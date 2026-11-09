@@ -26,6 +26,7 @@ ns.DEFAULTS = {
 		barHeight = 15,
 		classColor = true,
 		nameScale = 100,
+		showHealthText = true,
 		healthTextPosition = "INSIDE_RIGHT",
 		healthTextScale = 100,
 		showLevel = true,
@@ -81,6 +82,13 @@ ns.DEFAULTS = {
 		manaBarWidth = 60,
 		manaBarHeight = 4,
 	},
+
+	-- Where the raid mark sits: left or right of the health bar (or of the name when only the name
+	-- shows), or above the name
+	raidMarks = {
+		enemyPosition = "TOP",
+		allyPosition = "TOP",
+	},
 }
 
 -- {minimum, maximum} of each number, by section
@@ -110,6 +118,7 @@ ns.CHOICES = {
 	general = {language = {enUS = true, ptPT = true}},
 	enemy = {healthTextPosition = TEXT_POSITIONS, levelPosition = TEXT_POSITIONS},
 	allies = {roleIconPosition = {LEFT = true, RIGHT = true, TOP = true}},
+	raidMarks = {enemyPosition = {LEFT = true, RIGHT = true, TOP = true}, allyPosition = {LEFT = true, RIGHT = true, TOP = true}},
 }
 
 local function CopyValue(value)

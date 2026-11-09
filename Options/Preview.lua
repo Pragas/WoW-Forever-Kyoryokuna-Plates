@@ -49,7 +49,7 @@ local TAPPED = {0.6, 0.6, 0.6}
 
 -- Each example lists the option pages it belongs to: with one of those pages open in the options, the
 -- test mode shows only its examples. The General and About pages show them all.
-local ENEMIES, TARGET, CAST, ALLIES = "Enemies", "Target", "Cast Bar", "Allies"
+local ENEMIES, TARGET, CAST, ALLIES, MARKS = "Enemies", "Target", "Cast Bar", "Allies", "Raid Marks"
 
 local SCENARIOS = {
 	{label = "Enemy", desc = "A hostile mob from one of your quests", name = "Cursed Sailor", level = 26, health = 100, color = HOSTILE, quest = true,
@@ -62,7 +62,9 @@ local SCENARIOS = {
 	{label = "Neutral", desc = "Doesn't attack until you do", name = "Mottled Boar", level = 24, health = 100, color = NEUTRAL, pages = {ENEMIES}},
 	{label = "Tapped by others", desc = "Already tagged by another player", name = "Bluegill Warrior", level = 25, health = 60, color = TAPPED, pages = {ENEMIES}},
 	{label = "Elite", desc = "A stronger mob, with the elite dragon", name = "Nightveiled Rotheap", level = 31, health = 100, color = HOSTILE, elite = true, pages = {ENEMIES}},
-	{label = "Raid mark", desc = "A mob with a raid mark", name = "Fen Creeper", level = 24, health = 58, color = HOSTILE, raidMark = 8, pages = {ENEMIES}},
+	{label = "Raid mark", desc = "A mob with a raid mark", name = "Fen Creeper", level = 24, health = 58, color = HOSTILE, raidMark = 8, pages = {ENEMIES, MARKS}},
+	{label = "Quest mob with a raid mark", desc = "The mark goes past the quest icon", name = "Murloc Forager", level = 25, health = 100, color = HOSTILE,
+		quest = true, raidMark = 2, pages = {MARKS}},
 	{label = "Enemy player", desc = "In the color of their class", name = "Viktor", level = 27, health = 80, isPlayer = true, class = "WARLOCK", pages = {ENEMIES}},
 	{label = "Boss", desc = "Its level shows as a skull", name = "Mother Fang", level = -1, health = 100, color = HOSTILE, elite = true, pages = {ENEMIES}},
 	{label = "Low level", desc = "Far below your level", name = "Young Wetlands Crocolisk", level = 18, health = 100, color = HOSTILE, pages = {ENEMIES}},
@@ -79,7 +81,9 @@ local SCENARIOS = {
 		pages = {ALLIES, TARGET}},
 	{label = "Ally tank", desc = "With the tank role icon", side = "allies", name = "Toadz Malone", isPlayer = true, class = "WARRIOR", role = "TANK", pages = {ALLIES}},
 	{label = "Ally healer", desc = "With the role icon and the mana bar", side = "allies", name = "Posttal Kyoryokuna", isPlayer = true, class = "SHAMAN",
-		role = "HEALER", mana = 70, raidMark = 6, pages = {ALLIES}},
+		role = "HEALER", mana = 70, raidMark = 6, pages = {ALLIES, MARKS}},
+	{label = "Ally with a raid mark", desc = "A player of your faction, marked", side = "allies", name = "Vellira Dawnsong", isPlayer = true, class = "PALADIN",
+		raidMark = 1, pages = {MARKS}},
 }
 
 -- The option page the examples follow (nil: all of them)
@@ -363,10 +367,12 @@ local function GetCardHeight(example)
 	-- The name ignores the nameplate's scale too
 	local nameHeight = fontSize * 1.3 / windowScale
 
+	-- A raid mark takes room above the name only when it's placed there (Raid Marks page)
+	local markAbove = scenario.raidMark and (isAlly and db.raidMarks.allyPosition or db.raidMarks.enemyPosition) == "TOP"
 	local top
 	if isAlly and db.allies.nameOnly then
 		top = db.allies.nameHeight * toCard + nameHeight
-		if scenario.raidMark then top = top + 24 * toCard end
+		if markAbove then top = top + 24 * toCard end
 		if scenario.role and db.allies.roleIcons and db.allies.roleIconPosition == "TOP" then
 			top = top + (db.allies.roleIconSize + 2) * toCard
 		end
@@ -377,7 +383,7 @@ local function GetCardHeight(example)
 			top = math.max(top, (barTop + db.enemy.debuffY + db.enemy.debuffSize) * toCard)
 		end
 		-- The raid mark over the name (or over the debuffs), and an ally's role icon when it's above the name
-		if scenario.raidMark then top = top + 24 * toCard end
+		if markAbove then top = top + 24 * toCard end
 		if isAlly and scenario.role and db.allies.roleIcons and db.allies.roleIconPosition == "TOP" then
 			top = top + (db.allies.roleIconSize + 2) * toCard
 		end

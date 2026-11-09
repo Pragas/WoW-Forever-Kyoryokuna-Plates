@@ -21,10 +21,13 @@ ns.AddOptionsPage("Enemies", function(b)
 	b:Slider("enemy.barHeight", "Bar height", 1, nil, "The height of the health bar.")
 	b:Check("enemy.classColor", "Players in their class color", "The health bar and the name of enemy players.")
 	b:Slider("enemy.nameScale", "Name size", 5, "%", "100% is the normal size.")
-	b:Dropdown("enemy.healthTextPosition", "Health percent", positions,
-		"Where the health percent sits: inside the bar, or outside it. Outside on the same side as the level, it comes after the level.")
+	local healthText = W.IsOn("enemy.showHealthText")
+	b:Check("enemy.showHealthText", "Show the health percent")
+	b:Dropdown("enemy.healthTextPosition", "Health percent position", positions,
+		"Where the health percent sits: inside the bar, or outside it. Outside on the same side as the level, it comes after the level.",
+		healthText, true)
 	b:Slider("enemy.healthTextScale", "Health percent size", 5, "%",
-		"100% is the normal size of the name. Inside the bar, it's never taller than the bar.")
+		"100% is the normal size of the name. Inside the bar, it's never taller than the bar.", healthText, true)
 	b:Check("enemy.showLevel", "Show the level")
 	b:Dropdown("enemy.levelPosition", "Level position", positions, nil, W.IsOn("enemy.showLevel"), true)
 	b:Slider("enemy.levelScale", "Level size", 5, "%", "100% is the normal size. Inside the bar, it's never taller than the bar.",

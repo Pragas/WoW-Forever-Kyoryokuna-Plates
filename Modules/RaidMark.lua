@@ -2,12 +2,18 @@
 -- Copyright (c) 2026 Pragas. All Rights Reserved.
 -- See LICENSE for terms. Unauthorized copying, modification or redistribution is prohibited.
 
--- The game's raid mark (skull, cross...) always over the head, centered above the name:
---   - enemies: above the name, or above the player's debuffs when the enemy shows some (they sit above
---     the name too);
---   - allies: above the name, or above the role icon when that's above the name.
--- The game would put it left of the health bar. It keeps deciding when the mark shows; the addon only
--- places it, again whenever the game lays the nameplate out, a mark changes or the debuffs change.
+-- The game's raid mark (skull, cross...), where the Raid Marks page says, for enemies and allies apart:
+--   - above (default), centered above the name:
+--       enemies: above the name, or above the player's debuffs when the enemy shows some (they sit above
+--       the name too);
+--       allies: above the name, or above the role icon when that's above the name;
+--   - left or right: beside the health bar (or beside the name when only the name shows), past
+--     whatever else is shown on that side (the level or the health percent outside the bar, the quest
+--     "!", the elite dragon, the role icon), so it never covers them.
+-- The game keeps deciding when the mark shows; the addon only places it, again whenever the game lays
+-- the nameplate out, a mark changes, the debuffs change or the icons beside the bar change.
+-- Inside dungeons and raids the game protects the nameplates of allies: there their mark stays where the
+-- game puts it.
 
 local _, ns = ...
 
@@ -18,7 +24,37 @@ local GAP = 2
 -- Between the name and the health bar (Modules\Name.lua)
 local NAME_GAP = 4
 
-local function GetAnchor(frame, data)
+local function IsShown(region)
+	return type(region) == "table" and region.IsShown and ns.Known(region:IsShown()) and true or false
+end
+
+-- The outermost thing shown on one side of the health bar (or of the name, when only the name shows),
+-- which the mark goes next to
+local function OutermostOnSide(frame, data, sideName)
+	local container = frame.HealthBarsContainer
+	local withBar = container and ns.HasHealthBar(frame)
+	local anchor = withBar and container or frame.name
+	if data.side == "allies" then
+		-- The role icon, when it's on this side (beside the bar, or beside the name)
+		if IsShown(data.roleIcon) and ns.db.allies.roleIconPosition == sideName then anchor = data.roleIcon end
+		return anchor
+	end
+	if not withBar then return anchor end
+	-- Enemies: the level and the health percent outside the bar (the percent comes after the level)
+	local outside = (ns.GetOutsideHealthText and ns.GetOutsideHealthText(data, sideName))
+		or (ns.GetOutsideLevel and ns.GetOutsideLevel(data, sideName))
+	if outside then anchor = outside end
+	if sideName == "LEFT" then
+		-- Then the quest "!" and the game's elite dragon (Modules\LeftIcons.lua)
+		if IsShown(data.questIcon) then anchor = data.questIcon end
+		local classification = frame.ClassificationFrame
+		if IsShown(classification) and IsShown(classification.classificationIndicator) then anchor = classification end
+	end
+	return anchor
+end
+
+-- Above the name: what the mark sits on, and how high above it
+local function GetTopAnchor(frame, data)
 	local nameText = frame.name
 	if data.side == "allies" then
 		local icon = data.roleIcon
@@ -38,14 +74,27 @@ local function GetAnchor(frame, data)
 	return nameText, "TOP", 0, GAP
 end
 
+-- Where the mark goes: its point, the region it's placed on, that region's point, and the offsets
+local function GetPlace(frame, data)
+	local settings = ns.db.raidMarks
+	local position = data.side == "allies" and settings.allyPosition or settings.enemyPosition
+	if position == "LEFT" then
+		return "RIGHT", OutermostOnSide(frame, data, "LEFT"), "LEFT", -GAP, 0
+	elseif position == "RIGHT" then
+		return "LEFT", OutermostOnSide(frame, data, "RIGHT"), "RIGHT", GAP, 0
+	end
+	local anchor, point, x, y = GetTopAnchor(frame, data)
+	return "BOTTOM", anchor, point, x, y
+end
+
 function RaidMark.Update(frame, data)
 	local markFrame = frame.RaidTargetFrame
 	if type(markFrame) ~= "table" or not frame.name then return end
 	if data.side ~= "enemy" and data.side ~= "allies" then return end
-	local anchor, point, x, y = GetAnchor(frame, data)
+	local point, anchor, anchorPoint, x, y = GetPlace(frame, data)
 	markFrame:SetSize(MARK_SIZE, MARK_SIZE)
 	markFrame:ClearAllPoints()
-	markFrame:SetPoint("BOTTOM", anchor, point, x, y)
+	markFrame:SetPoint(point, anchor, anchorPoint, x, y)
 	local icon = markFrame.RaidTargetIcon
 	if type(icon) == "table" then
 		icon:ClearAllPoints()

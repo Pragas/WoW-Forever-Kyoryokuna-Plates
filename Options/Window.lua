@@ -92,6 +92,10 @@ local function CreateWindow()
 
 	local close = CreateFrame("Button", nil, window, "UIPanelCloseButton")
 	close:SetPoint("TOPRIGHT", window, "TOPRIGHT", -4, -4)
+	-- The template closes its parent with the game's panel system (HideUIPanel), which the game blocks
+	-- for addons in combat: the window then couldn't be closed. It's simply hidden instead.
+	close:SetScript("OnClick", function() window:Hide() end)
+	window.closeButton = close
 
 	local divider = window:CreateTexture(nil, "ARTWORK")
 	divider:SetColorTexture(1, 1, 1, 0.12)

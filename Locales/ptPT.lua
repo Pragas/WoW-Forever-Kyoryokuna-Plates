@@ -62,7 +62,8 @@ ns.LOCALES.ptPT = {
 		"A largura da barra de vida. As nameplates acompanham-na quando o addon gere as definições de nameplates do jogo.",
 	["Bar height"] = "Altura da barra",
 	["The height of the health bar."] = "A altura da barra de vida.",
-	["Health percent"] = "Percentagem de vida",
+	["Show the health percent"] = "Mostrar a percentagem de vida",
+	["Health percent position"] = "Posição da percentagem de vida",
 	["Where the health percent sits: inside the bar, or outside it. Outside on the same side as the level, it comes after the level."] =
 		"Onde fica a percentagem de vida: dentro da barra ou fora dela. Fora, do mesmo lado que o nível, fica a seguir ao nível.",
 	["Show the level"] = "Mostrar o nível",
@@ -131,9 +132,20 @@ ns.LOCALES.ptPT = {
 	["Spell name size"] = "Tamanho do nome do feitiço",
 	["Hide on allies"] = "Esconder nos aliados",
 
+	-- Raid marks
+	["Raid Marks"] = "Marcas de raid",
+	["Where the raid mark (skull, cross, square...) shows on the nameplates, for enemies and allies apart."] =
+		"Onde aparece a marca de raid (caveira, cruz, quadrado...) nas nameplates, para inimigos e aliados em separado.",
+	["Left or right: beside the health bar, past the level, the health percent and the icons shown on that side; beside the name when only the name shows."] =
+		"Esquerda ou direita: ao lado da barra de vida, depois do nível, da percentagem e dos ícones que estejam desse lado; ao lado do nome quando só se vê o nome.",
+	["Left or right: beside the health bar (past the role icon when it's on that side), or beside the name when it's name only."] =
+		"Esquerda ou direita: ao lado da barra de vida (depois do ícone de função, quando está desse lado), ou ao lado do nome quando é só nome.",
+	["Inside dungeons and raids the game doesn't let addons change the nameplates of allies: there their mark stays where the game puts it."] =
+		"Dentro de dungeons e raids o jogo não deixa os addons mexerem nas nameplates dos aliados: aí a marca fica onde o jogo a põe.",
+
 	-- Allies
-	["Inside dungeons and raids the game doesn't let addons change the nameplates of allies. There only name only and the class colors apply."] =
-		"Dentro de dungeons e raids o jogo não deixa os addons mexerem nas nameplates dos aliados. Aí só contam o só nome e as cores de classe.",
+	["Inside dungeons and raids the game doesn't let addons change the nameplates of allies. There only name only, the class colors and the name size apply."] =
+		"Dentro de dungeons e raids o jogo não deixa os addons mexerem nas nameplates dos aliados. Aí só contam o só nome, as cores de classe e o tamanho do nome.",
 	["Players"] = "Jogadores",
 	["Name only (no health bar)"] = "Só o nome (sem barra de vida)",
 	["Click through allies"] = "Clicar através dos aliados",
@@ -209,6 +221,10 @@ ns.LOCALES.ptPT = {
 	["Already tagged by another player"] = "Já foi tocado por outro jogador",
 	["A stronger mob, with the elite dragon"] = "Um mob mais forte, com o dragão de elite",
 	["A mob with a raid mark"] = "Um mob com marca de raid",
+	["Quest mob with a raid mark"] = "Mob de quest com marca de raid",
+	["The mark goes past the quest icon"] = "A marca fica depois do ícone da quest",
+	["Ally with a raid mark"] = "Aliado com marca de raid",
+	["A player of your faction, marked"] = "Um jogador da tua fação, marcado",
 	["In the color of their class"] = "Na cor da sua classe",
 	["Its level shows as a skull"] = "O nível aparece como caveira",
 	["Far below your level"] = "Muito abaixo do teu nível",

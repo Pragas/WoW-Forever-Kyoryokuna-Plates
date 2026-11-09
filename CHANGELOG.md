@@ -8,6 +8,13 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.6.0
+
+- New "Raid Marks" page: where the raid mark shows, for enemies and allies apart: left of the health bar, above the name (as before) or right of the health bar. Left and right go past whatever else is shown on that side (the level or the health percent outside the bar, the quest "!", the elite dragon, the role icon), and beside the name when only the name shows. The test mode has examples for it. Inside dungeons and raids the game keeps the allies' marks where it puts them.
+- Enemies: "Show the health percent", to hide the health percent like the level (on by default).
+- Allies inside dungeons, raids and scenarios: their names now have the same size as outside (the "Name size" of the Allies page). The game protects those nameplates from addons, so their names kept the game's size, shrunk with the nameplate's scale. The addon now sets the size of the game's shared font of nameplate names while inside, and puts the game's own back when leaving.
+- Fixed: the options window opened in combat couldn't be closed with its X. The X used the game's panel system, which the game blocks for addons in combat; it now simply hides the window.
+
 ## 1.5.2
 
 - The width and height of the health bar and the cast bar are now rounded to whole screen pixels (measured again when a nameplate becomes the bigger target). Their top and bottom edges then always move together, so a moving bar can't grow or shrink by a pixel. The look stays the same, at most one pixel larger or smaller.

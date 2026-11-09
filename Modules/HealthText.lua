@@ -3,7 +3,7 @@
 -- See LICENSE for terms. Unauthorized copying, modification or redistribution is prohibited.
 
 -- The health percent of an enemy ("100%"), inside the right end of the bar by default, or anywhere
--- inside or outside it (Enemies page). White with an outline, in the font of the name with a size of its
+-- inside or outside it, or hidden (Enemies page). White with an outline, in the font of the name with a size of its
 -- own (never taller than the bar when inside it), and like the name it doesn't grow when the enemy is
 -- selected.
 -- The game's own health text is made invisible, so it never shows twice. In combat the health is
@@ -103,7 +103,7 @@ end
 function HealthText.Update(frame, data)
 	HideGameTexts(frame)
 	local bar = ns.GetHealthBar(frame)
-	if data.side ~= "enemy" or not ns.HasHealthBar(frame) or not bar then
+	if data.side ~= "enemy" or not ns.db.enemy.showHealthText or not ns.HasHealthBar(frame) or not bar then
 		Hide(data)
 		return
 	end

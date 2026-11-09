@@ -82,6 +82,8 @@ function LeftIcons.Update(frame, data)
 		Chain(classification, anchor, anchorPoint)
 	end
 	data.placingIcons = false
+	-- A raid mark on the left goes past these icons, so it follows when they show or hide
+	if ns.RaidMark and ns.RaidMark.Update then ns.RaidMark.Update(frame, data) end
 end
 
 LeftIcons.Layout = LeftIcons.Update

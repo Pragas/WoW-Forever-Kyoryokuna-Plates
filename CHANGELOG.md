@@ -8,6 +8,10 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.5.1
+
+- Fixed: some names (e.g. an ally with a health bar) could be much smaller than the others. The addon kept the game's font of the first time it saw a nameplate; it now reads it again whenever the game changes it (a nameplate going from name only to a health bar, or reused for another unit).
+
 ## 1.5.0
 
 - General page: "Stack enemy nameplates". Off (default), the nameplates of mobs close together overlap and the game keeps swapping which one is in front, so a bar can seem to jump up and down; on, the game pushes them apart so they never overlap.

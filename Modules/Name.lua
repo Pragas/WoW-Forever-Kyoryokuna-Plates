@@ -66,6 +66,20 @@ local function HookNamePosition(frame, data)
 	end
 	hooksecurefunc(frame.name, "SetPoint", Replace)
 	hooksecurefunc(frame.name, "SetWidth", Replace)
+
+	-- The game gives the name another font when it changes the nameplate's style (e.g. an ally going from
+	-- name only to a health bar, or a nameplate reused for another unit): the game's new font is read
+	-- again, and the name gets its size from it
+	local function FontChanged()
+		local current = ns.GetPlateData(frame)
+		if current and not current.settingNameFont then
+			current.nameFont = nil
+			-- The health percent and the level take their font from the name's too
+			ns.CallModules("Layout", frame, current)
+		end
+	end
+	hooksecurefunc(frame.name, "SetFontObject", FontChanged)
+	hooksecurefunc(frame.name, "SetFont", FontChanged)
 end
 
 function Name.Update(frame, data)
@@ -91,7 +105,10 @@ function Name.Update(frame, data)
 		fontString:SetIgnoreParentScale(true)
 	end
 	local scale = NAME_BASE[data.side] * ns.db[data.side].nameScale / 100
+	-- Not taken for a change of the game's (see HookNamePosition)
+	data.settingNameFont = true
 	fontString:SetFont(base.path, base.size * scale, BuildFlags(base.flags))
+	data.settingNameFont = false
 
 	if data.side == "enemy" and data.isPlayer and ns.db.enemy.classColor then
 		local r, g, b = ns.GetClassColor(data.class)

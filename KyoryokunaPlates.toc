@@ -1,0 +1,48 @@
+## Interface: 16001
+## Title: |cffffe00aKyoryokuna|r |cff0055ffPlates|r
+## Notes: Clean, classic-style nameplates built on the Blizzard nameplates. Type /kp to open the options.
+## Author: Pragas
+## Version: 1.4.2
+## X-Copyright: Copyright (c) 2026 Pragas. All Rights Reserved.
+## X-License: All Rights Reserved
+## IconTexture: Interface\AddOns\KyoryokunaPlates\Media\IconSmall
+## SavedVariables: KyoryokunaPlatesDB
+## AddonCompartmentFunc: KyoryokunaPlates_OnAddonCompartmentClick
+## AddonCompartmentFuncOnEnter: KyoryokunaPlates_OnAddonCompartmentEnter
+## AddonCompartmentFuncOnLeave: KyoryokunaPlates_OnAddonCompartmentLeave
+
+Locales\enUS.lua
+Locales\ptPT.lua
+
+Core\Init.lua
+Core\Utils.lua
+Core\Errors.lua
+Core\Database.lua
+
+Engine\Nameplates.lua
+Engine\Hooks.lua
+Engine\CVars.lua
+
+Modules\HealthBar.lua
+Modules\Name.lua
+Modules\Level.lua
+Modules\HealthText.lua
+Modules\Target.lua
+Modules\TargetText.lua
+Modules\LeftIcons.lua
+Modules\CastBar.lua
+Modules\Debuffs.lua
+Modules\Allies.lua
+Modules\RaidMark.lua
+Modules\ClickArea.lua
+
+Options\Widgets.lua
+Options\Window.lua
+Options\MinimapButton.lua
+Options\Preview.lua
+Options\Pages\General.lua
+Options\Pages\Enemies.lua
+Options\Pages\Target.lua
+Options\Pages\CastBar.lua
+Options\Pages\Allies.lua
+Options\Pages\About.lua

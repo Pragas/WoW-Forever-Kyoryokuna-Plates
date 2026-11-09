@@ -1,0 +1,48 @@
+-- KyoryokunaPlates
+-- Copyright (c) 2026 Pragas. All Rights Reserved.
+-- See LICENSE for terms. Unauthorized copying, modification or redistribution is prohibited.
+
+local _, ns = ...
+local W = ns.Widgets
+
+ns.AddOptionsPage("Enemies", function(b)
+	local debuffs = W.IsOn("enemy.debuffs")
+
+	local positions = {
+		{value = "INSIDE_LEFT", text = "Inside, left"},
+		{value = "INSIDE_CENTER", text = "Inside, center"},
+		{value = "INSIDE_RIGHT", text = "Inside, right"},
+		{value = "OUTSIDE_LEFT", text = "Outside, left"},
+		{value = "OUTSIDE_RIGHT", text = "Outside, right"},
+	}
+
+	b:Header("Look")
+	b:Slider("enemy.barWidth", "Bar width", 2, nil, "The width of the health bar. The nameplates follow it when the addon manages the game's nameplate settings.")
+	b:Slider("enemy.barHeight", "Bar height", 1, nil, "The height of the health bar.")
+	b:Check("enemy.classColor", "Players in their class color", "The health bar and the name of enemy players.")
+	b:Slider("enemy.nameScale", "Name size", 5, "%", "100% is the normal size.")
+	b:Dropdown("enemy.healthTextPosition", "Health percent", positions,
+		"Where the health percent sits: inside the bar, or outside it. Outside on the same side as the level, it comes after the level.")
+	b:Slider("enemy.healthTextScale", "Health percent size", 5, "%",
+		"100% is the normal size of the name. Inside the bar, it's never taller than the bar.")
+	b:Check("enemy.showLevel", "Show the level")
+	b:Dropdown("enemy.levelPosition", "Level position", positions, nil, W.IsOn("enemy.showLevel"), true)
+	b:Slider("enemy.levelScale", "Level size", 5, "%", "100% is the normal size. Inside the bar, it's never taller than the bar.",
+		W.IsOn("enemy.showLevel"), true)
+	b:Check("enemy.questIcon", "Quest icon on quest mobs", "A yellow \"!\" left of the bar of mobs that belong to one of your active quests.")
+
+	b:Header("Threat")
+	local managed = W.IsOn("general.manageGameSettings")
+	b:Check("enemy.threatGlow", "Threat glow above the bar",
+		"The game's orange glow above the health bar of a mob that's attacking you, or that you're about to pull. Needs \"Manage the game's nameplate settings\" (General page).",
+		managed)
+	b:Check("enemy.threatFlash", "Flash when gaining or losing aggro",
+		"The game's short flash on the health bar when a mob starts or stops attacking you. Needs \"Manage the game's nameplate settings\" (General page).",
+		managed)
+
+	b:Header("My debuffs")
+	b:Check("enemy.debuffs", "Show my debuffs above the name")
+	b:Slider("enemy.debuffSize", "Icon size", 1, nil, nil, debuffs, true)
+	b:Slider("enemy.debuffMax", "Most icons", 1, nil, nil, debuffs, true)
+	b:Slider("enemy.debuffY", "Height above the bar", 1, nil, nil, debuffs, true)
+end)

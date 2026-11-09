@@ -8,6 +8,14 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.5.0
+
+- General page: "Stack enemy nameplates". Off (default), the nameplates of mobs close together overlap and the game keeps swapping which one is in front, so a bar can seem to jump up and down; on, the game pushes them apart so they never overlap.
+
+## 1.4.3
+
+- Fixed: the name of the enemy's target, under its health bar (or cast bar), could touch the bar's border and seem to jump while the nameplate moved. It now keeps a small gap below the border.
+
 ## 1.4.2
 
 - Fixed: errors ("Attempt to access forbidden object") when changing the size of the debuff icons, as the game protects the icons it already made. The new size is applied by the game's own layout of the icons.

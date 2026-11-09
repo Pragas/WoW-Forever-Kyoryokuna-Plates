@@ -19,8 +19,9 @@ local function Bool(value)
 end
 
 local CVARS = {
-	-- Overlapping nameplates (not pushed apart) and the size of the target
-	nameplateMotion = function() return "0" end,
+	-- Overlapping nameplates, or pushed apart so they never overlap (General page), and the size of the
+	-- target
+	nameplateMotion = function(db) return Bool(db.general.stackNameplates) end,
 	nameplateSelectedScale = function(db) return tostring(db.general.targetScale / 100) end,
 	-- The game shrinks the nameplates with the distance, down to 80%: they keep their full size instead
 	nameplateMinScale = function() return "1" end,
@@ -157,6 +158,18 @@ local function ApplyThreatBits()
 	SetBit(backup, name, kinds.Flash, db.enemy.threatFlash and true or false)
 end
 
+-- Stacking: overlapping nameplates of mobs close together swap which one is in front from one moment to
+-- the next, so a bar seems to jump up and down. Stacked, the game pushes them apart so they never overlap.
+local function ApplyStackBits()
+	local db = ns.db
+	if not db.general.manageGameSettings then return end
+	local kinds = Enum and Enum.NamePlateStackType
+	if not (kinds and C_CVar and C_CVar.GetCVarBitfield and C_CVar.SetCVarBitfield) then return end
+	local name = (NamePlateConstants and NamePlateConstants.STACKING_TYPES_CVAR) or "nameplateStackingTypes"
+	local backup = GetBackup()
+	SetBit(backup, name, kinds.Enemy, db.general.stackNameplates and true or false)
+end
+
 -- Every switch changed by the addon goes back to the value it had before
 local function RestoreBits(backup)
 	for key, saved in pairs(backup.bits) do
@@ -216,6 +229,7 @@ function ns.ApplyGameSettings()
 		ApplyCVars()
 		ApplyDebuffBits()
 		ApplyThreatBits()
+		ApplyStackBits()
 	end)
 	ns.ApplyNameplateSize()
 	if ns.Allies and ns.Allies.ApplyClickThrough then

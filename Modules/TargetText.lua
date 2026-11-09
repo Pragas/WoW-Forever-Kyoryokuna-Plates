@@ -12,6 +12,9 @@ local _, ns = ...
 local TargetText = ns.RegisterModule("TargetText", {})
 
 local TEXT_SIZE = 11
+-- Below the bar: room for its one-pixel border, and a little more, so the text never touches the border
+-- when the game rounds its place to the pixel as the nameplate moves
+local TEXT_GAP = 3
 
 local function GetText(frame, data)
 	if not data.targetText then
@@ -50,9 +53,9 @@ function TargetText.Update(frame, data)
 	local fake = data.fake
 	local name, class
 	if IsCasting(castBar) then
-		text:SetPoint("TOPRIGHT", castBar, "BOTTOMRIGHT", 0, -1)
+		text:SetPoint("TOPRIGHT", castBar, "BOTTOMRIGHT", 0, -TEXT_GAP)
 	else
-		text:SetPoint("TOPRIGHT", container, "BOTTOMRIGHT", 0, -1)
+		text:SetPoint("TOPRIGHT", container, "BOTTOMRIGHT", 0, -TEXT_GAP)
 	end
 	if fake then
 		if IsCasting(castBar) and fake.castTarget then

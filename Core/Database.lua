@@ -14,6 +14,7 @@ ns.DEFAULTS = {
 	general = {
 		language = "enUS",
 		manageGameSettings = true,
+		stackNameplates = false,
 		targetScale = 125,
 		minimapIcon = true,
 		minimapAngle = 225,

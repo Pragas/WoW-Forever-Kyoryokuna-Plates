@@ -29,6 +29,9 @@ ns.LOCALES.ptPT = {
 	["Lets this addon set the game's own nameplate settings: width, target size, which nameplates show, class colors, name-only allies and click-through. Turning it off puts back the values they had before."] =
 		"Deixa este addon mudar as definições de nameplates do próprio jogo: largura, tamanho do alvo, que nameplates aparecem, cores de classe, aliados só com o nome e clicar através. Desligado, repõe os valores que tinham antes.",
 	["Width"] = "Largura",
+	["Stack enemy nameplates"] = "Empilhar as nameplates dos inimigos",
+	["Off, the nameplates of mobs close together overlap, and the game keeps swapping which one is in front, so a bar can seem to jump up and down. On, the game pushes them apart so they never overlap."] =
+		"Desligado, as nameplates de mobs juntos sobrepõem-se e o jogo vai trocando qual fica à frente, por isso uma barra pode parecer saltar para cima e para baixo. Ligado, o jogo afasta-as para nunca se sobreporem.",
 	["Target size"] = "Tamanho do alvo",
 	["How much bigger the nameplate of your target is. Needs \"Manage the game's nameplate settings\" on the General page."] =
 		"Quanto maior fica a nameplate do teu alvo. Precisa de \"Gerir as definições de nameplates do jogo\" na página Geral.",

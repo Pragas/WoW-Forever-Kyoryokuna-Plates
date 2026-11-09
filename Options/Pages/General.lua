@@ -18,6 +18,9 @@ ns.AddOptionsPage("General", function(b)
 	b:Header("Nameplates")
 	b:Check("general.manageGameSettings", "Manage the game's nameplate settings",
 		"Lets this addon set the game's own nameplate settings: width, target size, which nameplates show, class colors, name-only allies and click-through. Turning it off puts back the values they had before.")
+	b:Check("general.stackNameplates", "Stack enemy nameplates",
+		"Off, the nameplates of mobs close together overlap, and the game keeps swapping which one is in front, so a bar can seem to jump up and down. On, the game pushes them apart so they never overlap.",
+		W.IsOn("general.manageGameSettings"), true)
 
 	b:Header("Minimap")
 	b:Check("general.minimapIcon", "Show the minimap button",

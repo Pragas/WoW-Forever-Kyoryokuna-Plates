@@ -8,6 +8,10 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.5.2
+
+- The width and height of the health bar and the cast bar are now rounded to whole screen pixels (measured again when a nameplate becomes the bigger target). Their top and bottom edges then always move together, so a moving bar can't grow or shrink by a pixel. The look stays the same, at most one pixel larger or smaller.
+
 ## 1.5.1
 
 - Fixed: some names (e.g. an ally with a health bar) could be much smaller than the others. The addon kept the game's font of the first time it saw a nameplate; it now reads it again whenever the game changes it (a nameplate going from name only to a health bar, or reused for another unit).

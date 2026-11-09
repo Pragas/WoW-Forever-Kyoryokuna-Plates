@@ -26,10 +26,7 @@ local CastBar = ns.RegisterModule("CastBar", {})
 
 -- The size of one screen pixel in a region's own units
 local function OnePixel(region)
-	local factor = PixelUtil and PixelUtil.GetPixelToUIUnitFactor and PixelUtil.GetPixelToUIUnitFactor()
-	local scale = ns.Known(region:GetEffectiveScale())
-	if factor and scale and scale > 0 then return factor / scale end
-	return 1
+	return ns.OnePixel(region) or 1
 end
 
 -- The room between the health bar and the cast bar, which the health bar leaves under it
@@ -279,7 +276,8 @@ local function ApplyLayout(frame, data)
 	local container = frame.HealthBarsContainer
 	if not castBar or not container then return end
 	local settings = ns.db.castBar
-	local height = settings.height
+	-- In whole screen pixels (see ns.ToWholePixels)
+	local height = ns.ToWholePixels(castBar, settings.height)
 
 	castBar:ClearAllPoints()
 	if settings.attached then
@@ -290,7 +288,7 @@ local function ApplyLayout(frame, data)
 		castBar:SetPoint("TOPRIGHT", container, "BOTTOMRIGHT", 0, -gap)
 	else
 		castBar:SetPoint("TOP", container, "BOTTOM", settings.offsetX, -settings.gap)
-		castBar:SetWidth(settings.width)
+		castBar:SetWidth(ns.ToWholePixels(castBar, settings.width))
 	end
 	castBar:SetHeight(height)
 	castBar:SetStatusBarTexture(ns.BAR_TEXTURE)

@@ -21,6 +21,26 @@ function ns.IsSecret(value)
 	return issecretvalue(value)
 end
 
+-- Screen pixels ------------------------------------------------------------------------------------
+
+-- The size of one screen pixel in a region's own units (its scale counted), or nil when the game
+-- doesn't tell (e.g. a secret scale)
+function ns.OnePixel(region)
+	local factor = PixelUtil and PixelUtil.GetPixelToUIUnitFactor and PixelUtil.GetPixelToUIUnitFactor()
+	local scale = region and region.GetEffectiveScale and ns.Known(region:GetEffectiveScale())
+	if type(factor) == "number" and type(scale) == "number" and scale > 0 then
+		return factor / scale
+	end
+end
+
+-- A size rounded to a whole number of screen pixels (at least one), so a bar's top and bottom edges
+-- (and its left and right ones) always fall at the same place within a pixel and move together
+function ns.ToWholePixels(region, size)
+	local pixel = ns.OnePixel(region)
+	if not pixel then return size end
+	return math.max(1, math.floor(size / pixel + 0.5)) * pixel
+end
+
 -- The look shared by the bars: the game's classic bar fill, which takes any color
 ns.BAR_TEXTURE = "Interface\\TargetingFrame\\UI-TargetingFrame-BarFill"
 ns.FONT = "Fonts\\FRIZQT__.TTF"

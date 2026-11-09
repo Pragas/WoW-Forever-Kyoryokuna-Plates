@@ -167,17 +167,30 @@ local CAST_GAP = 2
 -- The bar is held from the bottom of the nameplate, with the cast bar's room under it, and with a fixed
 -- width and height instead of the game's own anchors, which made it tall and narrow. The game sets its
 -- size and place again during its layout, so this runs again after it (see Engine\Hooks.lua).
+-- Width and height are in whole screen pixels (see ns.ToWholePixels).
 function HealthBar.ApplySize(frame, data)
 	local container = frame.HealthBarsContainer
 	if not container or not ns.HasHealthBar(frame) then return end
-	local half = ns.db.enemy.barWidth / 2
+	local half = ns.ToWholePixels(container, ns.db.enemy.barWidth) / 2
 	local bottom = BOTTOM_GAP + ns.db.castBar.height + (ns.GetCastGap and ns.GetCastGap() or CAST_GAP)
 	data.sizingBar = true
 	container:ClearAllPoints()
 	container:SetPoint("BOTTOMLEFT", frame, "BOTTOM", -half, bottom)
 	container:SetPoint("BOTTOMRIGHT", frame, "BOTTOM", half, bottom)
-	container:SetHeight(ns.db.enemy.barHeight)
+	container:SetHeight(ns.ToWholePixels(container, ns.db.enemy.barHeight))
 	data.sizingBar = false
+end
+
+-- The game may change a nameplate's scale right after the addon sees it (a new target is made bigger,
+-- the old one smaller again), and a screen pixel is then another size in the bar's units: both bars are
+-- sized again on the next frame, unless the nameplate went away or shows another unit by then
+local function ApplySizeSoon(frame, data)
+	local unit = data.unit
+	C_Timer.After(0, function()
+		if data.unit ~= unit or not ns.GetPlateData(frame) then return end
+		HealthBar.ApplySize(frame, data)
+		if ns.CastBar and ns.CastBar.Layout then ns.CastBar.Layout(frame, data) end
+	end)
 end
 
 -- A dead unit keeps its nameplate (e.g. a selected corpse), but its empty bar is made invisible
@@ -198,6 +211,7 @@ end
 function HealthBar.Update(frame, data)
 	ApplyDeadState(frame, data)
 	HealthBar.ApplySize(frame, data)
+	ApplySizeSoon(frame, data)
 	HideGameArt(frame)
 	ApplyTexture(frame)
 	HealthBar.UpdateBorder(frame, data)
@@ -215,6 +229,9 @@ function HealthBar.TargetChanged(frame, data)
 	-- The game shows its own selection art again when the target changes
 	HideGameArt(frame)
 	HealthBar.UpdateBorder(frame, data)
+	-- The target's nameplate is bigger: the size in whole screen pixels is measured again
+	HealthBar.ApplySize(frame, data)
+	ApplySizeSoon(frame, data)
 end
 
 function HealthBar.Removed(frame, data)

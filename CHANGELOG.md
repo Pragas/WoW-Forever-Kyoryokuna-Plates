@@ -8,6 +8,16 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.11.0
+
+- New defaults, from the author's own setup, so a new install starts with that look (settings already saved never change; the "Default" buttons of colors now give the new colors):
+  - Enemies: bar 150 x 20 (was 144 x 15), name and health percent 110%, level inside the bar on the left at 90% (was outside on the right at 100%), "My crowd control first" on, debuff icons 25 at 20 above the bar (was 26 at 18).
+  - Cast bar: no spell icon; "Can't be interrupted" in a grey green (was a dark red).
+  - Allies: name 120% (was 100%), 10 above the head (was 30).
+  - Raid marks: on enemies on the right (was above the name); 35 for enemies and allies (was 20).
+  - Target size 115% (was 125%).
+  - The language (English) and the minimap button stay as they were: they're each player's own.
+
 ## 1.10.0
 
 - Enemies page, new "Elites, rares and bosses" section:

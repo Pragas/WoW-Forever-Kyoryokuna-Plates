@@ -10,30 +10,32 @@ local addonName, ns = ...
 
 local DB_VERSION = 11
 
+-- The defaults are the author's own setup (1.11.0): a new install starts with it, and each player changes
+-- what they like from there. Settings already saved are never changed by a new default.
 ns.DEFAULTS = {
 	general = {
 		language = "enUS",
 		manageGameSettings = true,
 		stackNameplates = false,
-		targetScale = 125,
+		targetScale = 115,
 		minimapIcon = true,
 		minimapAngle = 225,
 		reportErrors = true,
 	},
 
 	enemy = {
-		barWidth = 144,
-		barHeight = 15,
+		barWidth = 150,
+		barHeight = 20,
 		-- The border around the health bar, in screen pixels (the target has its own, Target page)
 		borderSize = 1,
 		classColor = true,
-		nameScale = 100,
+		nameScale = 110,
 		showHealthText = true,
 		healthTextPosition = "INSIDE_RIGHT",
-		healthTextScale = 100,
+		healthTextScale = 110,
 		showLevel = true,
-		levelPosition = "OUTSIDE_RIGHT",
-		levelScale = 100,
+		levelPosition = "INSIDE_LEFT",
+		levelScale = 90,
 		questIcon = true,
 		-- Elites, rares and bosses: the game's dragon, the skull of the level, and a border fading from
 		-- black to a color of their own
@@ -49,12 +51,12 @@ ns.DEFAULTS = {
 		-- The row of icons over the bar: from its left end, or from its right end
 		debuffAlign = "LEFT",
 		-- My crowd control (stuns, roots...) first in the row, and its border in a color of its own
-		debuffCCFirst = false,
+		debuffCCFirst = true,
 		debuffCCBorder = true,
 		debuffCCBorderColor = {0.2, 0.85, 0.35},
-		debuffSize = 26,
+		debuffSize = 25,
 		debuffMax = 6,
-		debuffY = 18,
+		debuffY = 20,
 	},
 
 	target = {
@@ -75,7 +77,7 @@ ns.DEFAULTS = {
 		gap = 2,
 		offsetX = 0,
 		height = 15,
-		showIcon = true,
+		showIcon = false,
 		iconScale = 100,
 		-- The spell icon at the left or right end of the bar; the spell name at its left, middle or right
 		iconPosition = "LEFT",
@@ -85,15 +87,15 @@ ns.DEFAULTS = {
 		-- Can be interrupted / my interrupt on cooldown / can't be interrupted
 		readyColor = {0, 1, 0.17},
 		notReadyColor = {1, 0, 0.02},
-		nonInterruptibleColor = {0.44, 0, 0.03},
+		nonInterruptibleColor = {0.25, 0.28, 0.24},
 		hideOnAllies = true,
 	},
 
 	allies = {
 		nameOnly = true,
 		clickThrough = true,
-		nameScale = 100,
-		nameHeight = 30,
+		nameScale = 120,
+		nameHeight = 10,
 		roleIcons = true,
 		roleTank = true,
 		roleHealer = true,
@@ -109,10 +111,10 @@ ns.DEFAULTS = {
 	-- Where the raid mark sits: left or right of the health bar (or of the name when only the name
 	-- shows), or above the name; and its size
 	raidMarks = {
-		enemyPosition = "TOP",
-		enemySize = 20,
+		enemyPosition = "RIGHT",
+		enemySize = 35,
 		allyPosition = "TOP",
-		allySize = 20,
+		allySize = 35,
 	},
 }
 

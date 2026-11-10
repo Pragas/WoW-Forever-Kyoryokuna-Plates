@@ -355,6 +355,8 @@ ns.LOCALES.ptPT = {
 	["Thanks for installing! Type /kp to open the options."] = "Obrigado por instalares! Escreve /kp para abrir as opções.",
 	["Updated to version %s. Type /kp to see what's new."] = "Atualizado para a versão %s. Escreve /kp para veres as novidades.",
 	-- Release notes (Core\ReleaseNotes.lua)
+	["A new starting look for new installs: larger bars (150 x 20), larger names, the level inside the bar, your crowd control first, raid marks larger and on the right of enemies, and no spell icon on the cast bar. Your own settings don't change."] =
+		"Um novo aspeto inicial para novas instalações: barras maiores (150 x 20), nomes maiores, o nível dentro da barra, os teus CC primeiro, marcas de raid maiores e à direita dos inimigos, e sem o ícone do feitiço na barra de cast. As tuas definições não mudam.",
 	["Elites, rares and bosses stand out: their border fades from black to gold (elites), silver (rares) or white (bosses), with colors you can change. Your target keeps its own border."] =
 		"Elites, raros e bosses destacam-se: o contorno passa de preto a dourado (elites), prateado (raros) ou branco (bosses), com cores que podes mudar. O teu alvo mantém o seu contorno.",
 	["The elite and rare dragon and the skull of bosses can be hidden (Enemies page)."] =

@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.11.0",
+		new = {
+			"A new starting look for new installs: larger bars (150 x 20), larger names, the level inside the bar, your crowd control first, raid marks larger and on the right of enemies, and no spell icon on the cast bar. Your own settings don't change.",
+		},
+	},
+	{
 		version = "1.10.0",
 		new = {
 			"Elites, rares and bosses stand out: their border fades from black to gold (elites), silver (rares) or white (bosses), with colors you can change. Your target keeps its own border.",

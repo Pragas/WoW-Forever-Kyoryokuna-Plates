@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.11.1",
+		fixed = {
+			"After an update with new files, a /reload no longer gives errors: the addon says to close the game and open it again, and stays off until then.",
+		},
+	},
+	{
 		version = "1.11.0",
 		new = {
 			"A new starting look for new installs: larger bars (150 x 20), larger names, the level inside the bar, your crowd control first, raid marks larger and on the right of enemies, and no spell icon on the cast bar. Your own settings don't change.",

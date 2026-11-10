@@ -8,6 +8,10 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.11.1
+
+- After an update that adds files, a /reload no longer gives errors. The game reads the addon's list of files only when it starts, so a /reload leaves the new ones out; the addon now notices it (the version the game read isn't the code's), stays off (no events, nothing runs, settings untouched) and says to close the game and open it again, in the chat and in a window, in the player's language. /kp and the addon's entry in the game's addon button say it too.
+
 ## 1.11.0
 
 - New defaults, from the author's own setup, so a new install starts with that look (settings already saved never change; the "Default" buttons of colors now give the new colors):

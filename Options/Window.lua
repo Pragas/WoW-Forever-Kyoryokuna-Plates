@@ -120,6 +120,7 @@ local function CreateWindow()
 end
 
 function ns.OpenOptions()
+	if ns.NEEDS_RESTART then ns.ShowRestartNotice() return end
 	if not ns.db then return end
 	if not window then CreateWindow() end
 	window:Show()
@@ -292,6 +293,8 @@ end
 SLASH_KYORYOKUNAPLATES1 = "/kp"
 SLASH_KYORYOKUNAPLATES2 = "/kyoryokunaplates"
 SlashCmdList.KYORYOKUNAPLATES = function(message)
+	-- Waiting for the game to be restarted (Init.lua): every command says so
+	if ns.NEEDS_RESTART then ns.ShowRestartNotice() return end
 	local command = strtrim(message or ""):lower()
 	if command == "errors" then
 		ns.PrintErrors()

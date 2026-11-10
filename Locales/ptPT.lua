@@ -423,4 +423,10 @@ ns.LOCALES.ptPT = {
 	["Delete"] = "Apagar",
 	["Deletes this backup. Asks first."] = "Apaga esta cópia de segurança. Pergunta primeiro.",
 	["Delete the backup of %s? This can't be undone."] = "Apagar a cópia de %s? Não dá para desfazer.",
+
+	-- Updated, with the game still to be restarted (Core\Init.lua)
+	["%s was updated to version %s. Close the game and open it again to use it: a /reload isn't enough, because the game only reads the addon's new files when it starts. Until then the addon is turned off."] =
+		"%s foi atualizado para a versão %s. Fecha o jogo e abre-o de novo para o usar: um /reload não chega, porque o jogo só lê os ficheiros novos do addon quando arranca. Até lá, o addon fica desligado.",
+	["After an update with new files, a /reload no longer gives errors: the addon says to close the game and open it again, and stays off until then."] =
+		"Depois de uma atualização com ficheiros novos, um /reload já não dá erros: o addon avisa para fechares o jogo e o abrires de novo, e fica desligado até lá.",
 }

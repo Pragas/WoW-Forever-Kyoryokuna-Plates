@@ -1,7 +1,5 @@
 # Kyoryokuna Plates
 
-🇵🇹 [Ler em português](README.pt-PT.md)
-
 Clean, classic-style nameplates for **WoW Forever**: health bars with a thin border, cast bars colored by your interrupt, your debuffs above the name, allies by name with their role, and much more, all adjustable in the options.
 
 ## ⬇️ Download

@@ -84,10 +84,12 @@ ns.DEFAULTS = {
 	},
 
 	-- Where the raid mark sits: left or right of the health bar (or of the name when only the name
-	-- shows), or above the name
+	-- shows), or above the name; and its size
 	raidMarks = {
 		enemyPosition = "TOP",
+		enemySize = 20,
 		allyPosition = "TOP",
+		allySize = 20,
 	},
 }
 
@@ -106,6 +108,7 @@ ns.LIMITS = {
 	allies = {
 		nameScale = {50, 200}, nameHeight = {0, 60}, roleIconSize = {8, 40}, manaBarWidth = {20, 150}, manaBarHeight = {2, 12},
 	},
+	raidMarks = {enemySize = {10, 60}, allySize = {10, 60}},
 }
 
 -- The values a choice can take; anything else goes back to the default

@@ -16,7 +16,7 @@ ns.AddOptionsPage("Allies", function(b)
 	local roles = W.IsOn("allies.roleIcons")
 	local mana = W.IsOn("allies.manaBar")
 
-	b:Text("Inside dungeons and raids the game doesn't let addons change the nameplates of allies. There only name only, the class colors and the name size apply.",
+	b:Text("Inside dungeons and raids the game doesn't let addons change the nameplates of allies. There only name only and the class colors apply.",
 		{0.7, 0.7, 0.7})
 
 	b:Header("Players")

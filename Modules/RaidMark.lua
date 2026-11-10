@@ -10,6 +10,7 @@
 --   - left or right: beside the health bar (or beside the name when only the name shows), past
 --     whatever else is shown on that side (the level or the health percent outside the bar, the quest
 --     "!", the elite dragon, the role icon), so it never covers them.
+-- Its size is an option too, for enemies and allies apart.
 -- The game keeps deciding when the mark shows; the addon only places it, again whenever the game lays
 -- the nameplate out, a mark changes, the debuffs change or the icons beside the bar change.
 -- Inside dungeons and raids the game protects the nameplates of allies: there their mark stays where the
@@ -19,7 +20,6 @@ local _, ns = ...
 
 local RaidMark = ns.RegisterModule("RaidMark", {})
 
-local MARK_SIZE = 20
 local GAP = 2
 -- Between the name and the health bar (Modules\Name.lua)
 local NAME_GAP = 4
@@ -92,7 +92,10 @@ function RaidMark.Update(frame, data)
 	if type(markFrame) ~= "table" or not frame.name then return end
 	if data.side ~= "enemy" and data.side ~= "allies" then return end
 	local point, anchor, anchorPoint, x, y = GetPlace(frame, data)
-	markFrame:SetSize(MARK_SIZE, MARK_SIZE)
+	-- Its size (Raid Marks page). Like the nameplate, it's bigger on the target.
+	local settings = ns.db.raidMarks
+	local size = data.side == "allies" and settings.allySize or settings.enemySize
+	markFrame:SetSize(size, size)
 	markFrame:ClearAllPoints()
 	markFrame:SetPoint(point, anchor, anchorPoint, x, y)
 	local icon = markFrame.RaidTargetIcon

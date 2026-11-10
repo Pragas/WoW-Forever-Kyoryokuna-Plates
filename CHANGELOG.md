@@ -8,6 +8,12 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.7.0
+
+- Raid Marks page: a size for the raid mark, for enemies and allies apart (default 20, as before). Like the nameplate, the mark is bigger on your target. Inside dungeons and raids the allies' marks keep the game's size.
+- Removed: the size of the allies' names inside dungeons, raids and scenarios (1.6.0). It changed the game's shared fonts of nameplate names, which didn't size the allies' names there and also reached other protected nameplates (huge NPC and totem names, players' names drawn as dots). Inside, the allies' names have the game's size again.
+- Fixed: a mob's name could be much smaller than the others. The game reuses nameplates, and when it gave the name another font while the nameplate had no unit, the addon missed it: the next unit (e.g. a mob) kept the font of the last one (e.g. the smaller one of a friendly NPC). The addon now also checks, on every update, whether the name still has the font it gave it, and reads the game's again when it doesn't.
+
 ## 1.6.0
 
 - New "Raid Marks" page: where the raid mark shows, for enemies and allies apart: left of the health bar, above the name (as before) or right of the health bar. Left and right go past whatever else is shown on that side (the level or the health percent outside the bar, the quest "!", the elite dragon, the role icon), and beside the name when only the name shows. The test mode has examples for it. Inside dungeons and raids the game keeps the allies' marks where it puts them.

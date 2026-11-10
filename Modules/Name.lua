@@ -26,87 +26,21 @@ ns.NAME_BASE = NAME_BASE
 -- Name-only nameplates: how far above the bottom of the nameplate the name sits
 local NAME_ONLY_OFFSET = 30
 
--- Allies inside dungeons and raids -----------------------------------------------------------------
--- There the game protects the nameplates of allies: the addon can't touch them, and their names keep
--- the game's size, which also shrinks with the nameplate's scale (outside, names ignore that scale), so
--- they look smaller than outside. The game's shared font of nameplate names may be changed, though:
--- inside dungeons, raids and scenarios it gets the size that, shrunk by the nameplate's scale, gives
--- the names of allies the size they have outside. The game's own font is put back when leaving.
-
-local SHARED_FONT = "SystemFont_NamePlate_Outlined"
-local INSTANCE_TYPES = {party = true, raid = true, scenario = true}
--- The game's own shared font, kept before the addon changes it
-local sharedOriginal
--- The size the addon gave it; nil while it's the game's own
-local sharedApplied
--- The scale of a nameplate that isn't the target, last seen
-local plateScale
--- A hidden text that ignores its parent's scale, like the names: how such a text is scaled
-local probe
-
-local function SharedFont()
-	return _G[SHARED_FONT]
-end
-
--- The game's own size of a name's font: while the addon has changed the shared font, the name may
--- show the changed size, but the game's own is what the name's size is based on
-local function GameSize(fontString, size)
-	if sharedApplied and sharedOriginal and fontString.GetFontObject then
-		local ok, object = pcall(fontString.GetFontObject, fontString)
-		if ok and object == SharedFont() then return sharedOriginal.size end
-	end
-	return size
-end
-
-local function IgnoringScale()
-	if not probe then
-		probe = UIParent:CreateFontString(nil, "BACKGROUND")
-		if probe.SetIgnoreParentScale then probe:SetIgnoreParentScale(true) end
-		probe:Hide()
-	end
-	return ns.Known(probe:GetEffectiveScale())
-end
-
-local function IsInsideInstance()
-	if not IsInInstance then return false end
-	local inside, instanceType = IsInInstance()
-	return inside and INSTANCE_TYPES[instanceType] or false
-end
-
-local function UpdateSharedFont()
-	local font = SharedFont()
-	if not font or not ns.db then return end
-	if not IsInsideInstance() then
-		if sharedApplied and sharedOriginal then
-			font:SetFont(sharedOriginal.path, sharedOriginal.size, sharedOriginal.flags)
-		end
-		sharedApplied = nil
-		return
-	end
-	if not sharedOriginal then
-		local path, size, flags = font:GetFont()
-		size = ns.Known(size)
-		if not path or type(size) ~= "number" then return end
-		sharedOriginal = {path = path, size = size, flags = flags or ""}
-	end
-	local ignoring = IgnoringScale()
-	local plates = plateScale or ns.Known(UIParent:GetEffectiveScale())
-	if type(ignoring) ~= "number" or type(plates) ~= "number" or plates <= 0 then return end
-	local size = sharedOriginal.size * NAME_BASE.allies * ns.db.allies.nameScale / 100 * ignoring / plates
-	if sharedApplied and math.abs(sharedApplied - size) < 0.01 then return end
-	font:SetFont(sharedOriginal.path, size, sharedOriginal.flags)
-	sharedApplied = size
-end
-ns.UpdateInstanceNameFont = UpdateSharedFont
-
-ns.RegisterEvent("PLAYER_ENTERING_WORLD", function() ns.SafeCall(UpdateSharedFont) end)
-ns.RegisterEvent("ZONE_CHANGED_NEW_AREA", function() ns.SafeCall(UpdateSharedFont) end)
-
 local function BuildFlags(baseFlags)
 	if baseFlags and baseFlags:find("SLUG") then
 		return "OUTLINE, SLUG"
 	end
 	return "OUTLINE"
+end
+
+-- Whether a font read from a name is still the one this addon gave it. The size may come back rounded,
+-- and when it's secret it can't be compared, so it counts as the same (nothing is changed).
+local function SameFont(applied, path, size)
+	if not path then return true end
+	if path ~= applied.path then return false end
+	size = ns.Known(size)
+	if type(size) ~= "number" then return true end
+	return math.abs(size - applied.size) < 0.05
 end
 
 local function PlaceName(frame, data)
@@ -146,10 +80,13 @@ local function HookNamePosition(frame, data)
 	-- The game gives the name another font when it changes the nameplate's style (e.g. an ally going from
 	-- name only to a health bar, or a nameplate reused for another unit): the game's new font is read
 	-- again, and the name gets its size from it
+	-- Also while the nameplate has no unit (between one unit and the next): the next unit must not get
+	-- the font of the last one (e.g. the smaller font of a friendly NPC on a mob's name).
 	local function FontChanged()
+		if data.settingNameFont then return end
+		data.nameFont = nil
 		local current = ns.GetPlateData(frame)
-		if current and not current.settingNameFont then
-			current.nameFont = nil
+		if current then
 			-- The health percent and the level take their font from the name's too
 			ns.CallModules("Layout", frame, current)
 		end
@@ -162,17 +99,17 @@ function Name.Update(frame, data)
 	local fontString = frame.name
 	if not fontString then return end
 
+	-- The name no longer has the font this addon gave it: the game gave it another one in the meantime,
+	-- which becomes the new base (the hooks above may miss it, e.g. when it happens before they exist)
+	if data.nameFont and data.appliedNameFont and not data.fake
+		and not SameFont(data.appliedNameFont, fontString:GetFont()) then
+		data.nameFont = nil
+	end
 	-- The game's font, as it was before this addon changed it
 	if not data.nameFont then
 		local path, size, flags = fontString:GetFont()
 		if not path then return end
-		data.nameFont = {path = path, size = GameSize(fontString, ns.Known(size) or 9), flags = flags or ""}
-	end
-	-- The scale of the nameplates, for the allies' names inside instances (a selected one is bigger)
-	if not data.fake and not data.isTarget then
-		local ok, value = pcall(frame.GetEffectiveScale, frame)
-		value = ok and ns.Known(value) or nil
-		if type(value) == "number" and value > 0 then plateScale = value end
+		data.nameFont = {path = path, size = ns.Known(size) or 9, flags = flags or ""}
 	end
 	-- The game's font of real nameplates, so the examples of the test mode use the very same. Kept for
 	-- enemies and allies apart: the game gives the names of allies (name only) a smaller font.
@@ -188,9 +125,11 @@ function Name.Update(frame, data)
 	end
 	local scale = NAME_BASE[data.side] * ns.db[data.side].nameScale / 100
 	-- Not taken for a change of the game's (see HookNamePosition)
+	local applied = {path = base.path, size = base.size * scale, flags = BuildFlags(base.flags)}
 	data.settingNameFont = true
-	fontString:SetFont(base.path, base.size * scale, BuildFlags(base.flags))
+	fontString:SetFont(applied.path, applied.size, applied.flags)
 	data.settingNameFont = false
+	data.appliedNameFont = applied
 
 	if data.side == "enemy" and data.isPlayer and ns.db.enemy.classColor then
 		local r, g, b = ns.GetClassColor(data.class)
@@ -201,8 +140,6 @@ function Name.Update(frame, data)
 
 	HookNamePosition(frame, data)
 	PlaceName(frame, data)
-	-- A new name size (Allies page) or nameplate scale: the allies' names inside instances follow
-	UpdateSharedFont()
 end
 
 Name.Layout = Name.Update

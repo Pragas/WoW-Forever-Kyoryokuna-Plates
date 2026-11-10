@@ -134,18 +134,20 @@ ns.LOCALES.ptPT = {
 
 	-- Raid marks
 	["Raid Marks"] = "Marcas de raid",
-	["Where the raid mark (skull, cross, square...) shows on the nameplates, for enemies and allies apart."] =
-		"Onde aparece a marca de raid (caveira, cruz, quadrado...) nas nameplates, para inimigos e aliados em separado.",
+	["Where the raid mark (skull, cross, square...) shows on the nameplates, and how big, for enemies and allies apart."] =
+		"Onde aparece a marca de raid (caveira, cruz, quadrado...) nas nameplates, e o seu tamanho, para inimigos e aliados em separado.",
+	["The size of the mark. Like the nameplate, it's bigger on your target."] =
+		"O tamanho da marca. Tal como a nameplate, fica maior no teu alvo.",
 	["Left or right: beside the health bar, past the level, the health percent and the icons shown on that side; beside the name when only the name shows."] =
 		"Esquerda ou direita: ao lado da barra de vida, depois do nível, da percentagem e dos ícones que estejam desse lado; ao lado do nome quando só se vê o nome.",
 	["Left or right: beside the health bar (past the role icon when it's on that side), or beside the name when it's name only."] =
 		"Esquerda ou direita: ao lado da barra de vida (depois do ícone de função, quando está desse lado), ou ao lado do nome quando é só nome.",
-	["Inside dungeons and raids the game doesn't let addons change the nameplates of allies: there their mark stays where the game puts it."] =
-		"Dentro de dungeons e raids o jogo não deixa os addons mexerem nas nameplates dos aliados: aí a marca fica onde o jogo a põe.",
+	["Inside dungeons and raids the game doesn't let addons change the nameplates of allies: there their mark stays where the game puts it, in the game's size."] =
+		"Dentro de dungeons e raids o jogo não deixa os addons mexerem nas nameplates dos aliados: aí a marca fica onde o jogo a põe, com o tamanho do jogo.",
 
 	-- Allies
-	["Inside dungeons and raids the game doesn't let addons change the nameplates of allies. There only name only, the class colors and the name size apply."] =
-		"Dentro de dungeons e raids o jogo não deixa os addons mexerem nas nameplates dos aliados. Aí só contam o só nome, as cores de classe e o tamanho do nome.",
+	["Inside dungeons and raids the game doesn't let addons change the nameplates of allies. There only name only and the class colors apply."] =
+		"Dentro de dungeons e raids o jogo não deixa os addons mexerem nas nameplates dos aliados. Aí só contam o só nome e as cores de classe.",
 	["Players"] = "Jogadores",
 	["Name only (no health bar)"] = "Só o nome (sem barra de vida)",
 	["Click through allies"] = "Clicar através dos aliados",

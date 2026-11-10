@@ -7,8 +7,9 @@
 -- gave them. The mana goes straight from the game to the bar, so it also works when it's secret.
 --
 -- Inside dungeons and raids the game doesn't let addons change the nameplates of allies; there these
--- extras don't show, and only the game's own settings (name only, class color) apply, plus the size of
--- the names (through the game's shared font, see Modules\Name.lua).
+-- extras don't show, and only the game's own settings (name only, class color) apply. Changing the
+-- game's shared fonts of nameplate names to size them there was tried (1.6.0 to 1.7.0) and removed: it
+-- also changed other protected nameplates (huge NPC and totem names, names drawn as dots).
 --
 -- Also here: clicks going through the names of allies, so clicking a name doesn't select the player.
 

@@ -369,10 +369,11 @@ local function GetCardHeight(example)
 
 	-- A raid mark takes room above the name only when it's placed there (Raid Marks page)
 	local markAbove = scenario.raidMark and (isAlly and db.raidMarks.allyPosition or db.raidMarks.enemyPosition) == "TOP"
+	local markRoom = ((isAlly and db.raidMarks.allySize or db.raidMarks.enemySize) + 4) * toCard
 	local top
 	if isAlly and db.allies.nameOnly then
 		top = db.allies.nameHeight * toCard + nameHeight
-		if markAbove then top = top + 24 * toCard end
+		if markAbove then top = top + markRoom end
 		if scenario.role and db.allies.roleIcons and db.allies.roleIconPosition == "TOP" then
 			top = top + (db.allies.roleIconSize + 2) * toCard
 		end
@@ -383,7 +384,7 @@ local function GetCardHeight(example)
 			top = math.max(top, (barTop + db.enemy.debuffY + db.enemy.debuffSize) * toCard)
 		end
 		-- The raid mark over the name (or over the debuffs), and an ally's role icon when it's above the name
-		if markAbove then top = top + 24 * toCard end
+		if markAbove then top = top + markRoom end
 		if isAlly and scenario.role and db.allies.roleIcons and db.allies.roleIconPosition == "TOP" then
 			top = top + (db.allies.roleIconSize + 2) * toCard
 		end

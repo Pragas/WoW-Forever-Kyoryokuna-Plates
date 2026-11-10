@@ -37,6 +37,8 @@ function ns.GetCastGap()
 end
 
 local BACKGROUND = {0.25, 0.25, 0.25, 0.6}
+-- The space between an end of the bar (or the icon there) and the spell name placed at that end
+local TEXT_INSET = 4
 -- The game's global cooldown; a cooldown this short is the GCD, not the interrupt's own
 local GCD = 1.5
 
@@ -319,13 +321,15 @@ local function ApplyLayout(frame, data)
 		data.castBorder.top:SetShown(not settings.attached)
 	end
 
-	-- The spell icon sits inside the left end of the bar; at 100% it's exactly as tall as the bar. The
-	-- border is drawn above it, so it's always whole. It can be hidden (Cast Bar page).
+	-- The spell icon sits inside the left or right end of the bar (Cast Bar page); at 100% it's exactly as
+	-- tall as the bar. The border is drawn above it, so it's always whole. It can be hidden.
 	local icon = castBar.Icon
+	local iconSize = height * settings.iconScale / 100
 	if type(icon) == "table" then
-		local size = height * settings.iconScale / 100
+		local size = iconSize
+		local side = settings.iconPosition == "RIGHT" and "RIGHT" or "LEFT"
 		icon:ClearAllPoints()
-		icon:SetPoint("LEFT", castBar, "LEFT", 0, 0)
+		icon:SetPoint(side, castBar, side, 0, 0)
 		icon:SetSize(size, size)
 		icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 		icon:SetDrawLayer("OVERLAY", 6)
@@ -347,8 +351,34 @@ local function ApplyLayout(frame, data)
 			local flags = base.flags:find("SLUG") and "OUTLINE, SLUG" or "OUTLINE"
 			text:SetFont(base.path, base.size * settings.textScale / 100, flags)
 		end
+		-- At the left, in the middle or at the right of the bar (Cast Bar page). On the side of the icon, it
+		-- starts after the icon. At an end, a long name is cut before the other end instead of overflowing.
+		local iconShown = type(icon) == "table" and settings.showIcon
+		local leftRoom = TEXT_INSET + ((iconShown and settings.iconPosition ~= "RIGHT") and iconSize or 0)
+		local rightRoom = TEXT_INSET + ((iconShown and settings.iconPosition == "RIGHT") and iconSize or 0)
+		local justify = (settings.textPosition == "LEFT" or settings.textPosition == "RIGHT") and settings.textPosition or "CENTER"
+		text:SetJustifyH(justify)
 		text:ClearAllPoints()
-		text:SetPoint("CENTER", castBar, "CENTER", 0, 0)
+		if justify ~= "CENTER" then
+			text:SetPoint("LEFT", castBar, "LEFT", leftRoom, 0)
+			text:SetPoint("RIGHT", castBar, "RIGHT", -rightRoom, 0)
+			if text.SetWordWrap then text:SetWordWrap(false) end
+		else
+			text:SetPoint("CENTER", castBar, "CENTER", 0, 0)
+		end
+		-- The game draws a text again only when the text changes: with only the alignment changed (left to
+		-- right, same points), the name would stay where it was until the next cast. Set again, it moves at
+		-- once. (It may be secret in combat: it's only handed back, never read.)
+		if data.castJustify ~= justify then
+			data.castJustify = justify
+			pcall(function()
+				local current = text:GetText()
+				text:SetText("")
+				text:SetText(current)
+			end)
+		end
+		-- It can be hidden: made invisible, so the game keeps filling it as usual
+		text:SetAlpha(settings.showText and 1 or 0)
 	end
 end
 

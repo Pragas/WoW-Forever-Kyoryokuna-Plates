@@ -15,9 +15,18 @@ ns.AddOptionsPage("Target", function(b)
 		W.IsOn("general.manageGameSettings"))
 
 	b:Header("Arrow")
-	b:Check("target.arrow", "Arrow above the target")
+	b:Check("target.arrow", "Arrow on the target")
+	b:Dropdown("target.arrowPosition", "Arrow position", {
+		{value = "TOP", text = "Above"},
+		{value = "LEFT", text = "Left"},
+		{value = "RIGHT", text = "Right"},
+		{value = "BOTH", text = "Both sides"},
+	}, "On the top edge of the target's health bar, pointing down, or on its left or right edge (or both), pointing at it: always half inside and half outside the bar.",
+		arrow, true)
 	b:Slider("target.arrowScale", "Arrow size", 5, "%", nil, arrow, true)
-	b:Slider("target.arrowX", "Left / right", 1, nil, nil, arrow, true)
+	b:Slider("target.arrowX", "Left / right", 1, nil,
+		"Above: moves the arrow to the left or right. On the sides: moves the arrows away from the bar, or into it with a negative value.",
+		arrow, true)
 	b:Slider("target.arrowY", "Down / up", 1, nil, nil, arrow, true)
 
 	b:Header("Health bar")

@@ -249,6 +249,24 @@ function ns.OnSettingChanged(path)
 	end
 end
 
+-- Many settings changed at once (an import, or a backup put back): everything follows, like after a
+-- change of each one. wasManaging: whether "manage the game's nameplate settings" was on before.
+function ns.OnAllSettingsChanged(wasManaging)
+	if wasManaging and not ns.db.general.manageGameSettings then
+		ns.RestoreGameSettings()
+		ns.Print(ns.L["The game's nameplate settings were put back."])
+	end
+	if ns.language ~= ns.db.general.language then
+		ns.language = ns.db.general.language
+		if ns.RebuildOptions then ns.RebuildOptions() end
+	end
+	ns.ApplyGameSettings()
+	ns.RefreshAll()
+	if ns.UpdateMinimapButton then ns.UpdateMinimapButton() end
+	if ns.Preview then ns.Preview.Refresh() end
+	if ns.RefreshOptions then ns.RefreshOptions() end
+end
+
 function ns.OnDatabaseReady()
 	ns.ApplyGameSettings()
 end

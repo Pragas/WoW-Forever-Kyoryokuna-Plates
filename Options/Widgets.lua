@@ -19,6 +19,17 @@ ns.Widgets = Widgets
 local CONTENT_WIDTH = 540
 local LEFT = 16
 local INDENT = 22
+
+-- The vertical rhythm of a page: how much room each kind of control takes, and the space around the
+-- headers of the sections (more above, so a section starts clearly apart from the one before)
+local SPACE_ABOVE_HEADER = 22
+local HEADER_HEIGHT = 34
+local CHECK_HEIGHT = 28
+local SLIDER_HEIGHT = 48
+local DROPDOWN_HEIGHT = 52
+local COLOR_HEIGHT = 32
+local BUTTON_HEIGHT = 34
+local TEXT_GAP = 10
 -- Where the "Default" buttons of the colors start, so they line up whatever the label's length
 local COLOR_RESET_X = 300
 local WHITE = "Interface\\Buttons\\WHITE8X8"
@@ -248,7 +259,9 @@ function Builder:Height()
 end
 
 function Builder:Header(text)
-	self:Space(6)
+	-- The first header of a page sits at the top; the others leave room above them
+	self:Space(self.hasContent and SPACE_ABOVE_HEADER or 2)
+	self.hasContent = true
 	local header = self.content:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 	header:SetPoint("TOPLEFT", self.content, "TOPLEFT", LEFT, self.y)
 	header:SetText(L[text])
@@ -257,7 +270,7 @@ function Builder:Header(text)
 	line:SetHeight(1)
 	line:SetPoint("TOPLEFT", header, "BOTTOMLEFT", 0, -4)
 	line:SetWidth(CONTENT_WIDTH - LEFT * 2)
-	self.y = self.y - 30
+	self.y = self.y - HEADER_HEIGHT
 end
 
 function Builder:Text(text, color)
@@ -267,7 +280,8 @@ function Builder:Text(text, color)
 	fontString:SetJustifyH("LEFT")
 	fontString:SetText(L[text])
 	if color then fontString:SetTextColor(unpack(color)) end
-	self.y = self.y - math.max(14, fontString:GetStringHeight()) - 8
+	self.y = self.y - math.max(14, fontString:GetStringHeight()) - TEXT_GAP
+	self.hasContent = true
 	return fontString
 end
 
@@ -291,7 +305,8 @@ function Builder:Check(path, label, tooltip, dependsOn, indent)
 	check:SetScript("OnEnter", function(self) ShowTooltip(self, L[label], tooltip and L[tooltip]) end)
 	check:SetScript("OnLeave", HideTooltip)
 
-	self.y = self.y - 26
+	self.y = self.y - CHECK_HEIGHT
+	self.hasContent = true
 	return Register(control, dependsOn)
 end
 
@@ -325,7 +340,9 @@ function Builder:Slider(path, label, step, suffix, tooltip, dependsOn, indent)
 	slider:SetMinMaxValues(minValue, maxValue)
 	slider:SetValueStep(step)
 	slider:SetObeyStepOnDrag(true)
-	slider:EnableMouseWheel(true)
+	-- The mouse wheel doesn't change the value: over a slider it scrolls the page, like everywhere else
+	-- in the window, so scrolling down the options never changes a setting by accident
+	slider:EnableMouseWheel(false)
 
 	local valueText = holder:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 	valueText:SetPoint("LEFT", slider, "RIGHT", 10, 0)
@@ -346,10 +363,6 @@ function Builder:Slider(path, label, step, suffix, tooltip, dependsOn, indent)
 			ns.Set(path, value)
 		end
 	end)
-	slider:SetScript("OnMouseWheel", function(self, delta)
-		if not self:IsEnabled() then return end
-		self:SetValue(math.min(maxValue, math.max(minValue, self:GetValue() + delta * step)))
-	end)
 	-- A right click opens a box to type the value, over the number shown next to the slider
 	local function TypeValue()
 		if not slider:IsEnabled() then return end
@@ -369,7 +382,8 @@ function Builder:Slider(path, label, step, suffix, tooltip, dependsOn, indent)
 	end)
 	slider:SetScript("OnLeave", HideTooltip)
 
-	self.y = self.y - 46
+	self.y = self.y - SLIDER_HEIGHT
+	self.hasContent = true
 	return Register(control, dependsOn)
 end
 
@@ -437,7 +451,8 @@ function Builder:Color(path, label, tooltip, dependsOn, indent)
 	control.interactive[#control.interactive + 1] = reset
 	control.reset = reset
 
-	self.y = self.y - 26
+	self.y = self.y - COLOR_HEIGHT
+	self.hasContent = true
 	return Register(control, dependsOn)
 end
 
@@ -481,7 +496,8 @@ function Builder:Dropdown(path, label, options, tooltip, dependsOn, indent)
 	button:SetScript("OnEnter", function(self) ShowTooltip(self, L[label], tooltip and L[tooltip]) end)
 	button:SetScript("OnLeave", HideTooltip)
 
-	self.y = self.y - 50
+	self.y = self.y - DROPDOWN_HEIGHT
+	self.hasContent = true
 	return Register(control, dependsOn)
 end
 
@@ -494,8 +510,84 @@ function Builder:Button(label, onClick, tooltip, width)
 	button:SetScript("OnClick", onClick)
 	button:SetScript("OnEnter", function(self) ShowTooltip(self, L[label], tooltip and L[tooltip]) end)
 	button:SetScript("OnLeave", HideTooltip)
-	self.y = self.y - 32
+	self.y = self.y - BUTTON_HEIGHT
+	self.hasContent = true
 	return button
+end
+
+-- A one-line text box (e.g. a code to copy or paste); a click selects all its text, for Ctrl+C
+function Builder:EditBox(label, tooltip, width)
+	local title = self.content:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	title:SetPoint("TOPLEFT", self.content, "TOPLEFT", LEFT + 4, self.y)
+	title:SetText(L[label])
+
+	local box = CreateFrame("EditBox", nil, self.content, "BackdropTemplate")
+	box:SetSize(width or (CONTENT_WIDTH - LEFT * 2 - 8), 24)
+	box:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
+	box:SetAutoFocus(false)
+	box:SetFontObject("GameFontHighlightSmall")
+	box:SetMaxLetters(0)
+	box:SetTextInsets(6, 6, 0, 0)
+	box:SetBackdrop({
+		bgFile = WHITE, edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+		edgeSize = 10, insets = {left = 2, right = 2, top = 2, bottom = 2},
+	})
+	box:SetBackdropColor(0.05, 0.05, 0.05, 0.9)
+	box:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+	box:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
+	box:SetScript("OnEditFocusGained", function(self) self:HighlightText() end)
+	box:SetScript("OnEnter", function(self) ShowTooltip(self, L[label], tooltip and L[tooltip]) end)
+	box:SetScript("OnLeave", HideTooltip)
+
+	self.y = self.y - DROPDOWN_HEIGHT
+	self.hasContent = true
+	return box
+end
+
+-- An empty area of this height, for a page to fill itself (e.g. a list), and a way to have its own
+-- refresh called with the other controls
+function Builder:Area(height)
+	local area = CreateFrame("Frame", nil, self.content)
+	area:SetPoint("TOPLEFT", self.content, "TOPLEFT", LEFT, self.y)
+	area:SetSize(CONTENT_WIDTH - LEFT * 2, height)
+	self.y = self.y - height - TEXT_GAP
+	self.hasContent = true
+	return area
+end
+
+function Builder:AddControl(control, dependsOn)
+	return Register(control, dependsOn)
+end
+
+-- A plain button placed by the caller (e.g. in a row of a list)
+function Widgets.SmallButton(parent, label, tooltip, onClick, width)
+	local button = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
+	button:SetSize(width or 80, 20)
+	button:SetText(L[label])
+	button:SetScript("OnClick", onClick)
+	button:SetScript("OnEnter", function(self) ShowTooltip(self, L[label], tooltip and L[tooltip]) end)
+	button:SetScript("OnLeave", HideTooltip)
+	return button
+end
+
+-- Asks with the game's own confirmation window, then runs onAccept; without it, runs it straight away
+function Widgets.Confirm(key, text, onAccept)
+	if not (StaticPopupDialogs and StaticPopup_Show) then
+		onAccept()
+		return
+	end
+	StaticPopupDialogs[key] = {
+		-- The game formats the text, so a "%" in it must be doubled
+		text = (text:gsub("%%", "%%%%")),
+		button1 = YES or L["Yes"],
+		button2 = NO or L["No"],
+		OnAccept = function() onAccept() end,
+		timeout = 0,
+		whileDead = true,
+		hideOnEscape = true,
+		preferredIndex = 3,
+	}
+	StaticPopup_Show(key)
 end
 
 -- Helpers for "depends on" -------------------------------------------------------------------------

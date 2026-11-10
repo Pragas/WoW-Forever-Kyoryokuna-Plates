@@ -8,6 +8,26 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.8.0
+
+- New "Import / Export" page:
+  - Export: a code (one line of text) with all your settings, to copy (Ctrl+C) and share. Your language, the minimap button and the error messages stay out.
+  - Import: paste a code (Ctrl+V) and confirm. The code is only read as text, never run: only settings that exist, of the right kind, are taken, and their limits still apply; settings it doesn't have keep their value.
+  - Backups: a button to save a copy of all your settings, with a name of your own if you like, and the list of copies (date, name and version) with Edit (to name or rename it), Restore and Delete, the last two asking first. The last 10 are kept, and one is made by itself before an import or a restore, so those can be undone too.
+
+- Enemies page, "My debuffs": a position for the row of icons over the health bar: from its left end (default, as before) or ending at its right end (growing left). The test mode shows it too. A centered row isn't possible: the game's row only grows from one end, and in combat the game hides from addons how many debuffs there are.
+- Enemies page, "My debuffs":
+  - Every icon now has a black border of 2 pixels (it was 1, and hardly showed on the nameplate).
+  - "My crowd control first": your stuns, roots, fears, sleeps and other controls (what the game counts as crowd control) come first in the row.
+  - With it, "Crowd control border in its own color" (on by default, green) and its color. The game hides from addons which aura an icon shows, so crowd control can only be told apart when it has a group of its own, first in the row.
+- Cast Bar page, new "Spell" section:
+  - Spell icon: shown or hidden, its position (inside the left end, as before, or the right end) and its size.
+  - Spell name: shown or hidden (new), its position (left, middle as before, or right) and its size. On the side of the icon it starts after the icon; at an end, a long name is cut before the other end instead of overflowing.
+- Target page: "Arrow position": on the top edge of the health bar (as before, pointing down), or on its left edge, its right edge or both, pointing at the bar; always half inside and half outside it. On the sides, "Left / right" moves the arrows away from the bar (or into it), each to its own side, and "Down / up" moves them up or down.
+- Options: the pages in a new order: General, Allies, Enemies, Target, Cast Bar, Raid Marks, Import / Export, About.
+- Options: a clearer layout on every page. Each section starts well apart from the one before (the headers were almost touching the option above them), and checks, colors, sliders and lists have even room between them.
+- Options: the mouse wheel no longer changes the sliders. Over a slider it scrolls the page, so scrolling down the options never changes a setting by accident. Drag the slider, or right-click it to type the value.
+
 ## 1.7.0
 
 - Raid Marks page: a size for the raid mark, for enemies and allies apart (default 20, as before). Like the nameplate, the mark is bigger on your target. Inside dungeons and raids the allies' marks keep the game's size.

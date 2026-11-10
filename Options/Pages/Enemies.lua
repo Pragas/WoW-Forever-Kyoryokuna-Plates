@@ -45,6 +45,19 @@ ns.AddOptionsPage("Enemies", function(b)
 
 	b:Header("My debuffs")
 	b:Check("enemy.debuffs", "Show my debuffs above the name")
+	b:Dropdown("enemy.debuffAlign", "Position", {
+		{value = "LEFT", text = "Left"},
+		{value = "RIGHT", text = "Right"},
+	}, "Where the row of icons sits over the health bar: from its left end, or from its right end.", debuffs, true)
+	local ccFirst = W.All(debuffs, W.IsOn("enemy.debuffCCFirst"))
+	b:Check("enemy.debuffCCFirst", "My crowd control first",
+		"Your stuns, roots, fears, sleeps and other controls (what the game counts as crowd control) come first in the row.",
+		debuffs, true)
+	b:Check("enemy.debuffCCBorder", "Crowd control border in its own color",
+		"Every icon has a black border; this gives the crowd control ones a color of their own. Needs \"My crowd control first\": only then can the addon tell them apart.",
+		ccFirst, true)
+	b:Color("enemy.debuffCCBorderColor", "Crowd control border color", nil,
+		W.All(ccFirst, W.IsOn("enemy.debuffCCBorder")), true)
 	b:Slider("enemy.debuffSize", "Icon size", 1, nil, nil, debuffs, true)
 	b:Slider("enemy.debuffMax", "Most icons", 1, nil, nil, debuffs, true)
 	b:Slider("enemy.debuffY", "Height above the bar", 1, nil, nil, debuffs, true)

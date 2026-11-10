@@ -90,13 +90,29 @@ ns.LOCALES.ptPT = {
 		"O flash curto do jogo na barra de vida quando um mob começa ou deixa de te atacar. Precisa de \"Gerir as definições de nameplates do jogo\" (página Geral).",
 	["My debuffs"] = "Os meus debuffs",
 	["Show my debuffs above the name"] = "Mostrar os meus debuffs por cima do nome",
+	["My crowd control first"] = "Os meus CC primeiro",
+	["Your stuns, roots, fears, sleeps and other controls (what the game counts as crowd control) come first in the row."] =
+		"Os teus stuns, roots, fears, sleeps e outros controlos (o que o jogo conta como controlo de grupo) ficam primeiro na fila.",
+	["Crowd control border in its own color"] = "Contorno dos CC com cor própria",
+	["Every icon has a black border; this gives the crowd control ones a color of their own. Needs \"My crowd control first\": only then can the addon tell them apart."] =
+		"Todos os ícones têm um contorno preto; isto dá aos de CC uma cor própria. Precisa de \"Os meus CC primeiro\": só assim o addon os consegue distinguir.",
+	["Crowd control border color"] = "Cor do contorno dos CC",
+	["Where the row of icons sits over the health bar: from its left end, or from its right end."] =
+		"Onde fica a fila de ícones por cima da barra de vida: a partir da ponta esquerda ou a partir da ponta direita.",
 	["Icon size"] = "Tamanho dos ícones",
 	["Most icons"] = "Máximo de ícones",
 	["Height above the bar"] = "Altura acima da barra",
 
 	-- Target
 	["Arrow"] = "Seta",
-	["Arrow above the target"] = "Seta por cima do alvo",
+	["Arrow on the target"] = "Seta no alvo",
+	["Arrow position"] = "Posição da seta",
+	["Above"] = "Por cima",
+	["Both sides"] = "Dos dois lados",
+	["On the top edge of the target's health bar, pointing down, or on its left or right edge (or both), pointing at it: always half inside and half outside the bar."] =
+		"Na borda de cima da barra de vida do alvo, a apontar para baixo, ou na borda esquerda ou direita (ou nas duas), a apontar para ela: sempre metade dentro e metade fora da barra.",
+	["Above: moves the arrow to the left or right. On the sides: moves the arrows away from the bar, or into it with a negative value."] =
+		"Por cima: move a seta para a esquerda ou para a direita. Nos lados: afasta as setas da barra, ou mete-as para dentro com um valor negativo.",
 	["Arrow size"] = "Tamanho da seta",
 	["Left / right"] = "Esquerda / direita",
 	["Down / up"] = "Baixo / cima",
@@ -118,7 +134,15 @@ ns.LOCALES.ptPT = {
 		"Um cast que dava para interromper, mas o teu interrupt está em cooldown.",
 	["Can't be interrupted"] = "Não dá para interromper",
 	["Spells that can never be interrupted."] = "Spells que nunca dá para interromper.",
-	["Show the spell icon"] = "Mostrar o ícone do spell",
+	["Spell"] = "Feitiço",
+	["Show the spell icon"] = "Mostrar o ícone do feitiço",
+	["Show the spell name"] = "Mostrar o nome do feitiço",
+	["Spell icon position"] = "Posição do ícone do feitiço",
+	["Inside the left or the right end of the cast bar."] = "Dentro da ponta esquerda ou da ponta direita da barra de cast.",
+	["Spell name position"] = "Posição do nome do feitiço",
+	["At the left, in the middle or at the right of the cast bar. On the side of the icon, it starts after the icon."] =
+		"À esquerda, ao centro ou à direita da barra de cast. Do lado do ícone, começa a seguir ao ícone.",
+	["Center"] = "Ao centro",
 	["100% is as tall as the cast bar."] = "100% é da altura da barra de cast.",
 	["Join to the health bar"] = "Juntar à barra de vida",
 	["Right under the health bar, just as wide, sharing its border. Off, the cast bar has its own width and distance."] =
@@ -285,4 +309,46 @@ ns.LOCALES.ptPT = {
 	["Quest unit"] = "Unidade de quest",
 	["Identity secret"] = "Identidade secreta",
 	["secret"] = "secreto",
+
+	-- Import / Export
+	["Import / Export"] = "Importar / Exportar",
+	["Export"] = "Exportar",
+	["A code with all your settings, to share with someone. Click the box (or the button) and press Ctrl+C to copy it. Your language, the minimap button and the error messages aren't in it."] =
+		"Um código com todas as tuas definições, para partilhar com alguém. Clica na caixa (ou no botão) e carrega em Ctrl+C para o copiar. A língua, o botão do minimapa e as mensagens de erro não vão no código.",
+	["Your code"] = "O teu código",
+	["Select the code"] = "Selecionar o código",
+	["Press Ctrl+C to copy the code."] = "Carrega em Ctrl+C para copiar o código.",
+	["Import"] = "Importar",
+	["Paste a code (Ctrl+V) in the box and click Import. Your current settings are kept as a backup first, so you can go back."] =
+		"Cola um código (Ctrl+V) na caixa e clica em Importar. Antes disso, as tuas definições atuais ficam guardadas numa cópia de segurança, para poderes voltar atrás.",
+	["Code to import"] = "Código a importar",
+	["Paste a code in the box first."] = "Cola primeiro um código na caixa.",
+	["Replace your settings with the %d from this code? Your current settings are kept as a backup."] =
+		"Substituir as tuas definições pelas %d deste código? As tuas definições atuais ficam guardadas numa cópia de segurança.",
+	["That isn't a Kyoryokuna Plates code."] = "Isso não é um código do Kyoryokuna Plates.",
+	["That code has no settings this version knows."] = "Esse código não tem definições que esta versão conheça.",
+	["%d settings imported. Your previous settings were kept as a backup."] =
+		"%d definições importadas. As tuas definições anteriores ficaram guardadas numa cópia de segurança.",
+	["Backups"] = "Cópias de segurança",
+	["Copies of all your settings, to put back if you change something and don't like it. The last 10 are kept; one is also made by itself before an import or a restore."] =
+		"Cópias de todas as tuas definições, para repor se mudares alguma coisa e não gostares. Ficam guardadas as últimas 10; também é feita uma automaticamente antes de importar ou repor.",
+	["Create a backup"] = "Criar uma cópia de segurança",
+	["Name of the backup (optional)"] = "Nome da cópia (opcional)",
+	["Edit"] = "Editar",
+	["Gives this backup a name of your own. Enter keeps it; an empty name gives it back its first one."] =
+		"Dá um nome teu a esta cópia. Enter guarda-o; um nome vazio devolve-lhe o nome que tinha.",
+	["Backup created."] = "Cópia de segurança criada.",
+	["No backups yet."] = "Ainda não há cópias de segurança.",
+	["Backup"] = "Cópia",
+	["Before import"] = "Antes de importar",
+	["Before restore"] = "Antes de repor",
+	["Restore"] = "Repor",
+	["Puts these settings back. Your current ones are kept as a backup first."] =
+		"Repõe estas definições. Antes disso, as atuais ficam guardadas numa cópia de segurança.",
+	["Put back the settings of %s? Your current settings are kept as a backup."] =
+		"Repor as definições de %s? As tuas definições atuais ficam guardadas numa cópia de segurança.",
+	["Backup of %s restored."] = "Cópia de %s reposta.",
+	["Delete"] = "Apagar",
+	["Deletes this backup. Asks first."] = "Apaga esta cópia de segurança. Pergunta primeiro.",
+	["Delete the backup of %s? This can't be undone."] = "Apagar a cópia de %s? Não dá para desfazer.",
 }

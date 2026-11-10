@@ -7,7 +7,7 @@
 -- game's nameplates (health bar, name, cast bar, raid mark, elite dragon) and handed to the same modules
 -- as the real ones, so what shows here is what the options really do. The examples follow every change
 -- of the options at once. Opened from the General page or with /kp test. While the options are open,
--- it shows only the examples of the page that's open (General and About: all of them).
+-- it shows only the examples of the page that's open (General, Import / Export and About: all of them).
 --
 -- What the game itself would do on a real nameplate (the bar's value and color, the name, the cast bar
 -- running, name-only allies) is done here by hand; everything else comes from the modules.
@@ -48,7 +48,7 @@ local NEUTRAL = {1, 1, 0}
 local TAPPED = {0.6, 0.6, 0.6}
 
 -- Each example lists the option pages it belongs to: with one of those pages open in the options, the
--- test mode shows only its examples. The General and About pages show them all.
+-- test mode shows only its examples. The General, Import / Export and About pages show them all.
 local ENEMIES, TARGET, CAST, ALLIES, MARKS = "Enemies", "Target", "Cast Bar", "Allies", "Raid Marks"
 
 local SCENARIOS = {
@@ -445,9 +445,12 @@ function Preview.Refresh()
 	end
 end
 
--- The options window tells which page is open; General and About show every example
+-- The options window tells which page is open; General, Import / Export and About show every example
+-- (after an import, or a backup put back, all of them may have changed)
+local SHOWS_ALL = {General = true, ["Import / Export"] = true, About = true}
+
 function Preview.SetPage(pageName)
-	if pageName == "General" or pageName == "About" then pageName = nil end
+	if SHOWS_ALL[pageName] then pageName = nil end
 	if pageName == currentPage and window and window.laidOut then return end
 	currentPage = pageName
 	if not window then return end

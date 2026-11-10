@@ -8,7 +8,7 @@
 
 local addonName, ns = ...
 
-local DB_VERSION = 10
+local DB_VERSION = 11
 
 ns.DEFAULTS = {
 	general = {
@@ -36,6 +36,12 @@ ns.DEFAULTS = {
 		threatGlow = true,
 		threatFlash = true,
 		debuffs = true,
+		-- The row of icons over the bar: from its left end, or from its right end
+		debuffAlign = "LEFT",
+		-- My crowd control (stuns, roots...) first in the row, and its border in a color of its own
+		debuffCCFirst = false,
+		debuffCCBorder = true,
+		debuffCCBorderColor = {0.2, 0.85, 0.35},
 		debuffSize = 26,
 		debuffMax = 6,
 		debuffY = 18,
@@ -43,6 +49,8 @@ ns.DEFAULTS = {
 
 	target = {
 		arrow = true,
+		-- Above the target, or beside its health bar: left, right or both sides
+		arrowPosition = "TOP",
 		arrowScale = 150,
 		arrowX = 0,
 		arrowY = 0,
@@ -58,6 +66,10 @@ ns.DEFAULTS = {
 		height = 15,
 		showIcon = true,
 		iconScale = 100,
+		-- The spell icon at the left or right end of the bar; the spell name at its left, middle or right
+		iconPosition = "LEFT",
+		showText = true,
+		textPosition = "CENTER",
 		textScale = 110,
 		-- Can be interrupted / my interrupt on cooldown / can't be interrupted
 		readyColor = {0, 1, 0.17},
@@ -119,7 +131,12 @@ local TEXT_POSITIONS = {
 
 ns.CHOICES = {
 	general = {language = {enUS = true, ptPT = true}},
-	enemy = {healthTextPosition = TEXT_POSITIONS, levelPosition = TEXT_POSITIONS},
+	enemy = {
+		healthTextPosition = TEXT_POSITIONS, levelPosition = TEXT_POSITIONS,
+		debuffAlign = {LEFT = true, RIGHT = true},
+	},
+	target = {arrowPosition = {TOP = true, LEFT = true, RIGHT = true, BOTH = true}},
+	castBar = {iconPosition = {LEFT = true, RIGHT = true}, textPosition = {LEFT = true, CENTER = true, RIGHT = true}},
 	allies = {roleIconPosition = {LEFT = true, RIGHT = true, TOP = true}},
 	raidMarks = {enemyPosition = {LEFT = true, RIGHT = true, TOP = true}, allyPosition = {LEFT = true, RIGHT = true, TOP = true}},
 }
@@ -130,6 +147,7 @@ local function CopyValue(value)
 	for k, v in pairs(value) do copy[k] = CopyValue(v) end
 	return copy
 end
+ns.CopyValue = CopyValue
 
 local function IsValidColor(value)
 	return type(value) == "table" and type(value[1]) == "number" and type(value[2]) == "number" and type(value[3]) == "number"
@@ -190,6 +208,13 @@ local function Migrate(db, savedVersion)
 	if savedVersion < 10 then
 		db.castBar.iconScale = ns.DEFAULTS.castBar.iconScale
 	end
+	-- Version 11: the crowd control border's default went from gold to green; a gold one was never chosen
+	if savedVersion < 11 then
+		local color = db.enemy.debuffCCBorderColor
+		if math.abs(color[1] - 1) < 0.001 and math.abs(color[2] - 0.82) < 0.001 and math.abs(color[3]) < 0.001 then
+			db.enemy.debuffCCBorderColor = CopyValue(ns.DEFAULTS.enemy.debuffCCBorderColor)
+		end
+	end
 	-- Rescaled sizes stay inside their limits
 	for _, name in ipairs({"enemy", "allies"}) do
 		local limits = ns.LIMITS[name].nameScale
@@ -204,7 +229,8 @@ local function Validate(db)
 	local oldPlateWidth = type(db.general) == "table" and tonumber(db.general.width)
 	-- Sections of older versions are removed
 	for name in pairs(db) do
-		if type(db[name]) == "table" and not ns.DEFAULTS[name] and name ~= "errors" and name ~= "gameBackup" then
+		if type(db[name]) == "table" and not ns.DEFAULTS[name] and name ~= "errors" and name ~= "gameBackup"
+			and name ~= "backups" then
 			db[name] = nil
 		end
 	end
@@ -214,6 +240,12 @@ local function Validate(db)
 	end
 	if type(db.errors) ~= "table" then db.errors = {} end
 	if type(db.gameBackup) ~= "table" then db.gameBackup = {} end
+	-- Backups of the settings (Core\Backups.lua): only whole ones are kept
+	if type(db.backups) ~= "table" then db.backups = {} end
+	for i = #db.backups, 1, -1 do
+		local backup = db.backups[i]
+		if type(backup) ~= "table" or type(backup.settings) ~= "table" then table.remove(db.backups, i) end
+	end
 	-- Settings saved by an older version are brought up to date; new settings already have today's defaults
 	if savedVersion > 0 then
 		Migrate(db, savedVersion)
@@ -223,6 +255,14 @@ local function Validate(db)
 		end
 	end
 	db.version = DB_VERSION
+end
+
+-- Every setting checked again (after an import or a restore put many in place at once)
+function ns.ValidateSettings()
+	for name, defaults in pairs(ns.DEFAULTS) do
+		if type(ns.db[name]) ~= "table" then ns.db[name] = {} end
+		ValidateSection(name, ns.db[name], defaults)
+	end
 end
 
 -- Reading and writing by path, e.g. "enemy.classColor" ----------------------------------------------

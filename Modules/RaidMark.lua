@@ -48,7 +48,9 @@ local function OutermostOnSide(frame, data, sideName)
 		-- Then the quest "!" and the game's elite dragon (Modules\LeftIcons.lua)
 		if IsShown(data.questIcon) then anchor = data.questIcon end
 		local classification = frame.ClassificationFrame
-		if IsShown(classification) and IsShown(classification.classificationIndicator) then anchor = classification end
+		if ns.db.enemy.eliteIcon and IsShown(classification) and IsShown(classification.classificationIndicator) then
+			anchor = classification
+		end
 	end
 	return anchor
 end

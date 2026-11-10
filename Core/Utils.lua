@@ -41,6 +41,14 @@ function ns.ToWholePixels(region, size)
 	return math.max(1, math.floor(size / pixel + 0.5)) * pixel
 end
 
+-- An offset (a place, not a size: it may be 0) rounded to whole screen pixels. A line one pixel thick
+-- placed half way into a pixel may be rounded away by the game, so what holds a bar sits on whole pixels.
+function ns.SnapToPixels(region, offset)
+	local pixel = ns.OnePixel(region)
+	if not pixel then return offset end
+	return math.floor(offset / pixel + 0.5) * pixel
+end
+
 -- The look shared by the bars: the game's classic bar fill, which takes any color
 ns.BAR_TEXTURE = "Interface\\TargetingFrame\\UI-TargetingFrame-BarFill"
 ns.FONT = "Fonts\\FRIZQT__.TTF"

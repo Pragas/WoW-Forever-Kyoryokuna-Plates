@@ -156,7 +156,8 @@ function Level.Update(frame, data)
 	else
 		level = ns.Known(UnitEffectiveLevel(unit)) or ns.Known(UnitLevel(unit))
 	end
-	if level == nil then
+	-- The skull (bosses, and mobs far above the player) can be hidden (Enemies page)
+	if level == nil or (level <= 0 and not ns.db.enemy.skullIcon) then
 		HideSide(data)
 		return
 	end

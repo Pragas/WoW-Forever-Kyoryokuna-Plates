@@ -18,6 +18,15 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.10.0",
+		new = {
+			"Elites, rares and bosses stand out: their border fades from black to gold (elites), silver (rares) or white (bosses), with colors you can change. Your target keeps its own border.",
+			"The elite and rare dragon and the skull of bosses can be hidden (Enemies page).",
+			"The thickness of the border around the health bar, from 1 to 5 pixels: one for enemies (Enemies page) and one for your target (Target page).",
+			"Test mode: a rare mob, with the silver dragon.",
+		},
+	},
+	{
 		version = "1.9.0",
 		new = {
 			"A welcome window: the first time you open the addon, and after each update with what's new and what was fixed.",

@@ -77,9 +77,15 @@ function LeftIcons.Update(frame, data)
 		data.questIcon:Hide()
 	end
 
+	-- The dragon can be hidden (Enemies page): made invisible, so the game keeps managing it, and then
+	-- it takes no place in the row
 	local classification = frame.ClassificationFrame
-	if classification and IsShown(classification) and IsShown(classification.classificationIndicator) then
-		Chain(classification, anchor, anchorPoint)
+	if classification then
+		local showDragon = ns.db.enemy.eliteIcon
+		pcall(classification.SetAlpha, classification, showDragon and 1 or 0)
+		if showDragon and IsShown(classification) and IsShown(classification.classificationIndicator) then
+			Chain(classification, anchor, anchorPoint)
+		end
 	end
 	data.placingIcons = false
 	-- A raid mark on the left goes past these icons, so it follows when they show or hide
@@ -95,13 +101,6 @@ end
 local function RefreshAll()
 	ns.ForEachPlate(LeftIcons.Update)
 end
-
-ns.RegisterEvent("UNIT_CLASSIFICATION_CHANGED", function(_, unit)
-	local frame, data = ns.GetFrameForUnit(unit)
-	if frame and data and data.unit then
-		LeftIcons.Update(frame, data)
-	end
-end)
 
 -- The quest log changes often in a row, so the icons are checked once, a moment after the last change
 local scheduled = false

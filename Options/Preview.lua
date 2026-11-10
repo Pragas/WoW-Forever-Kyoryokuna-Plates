@@ -61,12 +61,16 @@ local SCENARIOS = {
 		pages = {TARGET, CAST}},
 	{label = "Neutral", desc = "Doesn't attack until you do", name = "Mottled Boar", level = 24, health = 100, color = NEUTRAL, pages = {ENEMIES}},
 	{label = "Tapped by others", desc = "Already tagged by another player", name = "Bluegill Warrior", level = 25, health = 60, color = TAPPED, pages = {ENEMIES}},
-	{label = "Elite", desc = "A stronger mob, with the elite dragon", name = "Nightveiled Rotheap", level = 31, health = 100, color = HOSTILE, elite = true, pages = {ENEMIES}},
+	{label = "Elite", desc = "A stronger mob, with the elite dragon", name = "Nightveiled Rotheap", level = 31, health = 100, color = HOSTILE, elite = true,
+		classification = "elite", pages = {ENEMIES}},
+	{label = "Rare", desc = "A rare mob, with the silver dragon", name = "Mor'Ladim", level = 35, health = 100, color = HOSTILE, elite = true,
+		classification = "rareelite", pages = {ENEMIES}},
 	{label = "Raid mark", desc = "A mob with a raid mark", name = "Fen Creeper", level = 24, health = 58, color = HOSTILE, raidMark = 8, pages = {ENEMIES, MARKS}},
 	{label = "Quest mob with a raid mark", desc = "The mark goes past the quest icon", name = "Murloc Forager", level = 25, health = 100, color = HOSTILE,
 		quest = true, raidMark = 2, pages = {MARKS}},
 	{label = "Enemy player", desc = "In the color of their class", name = "Viktor", level = 27, health = 80, isPlayer = true, class = "WARLOCK", pages = {ENEMIES}},
-	{label = "Boss", desc = "Its level shows as a skull", name = "Mother Fang", level = -1, health = 100, color = HOSTILE, elite = true, pages = {ENEMIES}},
+	{label = "Boss", desc = "Its level shows as a skull", name = "Mother Fang", level = -1, health = 100, color = HOSTILE, elite = true,
+		classification = "elite", boss = true, pages = {ENEMIES}},
 	{label = "Low level", desc = "Far below your level", name = "Young Wetlands Crocolisk", level = 18, health = 100, color = HOSTILE, pages = {ENEMIES}},
 	{label = "Cast: can be interrupted", desc = "Your interrupt is ready", name = "Dragonmaw Bonewarder", level = 28, health = 53, color = HOSTILE,
 		cast = "Immolate", castIcon = ICONS.immolate, castState = "ready", castTarget = "Posttal Kyoryokuna", castTargetClass = "SHAMAN",
@@ -108,8 +112,10 @@ local function SetRaidMarkTexture(texture, index)
 	texture:SetTexCoord(column / 4, (column + 1) / 4, row / 4, (row + 1) / 4)
 end
 
-local function SetEliteTexture(texture)
-	local atlas = "nameplates-icon-elite-gold"
+-- The gold dragon, or the silver one of rares
+local function SetEliteTexture(texture, classification)
+	local rare = classification == "rare" or classification == "rareelite"
+	local atlas = rare and "nameplates-icon-elite-silver" or "nameplates-icon-elite-gold"
 	if C_Texture and C_Texture.GetAtlasInfo and C_Texture.GetAtlasInfo(atlas) then
 		texture:SetAtlas(atlas)
 	else
@@ -176,6 +182,8 @@ local function NewData(scenario)
 		reaction = isAlly and 5 or (scenario.color == NEUTRAL and 4 or 2),
 		canAttack = not isAlly,
 		isTarget = scenario.isTarget and true or false,
+		classification = scenario.classification,
+		isBoss = scenario.boss and true or false,
 	}
 end
 
@@ -190,6 +198,9 @@ local function ApplyExample(example)
 	example.desc:SetText(scenario.desc and L[scenario.desc] or "")
 	frame:SetSize(ns.GetPlateWidth(), PLATE_HEIGHT)
 	frame:SetScale(data.isTarget and db.general.targetScale / 100 or 1)
+	-- Its distance from the card's bottom in whole pixels, at its scale (see the scroll)
+	frame:ClearAllPoints()
+	frame:SetPoint("BOTTOM", example.cell, "BOTTOM", 0, ns.SnapToPixels(frame, PLATE_BOTTOM))
 	frame.IsShowOnlyName = function() return nameOnly end
 
 	frame.name:SetText(scenario.name)
@@ -230,6 +241,7 @@ local function ApplyExample(example)
 		frame.RaidTargetFrame:Hide()
 	end
 	frame.ClassificationFrame:SetShown(scenario.elite and true or false)
+	SetEliteTexture(frame.ClassificationFrame.classificationIndicator, scenario.classification)
 
 	-- The fonts the game really uses on its nameplates (seen on the real ones), so the examples show the
 	-- real sizes; until a real nameplate was seen, the game's nameplate font objects
@@ -275,7 +287,9 @@ local function CreateScrollArea()
 	bar:SetValueStep(1)
 	bar:SetValue(0)
 	bar:SetScript("OnValueChanged", function(_, value)
-		scroll:SetVerticalScroll(value)
+		-- On whole pixels, so the examples never sit half way into one (their one-pixel borders could
+		-- then be rounded away)
+		scroll:SetVerticalScroll(ns.SnapToPixels(scroll, value))
 	end)
 
 	scroll:EnableMouseWheel(true)
@@ -412,10 +426,12 @@ local function LayoutExamples(keepScroll)
 		for i = first, math.min(first + COLUMNS - 1, #shownList) do
 			rowHeight = math.max(rowHeight, GetCardHeight(shownList[i]))
 		end
+		-- Rows on whole pixels (see the scroll above)
+		rowHeight = ns.SnapToPixels(content, rowHeight)
 		for i = first, math.min(first + COLUMNS - 1, #shownList) do
 			local cell = shownList[i].cell
 			cell:ClearAllPoints()
-			cell:SetPoint("TOPLEFT", content, "TOPLEFT", (i - first) * CELL_WIDTH + CARD_GAP / 2, -y)
+			cell:SetPoint("TOPLEFT", content, "TOPLEFT", (i - first) * CELL_WIDTH + CARD_GAP / 2, -ns.SnapToPixels(content, y))
 			cell:SetHeight(rowHeight)
 		end
 		y = y + rowHeight + CARD_GAP

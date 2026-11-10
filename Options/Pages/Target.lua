@@ -31,6 +31,7 @@ ns.AddOptionsPage("Target", function(b)
 
 	b:Header("Health bar")
 	b:Color("target.borderColor", "Border color of the target")
+	b:Slider("target.borderSize", "Border thickness of the target", 1, " px", "In screen pixels.")
 
 	b:Header("Who they target")
 	b:Check("target.targetText", "Show who each enemy is targeting",

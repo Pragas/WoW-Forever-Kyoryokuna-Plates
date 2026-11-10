@@ -135,6 +135,28 @@ ns.LOCALES.ptPT = {
 	["Can't be interrupted"] = "Não dá para interromper",
 	["Spells that can never be interrupted."] = "Spells que nunca dá para interromper.",
 	["Spell"] = "Feitiço",
+	["Border thickness"] = "Espessura do contorno",
+	["The border around the health bar, in screen pixels. Your target has its own (Target page)."] =
+		"O contorno à volta da barra de vida, em píxeis do ecrã. O teu alvo tem a sua própria (página Alvo).",
+	["Border thickness of the target"] = "Espessura do contorno do alvo",
+	["In screen pixels."] = "Em píxeis do ecrã.",
+	["Elites, rares and bosses"] = "Elites, raros e bosses",
+	["Their border fades from black, on the left, to a color of their own. Your target always keeps the target's border."] =
+		"O contorno deles passa de preto, à esquerda, a uma cor própria. O teu alvo mantém sempre o contorno de alvo.",
+	["Show the elite and rare dragon"] = "Mostrar o dragão dos elites e raros",
+	["The game's gold (elite) or silver (rare) dragon, left of the health bar."] =
+		"O dragão dourado (elite) ou prateado (raro) do jogo, à esquerda da barra de vida.",
+	["Show the skull"] = "Mostrar a caveira",
+	["The game shows a skull instead of the level for bosses and for mobs far above your level. Hidden, they show no level."] =
+		"O jogo mostra uma caveira em vez do nível nos bosses e nos mobs muito acima do teu nível. Escondida, não mostram nível.",
+	["Border in their own color"] = "Contorno com cor própria",
+	["Also on the cast bar joined to the health bar."] = "Também na barra de cast junta à barra de vida.",
+	["Elites"] = "Elites",
+	["Rares"] = "Raros",
+	["Also rare elites (the silver dragon)."] = "Também os raros elite (o dragão prateado).",
+	["Bosses"] = "Bosses",
+	["Rare"] = "Raro",
+	["A rare mob, with the silver dragon"] = "Um mob raro, com o dragão prateado",
 	["Show the spell icon"] = "Mostrar o ícone do feitiço",
 	["Show the spell name"] = "Mostrar o nome do feitiço",
 	["Spell icon position"] = "Posição do ícone do feitiço",
@@ -333,6 +355,13 @@ ns.LOCALES.ptPT = {
 	["Thanks for installing! Type /kp to open the options."] = "Obrigado por instalares! Escreve /kp para abrir as opções.",
 	["Updated to version %s. Type /kp to see what's new."] = "Atualizado para a versão %s. Escreve /kp para veres as novidades.",
 	-- Release notes (Core\ReleaseNotes.lua)
+	["Elites, rares and bosses stand out: their border fades from black to gold (elites), silver (rares) or white (bosses), with colors you can change. Your target keeps its own border."] =
+		"Elites, raros e bosses destacam-se: o contorno passa de preto a dourado (elites), prateado (raros) ou branco (bosses), com cores que podes mudar. O teu alvo mantém o seu contorno.",
+	["The elite and rare dragon and the skull of bosses can be hidden (Enemies page)."] =
+		"O dragão dos elites e dos raros e a caveira dos bosses podem ser escondidos (página Inimigos).",
+	["Test mode: a rare mob, with the silver dragon."] = "Modo de teste: um mob raro, com o dragão prateado.",
+	["The thickness of the border around the health bar, from 1 to 5 pixels: one for enemies (Enemies page) and one for your target (Target page)."] =
+		"A espessura do contorno à volta da barra de vida, de 1 a 5 píxeis: uma para os inimigos (página Inimigos) e outra para o teu alvo (página Alvo).",
 	["A welcome window: the first time you open the addon, and after each update with what's new and what was fixed."] =
 		"Uma janela de boas-vindas: na primeira vez que abres o addon, e depois de cada atualização com as novidades e as correções.",
 	["A message in the chat when the addon was updated."] = "Uma mensagem no chat quando o addon é atualizado.",

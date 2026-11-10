@@ -109,6 +109,9 @@ function ns.UpdateUnitInfo(data)
 	data.class = data.isPlayer and known(UnitClassBase(unit)) or nil
 	data.isTarget = known(UnitIsUnit(unit, "target")) and true or false
 	data.isDead = known(UnitIsDead(unit)) and true or false
+	-- Elite, rare, boss... (for the border and the icons): unknown while the game hides it
+	data.classification = UnitClassification and known(UnitClassification(unit)) or nil
+	data.isBoss = UnitIsBossMob and known(UnitIsBossMob(unit)) and true or false
 end
 
 local function GetUnitFrame(unit)
@@ -205,6 +208,8 @@ local function OnUnitChanged(_, unit)
 end
 ns.RegisterEvent("UNIT_FACTION", OnUnitChanged)
 ns.RegisterEvent("UNIT_FLAGS", OnUnitChanged)
+-- Becoming (or no longer being) elite, rare or a boss changes its border and its icons
+ns.RegisterEvent("UNIT_CLASSIFICATION_CHANGED", OnUnitChanged)
 
 -- When a unit dies (or comes back to life), its nameplate changes to name only (and back)
 ns.RegisterEvent("UNIT_HEALTH", function(_, unit)

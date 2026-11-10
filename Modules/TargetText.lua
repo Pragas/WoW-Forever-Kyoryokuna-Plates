@@ -52,10 +52,13 @@ function TargetText.Update(frame, data)
 	local targetUnit = unit .. "target"
 	local fake = data.fake
 	local name, class
+	-- Below the bottom border too, however thick it is (Enemies and Target pages)
+	local borderPixels = ns.GetBorderPixels and ns.GetBorderPixels(data) or 1
+	local gap = TEXT_GAP + (borderPixels - 1) * (ns.OnePixel and ns.OnePixel(container) or 1)
 	if IsCasting(castBar) then
-		text:SetPoint("TOPRIGHT", castBar, "BOTTOMRIGHT", 0, -TEXT_GAP)
+		text:SetPoint("TOPRIGHT", castBar, "BOTTOMRIGHT", 0, -gap)
 	else
-		text:SetPoint("TOPRIGHT", container, "BOTTOMRIGHT", 0, -TEXT_GAP)
+		text:SetPoint("TOPRIGHT", container, "BOTTOMRIGHT", 0, -gap)
 	end
 	if fake then
 		if IsCasting(castBar) and fake.castTarget then

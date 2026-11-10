@@ -19,6 +19,8 @@ ns.AddOptionsPage("Enemies", function(b)
 	b:Header("Look")
 	b:Slider("enemy.barWidth", "Bar width", 2, nil, "The width of the health bar. The nameplates follow it when the addon manages the game's nameplate settings.")
 	b:Slider("enemy.barHeight", "Bar height", 1, nil, "The height of the health bar.")
+	b:Slider("enemy.borderSize", "Border thickness", 1, " px",
+		"The border around the health bar, in screen pixels. Your target has its own (Target page).")
 	b:Check("enemy.classColor", "Players in their class color", "The health bar and the name of enemy players.")
 	b:Slider("enemy.nameScale", "Name size", 5, "%", "100% is the normal size.")
 	local healthText = W.IsOn("enemy.showHealthText")
@@ -33,6 +35,20 @@ ns.AddOptionsPage("Enemies", function(b)
 	b:Slider("enemy.levelScale", "Level size", 5, "%", "100% is the normal size. Inside the bar, it's never taller than the bar.",
 		W.IsOn("enemy.showLevel"), true)
 	b:Check("enemy.questIcon", "Quest icon on quest mobs", "A yellow \"!\" left of the bar of mobs that belong to one of your active quests.")
+
+	b:Header("Elites, rares and bosses")
+	b:Text("Their border fades from black, on the left, to a color of their own. Your target always keeps the target's border.",
+		{0.7, 0.7, 0.7})
+	local rankBorder = W.IsOn("enemy.rankBorder")
+	b:Check("enemy.eliteIcon", "Show the elite and rare dragon",
+		"The game's gold (elite) or silver (rare) dragon, left of the health bar.")
+	b:Check("enemy.skullIcon", "Show the skull",
+		"The game shows a skull instead of the level for bosses and for mobs far above your level. Hidden, they show no level.")
+	b:Check("enemy.rankBorder", "Border in their own color",
+		"Also on the cast bar joined to the health bar.")
+	b:Color("enemy.eliteColor", "Elites", nil, rankBorder, true)
+	b:Color("enemy.rareColor", "Rares", "Also rare elites (the silver dragon).", rankBorder, true)
+	b:Color("enemy.bossColor", "Bosses", nil, rankBorder, true)
 
 	b:Header("Threat")
 	local managed = W.IsOn("general.manageGameSettings")

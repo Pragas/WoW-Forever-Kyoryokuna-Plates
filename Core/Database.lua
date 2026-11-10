@@ -24,6 +24,8 @@ ns.DEFAULTS = {
 	enemy = {
 		barWidth = 144,
 		barHeight = 15,
+		-- The border around the health bar, in screen pixels (the target has its own, Target page)
+		borderSize = 1,
 		classColor = true,
 		nameScale = 100,
 		showHealthText = true,
@@ -33,6 +35,14 @@ ns.DEFAULTS = {
 		levelPosition = "OUTSIDE_RIGHT",
 		levelScale = 100,
 		questIcon = true,
+		-- Elites, rares and bosses: the game's dragon, the skull of the level, and a border fading from
+		-- black to a color of their own
+		eliteIcon = true,
+		skullIcon = true,
+		rankBorder = true,
+		eliteColor = {1, 0.82, 0},
+		rareColor = {0.78, 0.8, 0.86},
+		bossColor = {1, 1, 1},
 		threatGlow = true,
 		threatFlash = true,
 		debuffs = true,
@@ -55,6 +65,7 @@ ns.DEFAULTS = {
 		arrowX = 0,
 		arrowY = 0,
 		borderColor = {1, 1, 1},
+		borderSize = 1,
 		targetText = true,
 	},
 
@@ -109,11 +120,11 @@ ns.DEFAULTS = {
 ns.LIMITS = {
 	general = {targetScale = {100, 200}, minimapAngle = {0, 360}},
 	enemy = {
-		barWidth = {60, 300}, barHeight = {4, 40}, nameScale = {50, 200}, healthTextScale = {50, 200}, levelScale = {50, 200},
+		barWidth = {60, 300}, barHeight = {4, 40}, borderSize = {1, 5}, nameScale = {50, 200}, healthTextScale = {50, 200}, levelScale = {50, 200},
 		debuffSize = {12, 48}, debuffMax = {1, 12},
 		debuffY = {0, 60},
 	},
-	target = {arrowScale = {50, 300}, arrowX = {-100, 100}, arrowY = {-100, 100}},
+	target = {arrowScale = {50, 300}, arrowX = {-100, 100}, arrowY = {-100, 100}, borderSize = {1, 5}},
 	castBar = {
 		width = {30, 300}, gap = {0, 40}, offsetX = {-100, 100}, height = {6, 30}, iconScale = {50, 250}, textScale = {50, 200},
 	},

@@ -8,7 +8,8 @@
 --   - the game's classic bar fill texture (glossy, takes any color);
 --   - a dark, see-through background behind the empty part;
 --   - a border of exactly one screen pixel: black, and white (the target color) on the current target.
---     It ignores the scale of the nameplate, so it stays sharp at any size.
+--     Elites, rares and bosses (not the target) fade from black on the left to a color of their own
+--     (Enemies page). It ignores the scale of the nameplate, so it stays sharp at any size.
 -- The color of the bar stays the game's: red, yellow, grey when tapped by others, the class color of
 -- players. The game's health text and threat glow are left untouched.
 -- Size: 144 wide and 15 high by default, like the reference (both set on the Enemies page). The
@@ -64,15 +65,17 @@ local function SetPixelPoint(region, ...)
 	end
 end
 
--- Each edge is sized and placed in screen pixels, around the outside of the bar
-local function LayoutEdges(decoration, container)
+-- Each edge is sized and placed in screen pixels, around the outside of the bar: as many whole screen
+-- pixels thick as asked (1 by default; Enemies and Target pages)
+local function LayoutEdges(decoration, container, pixels)
 	local top, bottom, left, right = decoration.top, decoration.bottom, decoration.left, decoration.right
-	local size = BORDER_THICKNESS
+	pixels = pixels or BORDER_THICKNESS
+	local size = pixels * (ns.OnePixel and ns.OnePixel(top) or 1)
 	if PixelUtil then
-		PixelUtil.SetHeight(top, size, MIN_PIXELS)
-		PixelUtil.SetHeight(bottom, size, MIN_PIXELS)
-		PixelUtil.SetWidth(left, size, MIN_PIXELS)
-		PixelUtil.SetWidth(right, size, MIN_PIXELS)
+		PixelUtil.SetHeight(top, size, math.max(MIN_PIXELS, pixels))
+		PixelUtil.SetHeight(bottom, size, math.max(MIN_PIXELS, pixels))
+		PixelUtil.SetWidth(left, size, math.max(MIN_PIXELS, pixels))
+		PixelUtil.SetWidth(right, size, math.max(MIN_PIXELS, pixels))
 	else
 		top:SetHeight(size)
 		bottom:SetHeight(size)
@@ -91,6 +94,72 @@ local function LayoutEdges(decoration, container)
 	right:ClearAllPoints()
 	SetPixelPoint(right, "TOPLEFT", container, "TOPRIGHT", 0, size)
 	SetPixelPoint(right, "BOTTOMLEFT", container, "BOTTOMRIGHT", 0, -size)
+	decoration.pixels = pixels
+end
+
+-- How thick the border of a nameplate is, in screen pixels: the target's (Target page) or the enemies'
+-- (Enemies page); allies with a health bar keep one pixel
+function ns.GetBorderPixels(data)
+	if data.isTarget then return ns.db.target.borderSize end
+	if data.side == "enemy" then return ns.db.enemy.borderSize end
+	return BORDER_THICKNESS
+end
+
+-- Painting the edges --------------------------------------------------------------------------------
+
+-- An edge in one color, or fading from one color (left) to another (right). The edge is white and the
+-- colors are laid over it, so a fade and a plain color can follow each other on the same edge; without
+-- the game's gradient, the plain color only.
+local function PaintEdge(edge, r1, g1, b1, r2, g2, b2)
+	r2, g2, b2 = r2 or r1, g2 or g1, b2 or b1
+	if edge.SetGradient and CreateColor then
+		edge:SetColorTexture(1, 1, 1, 1)
+		local ok = pcall(edge.SetGradient, edge, "HORIZONTAL", CreateColor(r1, g1, b1, 1), CreateColor(r2, g2, b2, 1))
+		if ok then return end
+	end
+	edge:SetColorTexture(r2, g2, b2, 1)
+end
+
+-- The whole border in one color
+local function PaintSolid(edges, r, g, b)
+	for _, key in ipairs(EDGES) do PaintEdge(edges[key], r, g, b) end
+end
+
+-- Elites, rares and bosses: black on the left, fading along the top and the bottom to their color,
+-- which the right edge has
+local function PaintFade(edges, r, g, b)
+	PaintEdge(edges.left, 0, 0, 0)
+	PaintEdge(edges.top, 0, 0, 0, r, g, b)
+	PaintEdge(edges.bottom, 0, 0, 0, r, g, b)
+	PaintEdge(edges.right, r, g, b)
+end
+
+-- What kind of enemy it is, for its border and its icons: "boss", "rare" (the silver dragon, also rare
+-- elites), "elite" (the gold dragon), or nil. Players and allies are none; nil too while the game hides it.
+function ns.GetRank(data)
+	if data.side ~= "enemy" or data.isPlayer then return nil end
+	local classification = data.classification
+	if data.isBoss or classification == "worldboss" then return "boss" end
+	if classification == "rare" or classification == "rareelite" then return "rare" end
+	if classification == "elite" then return "elite" end
+	return nil
+end
+
+local RANK_COLORS = {boss = "bossColor", rare = "rareColor", elite = "eliteColor"}
+
+-- The border a nameplate gets: the target's color (always, it wins), the fade of its rank, or black.
+-- Paints the given edges (of the health bar or of the cast bar).
+function ns.PaintBorder(edges, data)
+	if data.isTarget then
+		PaintSolid(edges, ns.Unpack(ns.db.target.borderColor))
+		return
+	end
+	local rank = ns.db.enemy.rankBorder and ns.GetRank(data)
+	if rank then
+		PaintFade(edges, ns.Unpack(ns.db.enemy[RANK_COLORS[rank]]))
+		return
+	end
+	PaintSolid(edges, 0, 0, 0)
 end
 
 -- The same one-pixel border around another bar (the cast bar): its edges are drawn by the bar itself,
@@ -102,10 +171,13 @@ function ns.CreatePixelBorder(bar, sublevel)
 	end
 	LayoutEdges(border, bar)
 	function border:SetColor(r, g, b)
-		for _, key in ipairs(EDGES) do self[key]:SetColorTexture(r, g, b, 1) end
+		PaintSolid(self, r, g, b)
 	end
 	function border:SetShown(shown)
 		for _, key in ipairs(EDGES) do self[key]:SetShown(shown) end
+	end
+	function border:SetThickness(pixels)
+		if self.pixels ~= pixels then LayoutEdges(self, bar, pixels) end
 	end
 	return border
 end
@@ -146,13 +218,9 @@ function HealthBar.UpdateBorder(frame, data)
 		return
 	end
 	local decoration = GetDecoration(frame, data)
-	local r, g, b = 0, 0, 0
-	if data.isTarget then
-		r, g, b = ns.Unpack(ns.db.target.borderColor)
-	end
-	for _, key in ipairs(EDGES) do
-		decoration[key]:SetColorTexture(r, g, b, 1)
-	end
+	local pixels = ns.GetBorderPixels(data)
+	if decoration.pixels ~= pixels then LayoutEdges(decoration, frame.HealthBarsContainer, pixels) end
+	ns.PaintBorder(decoration, data)
 	decoration.holder:Show()
 	decoration.background:Show()
 end
@@ -173,6 +241,8 @@ function HealthBar.ApplySize(frame, data)
 	if not container or not ns.HasHealthBar(frame) then return end
 	local half = ns.ToWholePixels(container, ns.db.enemy.barWidth) / 2
 	local bottom = BOTTOM_GAP + ns.db.castBar.height + (ns.GetCastGap and ns.GetCastGap() or CAST_GAP)
+	-- On whole pixels from the nameplate's bottom, so the one-pixel border lines are never half way into one
+	bottom = ns.SnapToPixels(container, bottom)
 	data.sizingBar = true
 	container:ClearAllPoints()
 	container:SetPoint("BOTTOMLEFT", frame, "BOTTOM", -half, bottom)

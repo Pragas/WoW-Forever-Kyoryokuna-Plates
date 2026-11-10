@@ -281,11 +281,13 @@ local function ApplyLayout(frame, data)
 	-- In whole screen pixels (see ns.ToWholePixels)
 	local height = ns.ToWholePixels(castBar, settings.height)
 
+	-- The border's thickness, in screen pixels: the health bar's (Enemies and Target pages)
+	local borderPixels = ns.GetBorderPixels and ns.GetBorderPixels(data) or 1
 	castBar:ClearAllPoints()
 	if settings.attached then
-		-- One screen pixel under the health bar: exactly where the health bar's bottom border is, which is
-		-- then the line between both bars
-		local gap = OnePixel(castBar)
+		-- Right under the health bar's bottom border (as thick as the border), which is then the line
+		-- between both bars
+		local gap = OnePixel(castBar) * borderPixels
 		castBar:SetPoint("TOPLEFT", container, "BOTTOMLEFT", 0, -gap)
 		castBar:SetPoint("TOPRIGHT", container, "BOTTOMRIGHT", 0, -gap)
 	else
@@ -312,11 +314,9 @@ local function ApplyLayout(frame, data)
 		data.castBorder = ns.CreatePixelBorder(castBar, 7)
 	end
 	if data.castBorder then
-		if data.isTarget then
-			data.castBorder:SetColor(ns.Unpack(ns.db.target.borderColor))
-		else
-			data.castBorder:SetColor(0, 0, 0)
-		end
+		-- Like the health bar's: as thick, and the target color, the fade of elites, rares and bosses, or black
+		data.castBorder:SetThickness(borderPixels)
+		ns.PaintBorder(data.castBorder, data)
 		-- Joined, the health bar's bottom border is the line between both bars
 		data.castBorder.top:SetShown(not settings.attached)
 	end

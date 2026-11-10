@@ -8,6 +8,16 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.10.0
+
+- Enemies page, new "Elites, rares and bosses" section:
+  - Their border fades from black on the left to a color of their own: gold for elites, silver for rares and rare elites, white for bosses (world bosses and the game's boss mobs). Each color can be changed, and the fade can be turned off. Also on the cast bar joined to the health bar. Your target always keeps the target's border, whole; enemy players never fade. When the game hides what kind of mob it is, the border stays black.
+  - "Show the elite and rare dragon": hidden, it takes no room (the raid mark no longer goes past it).
+  - "Show the skull": the skull the game shows instead of the level of bosses and of mobs far above you; hidden, they show no level.
+- Test mode: a rare example, with the silver dragon.
+- Border thickness, from 1 (default, as before) to 5 screen pixels: "Border thickness" on the Enemies page and "Border thickness of the target" on the Target page, each its own. The cast bar joined to the health bar sits under the whole bottom border and has a border just as thick, and the name of the enemy's target keeps its distance below. Allies with a health bar keep one pixel.
+- Fixed: in the test mode, the bottom line of the border could be missing on a whole row of examples (e.g. the boss). Its examples sat half way into a screen pixel, where the game may round a one-pixel line away; the rows, the scroll and the examples now sit on whole pixels. The health bar of real nameplates is also held on whole pixels from the nameplate's bottom.
+
 ## 1.9.0
 
 - A welcome window over the options: the first time the addon is opened (what it is, how to start), and after each update (what's new and what was fixed in every version since the last one seen), with the known issues (limits of the game itself) under it. Its OK shows the General page, and it doesn't come back until the next version. The About page has a "See what's new" button to show it again.

@@ -74,7 +74,7 @@ function ns.ShowWelcome(window, state, notes)
 	if not window then return end
 	if window.welcome then window.welcome:Hide() end
 
-	local panel = CreateFrame("Frame", nil, window)
+	local panel = CreateFrame("Frame", nil, window.body or window)
 	panel:SetPoint("TOPLEFT", window, "TOPLEFT", 6, -40)
 	panel:SetPoint("BOTTOMRIGHT", window, "BOTTOMRIGHT", -6, 6)
 	panel:SetFrameLevel(window:GetFrameLevel() + 50)

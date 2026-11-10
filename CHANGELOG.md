@@ -8,6 +8,11 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.13.0
+
+- Options window: a button beside the X (a minus) shrinks the window to its title bar, so what's on the screen (e.g. the test mode's examples) can be seen and dragged; the same button (now a plus) brings it back as it was. The title bar stays where it is, and can still be dragged. The window always opens whole. It keeps its width: only its height shrinks.
+- Options window: the X has the same new look as the minimize button beside it, a small dark square with a gold sign.
+
 ## 1.12.0
 
 - Enemies page, My debuffs: "Time left color" and "Time left size", the color and size of the seconds left on each of your debuffs (red and 12 by default, as before; any color, e.g. white; size 6 to 24). They follow at once, in the test mode too.

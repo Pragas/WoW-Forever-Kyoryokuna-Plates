@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.13.0",
+		new = {
+			"A button beside the X of the options window shrinks it to its title bar, to see and drag what's on the screen, and brings it back.",
+		},
+	},
+	{
 		version = "1.12.0",
 		new = {
 			"The seconds left on your debuffs can have a color and a size of your own (Enemies page; red and 12 by default, as before).",

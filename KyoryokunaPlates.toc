@@ -2,7 +2,7 @@
 ## Title: |cffffe00aKyoryokuna|r |cff0055ffPlates|r
 ## Notes: Clean, classic-style nameplates built on the Blizzard nameplates. Type /kp to open the options.
 ## Author: Pragas
-## Version: 1.12.0
+## Version: 1.13.0
 ## X-Copyright: Copyright (c) 2026 Pragas. All Rights Reserved.
 ## X-License: All Rights Reserved
 ## IconTexture: Interface\AddOns\KyoryokunaPlates\Media\IconSmall

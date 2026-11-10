@@ -440,4 +440,11 @@ ns.LOCALES.ptPT = {
 	["Time left size"] = "Tamanho do tempo restante",
 	["The size of the seconds left on each of your debuffs. 12 is the size it had before."] =
 		"O tamanho dos segundos que faltam em cada um dos teus debuffs. 12 é o tamanho que tinha antes.",
+	-- The options window, minimized
+	["Minimize"] = "Minimizar",
+	["Maximize"] = "Maximizar",
+	["Only the title bar stays, to see and drag what's on the screen."] = "Fica só a barra do título, para veres e arrastares o que está no ecrã.",
+	["The window back to its full size."] = "A janela volta ao tamanho inteiro.",
+	["A button beside the X of the options window shrinks it to its title bar, to see and drag what's on the screen, and brings it back."] =
+		"Um botão ao lado do X da janela das opções encolhe-a até à barra do título, para veres e arrastares o que está no ecrã, e volta a abri-la.",
 }

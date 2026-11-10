@@ -2,6 +2,8 @@
 
 Clean, classic-style nameplates for **WoW Forever**: health bars with a thin border, cast bars colored by your interrupt, your debuffs above the name, allies by name with their role, and much more, all adjustable in the options.
 
+**Languages:** the addon itself is available in English and Portuguese (Portugal). Choose yours in `/kp` → **General** → **Language**.
+
 ## ⬇️ Download
 
 **[Download the latest version (KyoryokunaPlates.zip)](https://github.com/Pragas/WoW-Forever-Kyoryokuna-Plates/releases/latest/download/KyoryokunaPlates.zip)**

@@ -18,6 +18,15 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.14.0",
+		new = {
+			"Casts that can be interrupted have the game's own yellow by default (Cast Bar page). Your color stays: its \"Default\" button gives the new one.",
+		},
+		fixed = {
+			"Closing the options now closes the test mode too: left open, it could fail to close. Its X has the new look.",
+		},
+	},
+	{
 		version = "1.13.0",
 		new = {
 			"A button beside the X of the options window shrinks it to its title bar, to see and drag what's on the screen, and brings it back.",

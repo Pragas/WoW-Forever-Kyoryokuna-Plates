@@ -447,4 +447,8 @@ ns.LOCALES.ptPT = {
 	["The window back to its full size."] = "A janela volta ao tamanho inteiro.",
 	["A button beside the X of the options window shrinks it to its title bar, to see and drag what's on the screen, and brings it back."] =
 		"Um botão ao lado do X da janela das opções encolhe-a até à barra do título, para veres e arrastares o que está no ecrã, e volta a abri-la.",
+	["Closing the options now closes the test mode too: left open, it could fail to close. Its X has the new look."] =
+		"Fechar as opções agora fecha também o modo de teste: deixado aberto, podia não fechar. O X dele tem o aspeto novo.",
+	["Casts that can be interrupted have the game's own yellow by default (Cast Bar page). Your color stays: its \"Default\" button gives the new one."] =
+		"Os casts que se podem interromper têm por defeito o amarelo do próprio jogo (página Barra de cast). A tua cor fica: o botão \"Padrão\" dela dá a nova.",
 }

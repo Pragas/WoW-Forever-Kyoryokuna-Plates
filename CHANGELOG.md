@@ -8,6 +8,13 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.14.0
+
+- New default color of casts that can be interrupted: the game's own (its classic cast bar yellow, R 1, G 0.7, B 0), was a green. Colors already saved don't change: the "Default" button beside the color gives the new one.
+
+- Fixed: with the test mode open, closing the options first left the test mode on the screen, and it could fail to close. Closing the options now closes the test mode too, and the test mode's X simply hides it (the game's close button goes through the game's panel system, which can refuse).
+- The test mode's X has the same look as the options window's.
+
 ## 1.13.0
 
 - Options window: a button beside the X (a minus) shrinks the window to its title bar, so what's on the screen (e.g. the test mode's examples) can be seen and dragged; the same button (now a plus) brings it back as it was. The title bar stays where it is, and can still be dragged. The window always opens whole. It keeps its width: only its height shrinks.

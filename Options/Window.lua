@@ -101,6 +101,8 @@ local function CloseButton(parent)
 	SignBar(button, 12, 2, -45)
 	return button
 end
+-- Also for the test mode's window (Options\Preview.lua)
+ns.CreateCloseButton = CloseButton
 
 -- Minimized: only the title bar with its buttons, to see and drag what's on the screen (e.g. the things
 -- the options move), as wide as before. The button beside the X shrinks it (a minus) and brings it back
@@ -164,7 +166,11 @@ local function CreateWindow()
 	})
 	window:SetBackdropColor(0.06, 0.06, 0.08, 0.96)
 	window:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
-	window:SetScript("OnHide", ns.Widgets.ClosePopup)
+	window:SetScript("OnHide", function()
+		ns.Widgets.ClosePopup()
+		-- The test mode follows the options: closed with them, so it's never left without them
+		if ns.Preview and ns.Preview.Hide then ns.Preview.Hide() end
+	end)
 	-- Escape closes it
 	tinsert(UISpecialFrames, "KyoryokunaPlatesOptionsWindow")
 

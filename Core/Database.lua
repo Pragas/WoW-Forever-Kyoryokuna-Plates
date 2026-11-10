@@ -88,7 +88,8 @@ ns.DEFAULTS = {
 		textPosition = "CENTER",
 		textScale = 110,
 		-- Can be interrupted / my interrupt on cooldown / can't be interrupted
-		readyColor = {0, 1, 0.17},
+		-- Can be interrupted: the game's own default cast bar color (CASTBAR_CLASSIC_YELLOW)
+		readyColor = {1, 0.7, 0},
 		notReadyColor = {1, 0, 0.02},
 		nonInterruptibleColor = {0.25, 0.28, 0.24},
 		hideOnAllies = true,

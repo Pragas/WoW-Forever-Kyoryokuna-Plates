@@ -325,8 +325,12 @@ local function CreateWindow()
 	-- Under the title, so a long title (with the page's name) never pushes it under the close button
 	window.hint:SetPoint("TOPLEFT", window.title, "BOTTOMLEFT", 0, -3)
 
-	local close = CreateFrame("Button", nil, window, "UIPanelCloseButton")
+	-- The same X as the options window: it simply hides the window (the game's template closes it
+	-- through the game's panel system, which the game blocks for addons in combat)
+	local close = ns.CreateCloseButton and ns.CreateCloseButton(window) or CreateFrame("Button", nil, window, "UIPanelCloseButton")
 	close:SetPoint("TOPRIGHT", window, "TOPRIGHT", -4, -4)
+	close:SetScript("OnClick", function() window:Hide() end)
+	window.closeButton = close
 
 	local content = CreateScrollArea()
 	window.content = content
@@ -482,6 +486,15 @@ function Preview.CountShown()
 		if example.cell:IsShown() then count = count + 1 end
 	end
 	return count
+end
+
+-- Closed (with the options window, which it belongs to)
+function Preview.Hide()
+	if window and window:IsShown() then window:Hide() end
+end
+
+function Preview.IsShown()
+	return window ~= nil and window:IsShown()
 end
 
 function Preview.Toggle()

@@ -21,6 +21,8 @@ ns.AddOptionsPage("About", function(b)
 	b:Text(ns.VERSION)
 	b:Text("Author", LABEL)
 	b:Text(ns.AUTHOR)
+	b:Button("See what's new", function() ns.ShowWhatsNew() end,
+		"The window of what's new in each version, and the known issues.")
 
 	b:Header("How it works")
 	b:Text("Kyoryokuna Plates doesn't create nameplates of its own. It takes the game's nameplates and changes how they look, so the game keeps handling health, positions, clicks, its threat glow and its health text. That's why it keeps working in combat and with the values the game hides from addons.", GREY)

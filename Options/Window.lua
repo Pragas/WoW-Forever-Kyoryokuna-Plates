@@ -126,6 +126,25 @@ function ns.OpenOptions()
 	local page = selectedPage or pages[1]
 	selectedPage = nil
 	SelectPage(page)
+	-- The first time, and after an update: the welcome window over it (Options\Welcome.lua)
+	if ns.CheckWelcome and not (window.welcome and window.welcome:IsShown()) then
+		ns.CheckWelcome(window)
+	end
+end
+
+function ns.GetOptionsWindow()
+	return window
+end
+
+-- A page by its place in the list (1 is General) or by its name
+function ns.SelectOptionsPage(which)
+	if not window then return end
+	for i, page in ipairs(pages) do
+		if i == which or page.name == which then
+			SelectPage(page)
+			return
+		end
+	end
 end
 
 function ns.ToggleOptions()

@@ -1,0 +1,105 @@
+-- KyoryokunaPlates
+-- Copyright (c) 2026 Pragas. All Rights Reserved.
+-- See LICENSE for terms. Unauthorized copying, modification or redistribution is prohibited.
+
+-- What's new, for the welcome window (Options\Welcome.lua) and the chat message after an update.
+--
+-- The game can't read CHANGELOG.md, so each release gets short notes here, written for the player (the
+-- CHANGELOG stays the detailed record). Newest first; every new version adds its notes at the top, with
+-- their Portuguese in Locales\ptPT.lua.
+--
+-- The window shows:
+--   - the first time the addon is used: what the addon is, and how to start;
+--   - after an update: the notes of every version since the last one the player saw;
+--   - then never again until the next version (the version seen is saved).
+
+local _, ns = ...
+local L = ns.L
+
+ns.RELEASE_NOTES = {
+	{
+		version = "1.9.0",
+		new = {
+			"A welcome window: the first time you open the addon, and after each update with what's new and what was fixed.",
+			"A message in the chat when the addon was updated.",
+		},
+	},
+	{
+		version = "1.8.0",
+		new = {
+			"Import / Export page: share your settings with a code, and keep backups with a name of your own to put back later.",
+			"Your debuffs on enemies: on the left or the right of the bar, your crowd control first, and a border color of its own for it.",
+			"Cast bar: the spell name can be hidden, and the icon and the name can go to the left or the right.",
+			"Target arrow: above the bar, on its left, on its right or on both sides.",
+			"Options: the pages in a new order, more room between the sections, and the mouse wheel no longer changes the sliders.",
+		},
+	},
+}
+
+-- What isn't fixed: limits of the game itself, shown under the notes
+ns.KNOWN_ISSUES = {
+	"Inside dungeons and raids the game doesn't let addons change the nameplates of allies: there they keep the game's look (smaller names, the game's raid mark).",
+	"In combat the game hides some things from addons: the cast bar can't tell whether your interrupt will be ready in time, and your debuffs can't be centered over the bar.",
+}
+
+-- "1.10.2" as three numbers
+local function Parse(version)
+	local a, b, c = tostring(version or ""):match("^(%d+)%.?(%d*)%.?(%d*)")
+	return tonumber(a) or 0, tonumber(b) or 0, tonumber(c) or 0
+end
+
+-- -1, 0 or 1 as version a is older, the same or newer than b
+function ns.CompareVersions(a, b)
+	local a1, a2, a3 = Parse(a)
+	local b1, b2, b3 = Parse(b)
+	if a1 ~= b1 then return a1 < b1 and -1 or 1 end
+	if a2 ~= b2 then return a2 < b2 and -1 or 1 end
+	if a3 ~= b3 then return a3 < b3 and -1 or 1 end
+	return 0
+end
+
+-- What the welcome window has to show now: "first" (a new install), "update" with the notes of the
+-- versions not seen yet (newest first), or nil
+function ns.GetWelcomeState()
+	if not ns.db or not ns.VERSION or not ns.VERSION:match("^%d") then return nil end
+	if ns.db.firstWelcome then return "first", {} end
+	local seen = ns.db.seenVersion
+	if type(seen) ~= "string" then
+		-- Used before this window existed: the notes of this version
+		seen = nil
+	elseif ns.CompareVersions(seen, ns.VERSION) >= 0 then
+		return nil
+	end
+	local notes = {}
+	for _, entry in ipairs(ns.RELEASE_NOTES) do
+		local newerThanSeen = not seen and ns.CompareVersions(entry.version, ns.VERSION) == 0
+			or seen and ns.CompareVersions(entry.version, seen) > 0
+		if newerThanSeen and ns.CompareVersions(entry.version, ns.VERSION) <= 0 then
+			notes[#notes + 1] = entry
+		end
+	end
+	return "update", notes
+end
+
+-- The OK of the window: not shown again until the next version
+function ns.MarkWelcomeSeen()
+	if not ns.db then return end
+	ns.db.seenVersion = ns.VERSION
+	ns.db.firstWelcome = nil
+end
+
+-- In the chat once per session, a few seconds after logging in (after the game's own messages)
+local told = false
+ns.RegisterEvent("PLAYER_ENTERING_WORLD", function()
+	if told then return end
+	told = true
+	local function Tell()
+		local state = ns.GetWelcomeState()
+		if state == "first" then
+			ns.Print(L["Thanks for installing! Type /kp to open the options."])
+		elseif state == "update" then
+			ns.Print(string.format(L["Updated to version %s. Type /kp to see what's new."], ns.VERSION))
+		end
+	end
+	if C_Timer and C_Timer.After then C_Timer.After(5, function() ns.SafeCall(Tell) end) else Tell() end
+end)

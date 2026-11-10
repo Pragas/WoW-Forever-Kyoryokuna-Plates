@@ -310,6 +310,47 @@ ns.LOCALES.ptPT = {
 	["Identity secret"] = "Identidade secreta",
 	["secret"] = "secreto",
 
+	-- Welcome window and what's new
+	["Kyoryokuna Plates gives the game's nameplates a clean, classic look: health bars with a thin border, cast bars colored by your interrupt, your debuffs above the name, and allies by name with their role. Everything can be set in these options."] =
+		"O Kyoryokuna Plates dá às nameplates do jogo um aspeto limpo e clássico: barras de vida com uma borda fina, barras de cast com a cor do teu interrupt, os teus debuffs por cima do nome e os aliados pelo nome, com a sua função. Tudo pode ser ajustado nestas opções.",
+	["Version %s"] = "Versão %s",
+	["Getting started"] = "Para começar",
+	["Open the test mode (General page, or /kp test) to see every kind of nameplate while you change the options."] =
+		"Abre o modo de teste (página Geral, ou /kp test) para veres todos os tipos de nameplate enquanto mudas as opções.",
+	["The pages on the left: Allies, Enemies, Target, Cast Bar and Raid Marks set each part of the nameplates."] =
+		"As páginas à esquerda: Aliados, Inimigos, Alvo, Barra de cast e Marcas de raid ajustam cada parte das nameplates.",
+	["Import / Export keeps backups of your settings and shares them with a code."] =
+		"Importar / Exportar guarda cópias de segurança das tuas definições e partilha-as com um código.",
+	["What's new in %s"] = "Novidades da %s",
+	["New"] = "Novo",
+	["Fixed"] = "Corrigido",
+	["Known issues"] = "Problemas conhecidos",
+	["Limits of the game itself, which no addon can get around:"] = "Limites do próprio jogo, que nenhum addon consegue contornar:",
+	["OK"] = "OK",
+	["See what's new"] = "Ver as novidades",
+	["The window of what's new in each version, and the known issues."] =
+		"A janela com as novidades de cada versão e os problemas conhecidos.",
+	["Thanks for installing! Type /kp to open the options."] = "Obrigado por instalares! Escreve /kp para abrir as opções.",
+	["Updated to version %s. Type /kp to see what's new."] = "Atualizado para a versão %s. Escreve /kp para veres as novidades.",
+	-- Release notes (Core\ReleaseNotes.lua)
+	["A welcome window: the first time you open the addon, and after each update with what's new and what was fixed."] =
+		"Uma janela de boas-vindas: na primeira vez que abres o addon, e depois de cada atualização com as novidades e as correções.",
+	["A message in the chat when the addon was updated."] = "Uma mensagem no chat quando o addon é atualizado.",
+	["Import / Export page: share your settings with a code, and keep backups with a name of your own to put back later."] =
+		"Página Importar / Exportar: partilha as tuas definições com um código e guarda cópias de segurança com um nome teu, para repor mais tarde.",
+	["Your debuffs on enemies: on the left or the right of the bar, your crowd control first, and a border color of its own for it."] =
+		"Os teus debuffs nos inimigos: à esquerda ou à direita da barra, os teus CC primeiro e uma cor de contorno própria para eles.",
+	["Cast bar: the spell name can be hidden, and the icon and the name can go to the left or the right."] =
+		"Barra de cast: o nome do feitiço pode ser escondido, e o ícone e o nome podem ficar à esquerda ou à direita.",
+	["Target arrow: above the bar, on its left, on its right or on both sides."] =
+		"Seta do alvo: por cima da barra, à esquerda, à direita ou dos dois lados.",
+	["Options: the pages in a new order, more room between the sections, and the mouse wheel no longer changes the sliders."] =
+		"Opções: as páginas numa nova ordem, mais espaço entre as secções, e a roda do rato já não muda os sliders.",
+	["Inside dungeons and raids the game doesn't let addons change the nameplates of allies: there they keep the game's look (smaller names, the game's raid mark)."] =
+		"Dentro de dungeons e raids o jogo não deixa os addons mexerem nas nameplates dos aliados: aí ficam com o aspeto do jogo (nomes mais pequenos, a marca de raid do jogo).",
+	["In combat the game hides some things from addons: the cast bar can't tell whether your interrupt will be ready in time, and your debuffs can't be centered over the bar."] =
+		"Em combate o jogo esconde algumas coisas dos addons: a barra de cast não consegue saber se o teu interrupt fica pronto a tempo, e os teus debuffs não podem ficar centrados por cima da barra.",
+
 	-- Import / Export
 	["Import / Export"] = "Importar / Exportar",
 	["Export"] = "Exportar",

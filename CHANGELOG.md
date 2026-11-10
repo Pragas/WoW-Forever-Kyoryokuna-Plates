@@ -8,6 +8,12 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.9.0
+
+- A welcome window over the options: the first time the addon is opened (what it is, how to start), and after each update (what's new and what was fixed in every version since the last one seen), with the known issues (limits of the game itself) under it. Its OK shows the General page, and it doesn't come back until the next version. The About page has a "See what's new" button to show it again.
+- After an update, a message in the chat a few seconds after logging in says so and how to see what's new (on the first install, how to open the options).
+- The notes for the window are short texts written for the player (Core\ReleaseNotes.lua), in English and Portuguese; a test checks that the version of the TOC has its notes.
+
 ## 1.8.0
 
 - New "Import / Export" page:

@@ -304,6 +304,9 @@ ns.RegisterEvent("ADDON_LOADED", function(_, loadedName)
 	if type(KyoryokunaPlatesDB) ~= "table" then
 		KyoryokunaPlatesDB = {}
 	end
+	-- Nothing saved yet: the addon's first use. The welcome window then says what the addon is, until
+	-- its OK is clicked (Core\ReleaseNotes.lua)
+	if KyoryokunaPlatesDB.version == nil then KyoryokunaPlatesDB.firstWelcome = true end
 	-- The game settings saved by the first version keep their place
 	if type(KyoryokunaPlatesDB.cvarBackup) == "table" and type(KyoryokunaPlatesDB.gameBackup) ~= "table" then
 		KyoryokunaPlatesDB.gameBackup = {cvars = KyoryokunaPlatesDB.cvarBackup}

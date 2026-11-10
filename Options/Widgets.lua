@@ -258,13 +258,14 @@ function Builder:Height()
 	return -self.y + 16
 end
 
-function Builder:Header(text)
+-- raw: the text is shown as given (already translated, or built with numbers), not looked up
+function Builder:Header(text, raw)
 	-- The first header of a page sits at the top; the others leave room above them
 	self:Space(self.hasContent and SPACE_ABOVE_HEADER or 2)
 	self.hasContent = true
 	local header = self.content:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 	header:SetPoint("TOPLEFT", self.content, "TOPLEFT", LEFT, self.y)
-	header:SetText(L[text])
+	header:SetText(raw and text or L[text])
 	local line = self.content:CreateTexture(nil, "ARTWORK")
 	line:SetColorTexture(1, 0.82, 0, 0.35)
 	line:SetHeight(1)
@@ -273,12 +274,13 @@ function Builder:Header(text)
 	self.y = self.y - HEADER_HEIGHT
 end
 
-function Builder:Text(text, color)
+function Builder:Text(text, color, raw, indent)
 	local fontString = self.content:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-	fontString:SetPoint("TOPLEFT", self.content, "TOPLEFT", LEFT, self.y)
-	fontString:SetWidth(CONTENT_WIDTH - LEFT * 2)
+	local x = LEFT + (indent or 0)
+	fontString:SetPoint("TOPLEFT", self.content, "TOPLEFT", x, self.y)
+	fontString:SetWidth(CONTENT_WIDTH - LEFT - x)
 	fontString:SetJustifyH("LEFT")
-	fontString:SetText(L[text])
+	fontString:SetText(raw and text or L[text])
 	if color then fontString:SetTextColor(unpack(color)) end
 	self.y = self.y - math.max(14, fontString:GetStringHeight()) - TEXT_GAP
 	self.hasContent = true

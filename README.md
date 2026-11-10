@@ -1,43 +1,34 @@
 # Kyoryokuna Plates
 
-Nameplates limpas, em estilo clássico, para o **WoW Forever**: barras de vida com uma borda fina, barras de cast com a cor do teu interrupt, os teus debuffs por cima do nome, aliados pelo nome com a sua função, e muito mais, tudo ajustável nas opções.
+🇵🇹 [Ler em português](README.pt-PT.md)
 
-*Clean, classic-style nameplates for **WoW Forever**. Instructions in English below.*
+Clean, classic-style nameplates for **WoW Forever**: health bars with a thin border, cast bars colored by your interrupt, your debuffs above the name, allies by name with their role, and much more, all adjustable in the options.
 
-## ⬇️ Descarregar
+## ⬇️ Download
 
-**[Descarregar a última versão (KyoryokunaPlates.zip)](https://github.com/Pragas/WoW-Forever-Kyoryokuna-Plates/releases/latest/download/KyoryokunaPlates.zip)**
+**[Download the latest version (KyoryokunaPlates.zip)](https://github.com/Pragas/WoW-Forever-Kyoryokuna-Plates/releases/latest/download/KyoryokunaPlates.zip)**
 
-Este link dá sempre a versão mais recente. Não uses o botão verde **Code → Download ZIP**: esse zip vem com outro nome de pasta e o jogo não carrega o addon.
+This link always gives the newest version. Don't use the green **Code → Download ZIP** button: that zip has another folder name and the game won't load the addon.
 
-## Instalar
+## Install
 
-1. Fecha o jogo.
-2. Descompacta o `KyoryokunaPlates.zip` para a pasta dos addons do jogo:
+1. Close the game.
+2. Unzip `KyoryokunaPlates.zip` into the game's addons folder:
    `World of Warcraft\_forever_\Interface\AddOns`
-3. Confirma que ficou assim: `Interface\AddOns\KyoryokunaPlates\KyoryokunaPlates.toc`
-4. Abre o jogo e escreve **`/kp`** para abrir as opções.
+3. Check that you get: `Interface\AddOns\KyoryokunaPlates\KyoryokunaPlates.toc`
+4. Start the game and type **`/kp`** to open the options.
 
-## Atualizar
+## Update
 
-1. Fecha o jogo.
-2. Descarrega o zip outra vez (o mesmo link acima) e descompacta-o por cima da pasta antiga, substituindo os ficheiros.
-3. As tuas definições **não se perdem**: ficam guardadas pelo jogo noutra pasta (`WTF`). Ao abrir, o addon mostra as novidades da versão nova.
+1. Close the game.
+2. Download the zip again (same link above) and unzip it over the old folder, replacing the files.
+3. Your settings are **kept**: the game stores them in another folder (`WTF`). When it opens, the addon shows what's new in the new version.
 
-Dica: antes de atualizar, podes criar uma cópia de segurança das definições em `/kp` → **Importar / Exportar**.
+Tip: before updating, you can back up your settings in `/kp` → **Import / Export**.
 
-## Novidades
+## What's new
 
-Todas as versões e o que mudou em cada uma estão no [CHANGELOG](CHANGELOG.md) e na página [Releases](https://github.com/Pragas/WoW-Forever-Kyoryokuna-Plates/releases).
-
----
-
-## English
-
-**[Download the latest version (KyoryokunaPlates.zip)](https://github.com/Pragas/WoW-Forever-Kyoryokuna-Plates/releases/latest/download/KyoryokunaPlates.zip)**. Don't use the green **Code → Download ZIP** button: its folder has another name and the game won't load the addon.
-
-- **Install:** close the game, unzip `KyoryokunaPlates.zip` into `World of Warcraft\_forever_\Interface\AddOns` (you should get `AddOns\KyoryokunaPlates\KyoryokunaPlates.toc`), start the game and type **`/kp`**.
-- **Update:** close the game and unzip the new version over the old one. Your settings are kept (the game stores them in the `WTF` folder).
+Every version and what changed in it are in the [CHANGELOG](CHANGELOG.md) and on the [Releases](https://github.com/Pragas/WoW-Forever-Kyoryokuna-Plates/releases) page.
 
 ---
 

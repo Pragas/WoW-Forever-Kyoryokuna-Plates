@@ -429,4 +429,6 @@ ns.LOCALES.ptPT = {
 		"%s foi atualizado para a versão %s. Fecha o jogo e abre-o de novo para o usar: um /reload não chega, porque o jogo só lê os ficheiros novos do addon quando arranca. Até lá, o addon fica desligado.",
 	["After an update with new files, a /reload no longer gives errors: the addon says to close the game and open it again, and stays off until then."] =
 		"Depois de uma atualização com ficheiros novos, um /reload já não dá erros: o addon avisa para fechares o jogo e o abrires de novo, e fica desligado até lá.",
+	["The message asking to restart the game after an update now shows: it was written too early, while the game was still making its interface, and got lost."] =
+		"A mensagem a pedir para reiniciar o jogo depois de uma atualização já aparece: era escrita cedo demais, enquanto o jogo ainda montava a interface, e perdia-se.",
 }

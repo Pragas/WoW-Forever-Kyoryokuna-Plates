@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.11.2",
+		fixed = {
+			"The message asking to restart the game after an update now shows: it was written too early, while the game was still making its interface, and got lost.",
+		},
+	},
+	{
 		version = "1.11.1",
 		fixed = {
 			"After an update with new files, a /reload no longer gives errors: the addon says to close the game and open it again, and stays off until then.",

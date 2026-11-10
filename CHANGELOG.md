@@ -8,6 +8,10 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.11.2
+
+- The message asking to restart the game after an update (1.11.1) didn't show: it was written at login, while the game was still making its interface, and got lost. It now shows 5 seconds after the world appears, like the update message.
+
 ## 1.11.1
 
 - After an update that adds files, a /reload no longer gives errors. The game reads the addon's list of files only when it starts, so a /reload leaves the new ones out; the addon now notices it (the version the game read isn't the code's), stays off (no events, nothing runs, settings untouched) and says to close the game and open it again, in the chat and in a window, in the player's language. /kp and the addon's entry in the game's addon button say it too.

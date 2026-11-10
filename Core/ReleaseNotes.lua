@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.12.0",
+		new = {
+			"The seconds left on your debuffs can have a color and a size of your own (Enemies page; red and 12 by default, as before).",
+		},
+	},
+	{
 		version = "1.11.2",
 		fixed = {
 			"The message asking to restart the game after an update now shows: it was written too early, while the game was still making its interface, and got lost.",

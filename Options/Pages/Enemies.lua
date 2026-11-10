@@ -74,6 +74,10 @@ ns.AddOptionsPage("Enemies", function(b)
 		ccFirst, true)
 	b:Color("enemy.debuffCCBorderColor", "Crowd control border color", nil,
 		W.All(ccFirst, W.IsOn("enemy.debuffCCBorder")), true)
+	b:Color("enemy.debuffTimerColor", "Time left color",
+		"The color of the seconds left on each of your debuffs.", debuffs, true)
+	b:Slider("enemy.debuffTimerSize", "Time left size", 1, nil,
+		"The size of the seconds left on each of your debuffs. 12 is the size it had before.", debuffs, true)
 	b:Slider("enemy.debuffSize", "Icon size", 1, nil, nil, debuffs, true)
 	b:Slider("enemy.debuffMax", "Most icons", 1, nil, nil, debuffs, true)
 	b:Slider("enemy.debuffY", "Height above the bar", 1, nil, nil, debuffs, true)

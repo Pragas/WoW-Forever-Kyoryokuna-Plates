@@ -27,8 +27,13 @@ local GAP = 4
 -- The border of every icon: black, or for crowd control (when it has a color of its own) that color.
 -- Two pixels, so it shows on the nameplate (which is scaled down).
 local EDGE = 2
-local COUNTDOWN_SIZE = 12
-local COUNTDOWN_COLOR = {1, 0.1, 0.1}
+-- The seconds left on an icon, in the size and color of the options
+local function SetCountdownStyle(button)
+	if button.kpCountdown then
+		button.kpCountdown:SetFont(ns.FONT, ns.db.enemy.debuffTimerSize, "OUTLINE")
+		button.kpCountdown:SetTextColor(ns.Unpack(ns.db.enemy.debuffTimerColor))
+	end
+end
 
 -- Which of the player's debuffs: all of them, only crowd control ("cc"), or all but it ("notcc"). The
 -- game marks crowd control itself (stuns, roots, fears, polymorph...); a "!" leaves a kind out.
@@ -122,8 +127,8 @@ local function InitButton(button, cc)
 	timer.noCooldownCount = true
 	local countdown = timer.GetCountdownFontString and timer:GetCountdownFontString()
 	if countdown then
-		countdown:SetFont(ns.FONT, COUNTDOWN_SIZE, "OUTLINE")
-		countdown:SetTextColor(unpack(COUNTDOWN_COLOR))
+		button.kpCountdown = countdown
+		SetCountdownStyle(button)
 		-- Always in the middle of the icon: cooldown text addons (e.g. OmniCC) may move the game's number
 		-- to their own place, so it's put back whenever it's moved
 		local centering = false
@@ -196,12 +201,15 @@ local function CreateContainer(frame, data)
 end
 
 -- The groups (and the look of their icons) a container is made with: when these options change, the
--- container is made again, as the game's groups can't be changed once made
+-- container is made again, as the game's groups can't be changed once made (nor, when protected, the
+-- icons it already made: a new size or color of the seconds left comes with new icons)
 local function GroupsKey()
 	local settings = ns.db.enemy
-	if not settings.debuffCCFirst then return "all" end
-	local r, g, b = ns.Unpack(settings.debuffCCBorderColor)
-	return string.format("cc:%s:%.3f:%.3f:%.3f", tostring(settings.debuffCCBorder), r, g, b)
+	local r, g, b = ns.Unpack(settings.debuffTimerColor)
+	local timer = string.format("t:%d:%.3f:%.3f:%.3f|", settings.debuffTimerSize, r, g, b)
+	if not settings.debuffCCFirst then return timer .. "all" end
+	r, g, b = ns.Unpack(settings.debuffCCBorderColor)
+	return timer .. string.format("cc:%s:%.3f:%.3f:%.3f", tostring(settings.debuffCCBorder), r, g, b)
 end
 
 -- A size or count changed in the options: the container and the icons it already made follow
@@ -307,6 +315,7 @@ local function ShowExamples(frame, data)
 			end
 			local cc = settings.debuffCCFirst and i == 1
 			SetEdge(button, cc)
+			SetCountdownStyle(button)
 			StyleButton(button, settings.debuffSize)
 			button.kpIcon:SetTexture(cc and EXAMPLE_CC_ICON or EXAMPLE_ICONS[(i - 1) % #EXAMPLE_ICONS + 1])
 			button:ClearAllPoints()
@@ -358,7 +367,8 @@ function Debuffs.Update(frame, data)
 		ShowExamples(frame, data)
 		return
 	end
-	-- "My crowd control first" or its border color changed: the old container goes, a new one is made
+	-- "My crowd control first", its border color or the color of the seconds changed: the old container
+	-- goes, a new one is made
 	local key = GroupsKey()
 	if data.debuffContainer and data.debuffGroupsKey ~= key then
 		HideContainer(data)

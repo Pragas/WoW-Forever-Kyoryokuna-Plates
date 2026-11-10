@@ -8,6 +8,10 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.12.0
+
+- Enemies page, My debuffs: "Time left color" and "Time left size", the color and size of the seconds left on each of your debuffs (red and 12 by default, as before; any color, e.g. white; size 6 to 24). They follow at once, in the test mode too.
+
 ## 1.11.2
 
 - The message asking to restart the game after an update (1.11.1) didn't show: it was written at login, while the game was still making its interface, and got lost. It now shows 5 seconds after the world appears, like the update message.

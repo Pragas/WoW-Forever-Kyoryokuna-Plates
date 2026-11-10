@@ -54,6 +54,9 @@ ns.DEFAULTS = {
 		debuffCCFirst = true,
 		debuffCCBorder = true,
 		debuffCCBorderColor = {0.2, 0.85, 0.35},
+		-- The seconds left on each debuff
+		debuffTimerColor = {1, 0.1, 0.1},
+		debuffTimerSize = 12,
 		debuffSize = 25,
 		debuffMax = 6,
 		debuffY = 20,
@@ -123,7 +126,7 @@ ns.LIMITS = {
 	general = {targetScale = {100, 200}, minimapAngle = {0, 360}},
 	enemy = {
 		barWidth = {60, 300}, barHeight = {4, 40}, borderSize = {1, 5}, nameScale = {50, 200}, healthTextScale = {50, 200}, levelScale = {50, 200},
-		debuffSize = {12, 48}, debuffMax = {1, 12},
+		debuffSize = {12, 48}, debuffMax = {1, 12}, debuffTimerSize = {6, 24},
 		debuffY = {0, 60},
 	},
 	target = {arrowScale = {50, 300}, arrowX = {-100, 100}, arrowY = {-100, 100}, borderSize = {1, 5}},

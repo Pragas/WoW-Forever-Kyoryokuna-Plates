@@ -431,4 +431,13 @@ ns.LOCALES.ptPT = {
 		"Depois de uma atualização com ficheiros novos, um /reload já não dá erros: o addon avisa para fechares o jogo e o abrires de novo, e fica desligado até lá.",
 	["The message asking to restart the game after an update now shows: it was written too early, while the game was still making its interface, and got lost."] =
 		"A mensagem a pedir para reiniciar o jogo depois de uma atualização já aparece: era escrita cedo demais, enquanto o jogo ainda montava a interface, e perdia-se.",
+
+	-- The color of the seconds left on my debuffs (Enemies page)
+	["Time left color"] = "Cor do tempo restante",
+	["The color of the seconds left on each of your debuffs."] = "A cor dos segundos que faltam em cada um dos teus debuffs.",
+	["The seconds left on your debuffs can have a color and a size of your own (Enemies page; red and 12 by default, as before)."] =
+		"Os segundos que faltam nos teus debuffs podem ter uma cor e um tamanho à tua escolha (página Inimigos; vermelho e 12 por defeito, como antes).",
+	["Time left size"] = "Tamanho do tempo restante",
+	["The size of the seconds left on each of your debuffs. 12 is the size it had before."] =
+		"O tamanho dos segundos que faltam em cada um dos teus debuffs. 12 é o tamanho que tinha antes.",
 }

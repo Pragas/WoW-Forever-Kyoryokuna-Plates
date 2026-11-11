@@ -55,6 +55,9 @@ ns.AddOptionsPage("Enemies", function(b)
 	b:Check("enemy.threatGlow", "Threat glow above the bar",
 		"The game's orange glow above the health bar of a mob that's attacking you, or that you're about to pull. Needs \"Manage the game's nameplate settings\" (General page).",
 		managed)
+	b:Slider("enemy.threatGlowHeight", "Threat glow height", 5, "%",
+		"How tall the game's threat glow is, as a share of the game's own height: lower keeps it closer to the bar. The test mode has an example.",
+		W.All(managed, W.IsOn("enemy.threatGlow")), true)
 	b:Check("enemy.threatFlash", "Flash when gaining or losing aggro",
 		"The game's short flash on the health bar when a mob starts or stops attacking you. Needs \"Manage the game's nameplate settings\" (General page).",
 		managed)

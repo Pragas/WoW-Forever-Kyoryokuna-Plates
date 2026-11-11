@@ -71,6 +71,8 @@ local SCENARIOS = {
 	{label = "Enemy player", desc = "In the color of their class", name = "Viktor", level = 27, health = 80, isPlayer = true, class = "WARLOCK", pages = {ENEMIES}},
 	{label = "Boss", desc = "Its level shows as a skull", name = "Mother Fang", level = -1, health = 100, color = HOSTILE, elite = true,
 		classification = "elite", boss = true, pages = {ENEMIES}},
+	{label = "Threat", desc = "The game's glow: it's attacking you", name = "Murkgill Hunter", level = 26, health = 85, color = HOSTILE,
+		threat = true, pages = {ENEMIES}},
 	{label = "Low level", desc = "Far below your level", name = "Young Wetlands Crocolisk", level = 18, health = 100, color = HOSTILE, pages = {ENEMIES}},
 	{label = "Cast: can be interrupted", desc = "Your interrupt is ready", name = "Dragonmaw Bonewarder", level = 28, health = 53, color = HOSTILE,
 		cast = "Immolate", castIcon = ICONS.immolate, castState = "ready", castTarget = "Posttal Kyoryokuna", castTargetClass = "SHAMAN",
@@ -147,6 +149,27 @@ local function BuildPlate(parent)
 	frame.healthBar = bar
 
 	frame.name = NewFontString(frame, "SystemFont_NamePlate", 9)
+
+	-- The game's threat glow, made like the game's (its flare, a brighter copy and the mask shaping them,
+	-- on the top of the health bar); shown only by the threat example
+	local function GlowPart(part, atlas, alpha, blend)
+		part:SetAtlas(atlas, true)
+		part:ClearAllPoints()
+		part:SetPoint("BOTTOMLEFT", container, "TOPLEFT", 0, 0)
+		part:SetPoint("BOTTOMRIGHT", container, "TOPRIGHT", 0, 0)
+		if alpha then part:SetAlpha(alpha) end
+		if blend then part:SetBlendMode(blend) end
+		part:Hide()
+		return part
+	end
+	local FLARE, MASK = "UI-HUD-Nameplates-Aggro-Flare", "UI-HUD-Nameplates-Aggro-Mask"
+	frame.aggroHighlightBase = GlowPart(frame:CreateTexture(nil, "BACKGROUND"), FLARE)
+	frame.aggroHighlightAdditive = GlowPart(frame:CreateTexture(nil, "BACKGROUND"), FLARE, 0.4, "ADD")
+	if frame.CreateMaskTexture then
+		frame.aggroHighlightMask = GlowPart(frame:CreateMaskTexture(nil, "BACKGROUND"), MASK)
+		frame.aggroHighlightBase:AddMaskTexture(frame.aggroHighlightMask)
+		frame.aggroHighlightAdditive:AddMaskTexture(frame.aggroHighlightMask)
+	end
 
 	local castBar = CreateFrame("StatusBar", nil, frame)
 	castBar:SetMinMaxValues(0, 1)
@@ -239,6 +262,11 @@ local function ApplyExample(example)
 		end
 	else
 		frame.RaidTargetFrame:Hide()
+	end
+	-- The threat glow: only on its example, and only while it's on (the game's switch, Engine\CVars.lua)
+	local glow = scenario.threat and not nameOnly and db.enemy.threatGlow and true or false
+	for _, key in ipairs({"aggroHighlightBase", "aggroHighlightAdditive", "aggroHighlightMask"}) do
+		if frame[key] then frame[key]:SetShown(glow) end
 	end
 	frame.ClassificationFrame:SetShown(scenario.elite and true or false)
 	SetEliteTexture(frame.ClassificationFrame.classificationIndicator, scenario.classification)

@@ -8,6 +8,11 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.15.0
+
+- Enemies page, Threat: "Threat glow height", the height of the game's orange threat glow above the health bar, from 20% to 100% of the game's own (100% by default, as before). The glow stays the game's (its art, animation and scale): the addon only sets the height of its three parts (the flare, its brighter copy and the mask), from the game's height seen first, so a reused nameplate is never lowered twice. Only enemies.
+- Test mode: a new "Threat" example on the Enemies page, with the game's glow drawn like the game's, at the height asked; shown while the threat glow is on.
+
 ## 1.14.0
 
 - New default color of casts that can be interrupted: the game's own (its classic cast bar yellow, R 1, G 0.7, B 0), was a green. Colors already saved don't change: the "Default" button beside the color gives the new one.

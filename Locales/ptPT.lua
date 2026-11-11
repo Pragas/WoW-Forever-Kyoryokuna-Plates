@@ -451,4 +451,10 @@ ns.LOCALES.ptPT = {
 		"Fechar as opções agora fecha também o modo de teste: deixado aberto, podia não fechar. O X dele tem o aspeto novo.",
 	["Casts that can be interrupted have the game's own yellow by default (Cast Bar page). Your color stays: its \"Default\" button gives the new one."] =
 		"Os casts que se podem interromper têm por defeito o amarelo do próprio jogo (página Barra de cast). A tua cor fica: o botão \"Padrão\" dela dá a nova.",
+	["Threat glow height"] = "Altura do brilho de ameaça",
+	["How tall the game's threat glow is, as a share of the game's own height: lower keeps it closer to the bar. The test mode has an example."] =
+		"A altura do brilho de ameaça do jogo, em percentagem da altura original: mais baixo deixa-o mais junto à barra. O modo de teste tem um exemplo.",
+	["The game's glow: it's attacking you"] = "O brilho do jogo: está a atacar-te",
+	["Enemies page: the height of the game's threat glow above the bar, from 20% to 100% of the game's. The test mode has a threat example to see it."] =
+		"Página Inimigos: a altura do brilho de ameaça do jogo por cima da barra, de 20% a 100% da original. O modo de teste tem um exemplo de ameaça para o veres.",
 }

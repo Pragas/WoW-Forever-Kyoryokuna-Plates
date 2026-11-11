@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.15.0",
+		new = {
+			"Enemies page: the height of the game's threat glow above the bar, from 20% to 100% of the game's. The test mode has a threat example to see it.",
+		},
+	},
+	{
 		version = "1.14.0",
 		new = {
 			"Casts that can be interrupted have the game's own yellow by default (Cast Bar page). Your color stays: its \"Default\" button gives the new one.",

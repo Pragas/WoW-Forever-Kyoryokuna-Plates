@@ -46,6 +46,8 @@ ns.DEFAULTS = {
 		rareColor = {0.78, 0.8, 0.86},
 		bossColor = {1, 1, 1},
 		threatGlow = true,
+		-- The height of the game's threat glow: a share of the game's (%)
+		threatGlowHeight = 100,
 		threatFlash = true,
 		debuffs = true,
 		-- The row of icons over the bar: from its left end, or from its right end
@@ -128,7 +130,7 @@ ns.LIMITS = {
 	enemy = {
 		barWidth = {60, 300}, barHeight = {4, 40}, borderSize = {1, 5}, nameScale = {50, 200}, healthTextScale = {50, 200}, levelScale = {50, 200},
 		debuffSize = {12, 48}, debuffMax = {1, 12}, debuffTimerSize = {6, 24},
-		debuffY = {0, 60},
+		debuffY = {0, 60}, threatGlowHeight = {20, 100},
 	},
 	target = {arrowScale = {50, 300}, arrowX = {-100, 100}, arrowY = {-100, 100}, borderSize = {1, 5}},
 	castBar = {

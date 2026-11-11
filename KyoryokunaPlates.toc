@@ -2,7 +2,7 @@
 ## Title: |cffffe00aKyoryokuna|r |cff0055ffPlates|r
 ## Notes: Clean, classic-style nameplates built on the Blizzard nameplates. Type /kp to open the options.
 ## Author: Pragas
-## Version: 1.14.0
+## Version: 1.15.0
 ## X-Copyright: Copyright (c) 2026 Pragas. All Rights Reserved.
 ## X-License: All Rights Reserved
 ## IconTexture: Interface\AddOns\KyoryokunaPlates\Media\IconSmall
@@ -26,6 +26,7 @@ Engine\Hooks.lua
 Engine\CVars.lua
 
 Modules\HealthBar.lua
+Modules\Threat.lua
 Modules\Name.lua
 Modules\Level.lua
 Modules\HealthText.lua

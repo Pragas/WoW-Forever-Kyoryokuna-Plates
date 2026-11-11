@@ -8,6 +8,10 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.15.1
+
+- Fixed: the healer mana bar of a name-only ally, set to follow the name, was shorter than the name. The name is drawn at the nameplate's scale and the bar at its own (it keeps its size when the ally is selected); the name's width is now turned into the bar's scale, so both are just as wide on screen.
+
 ## 1.15.0
 
 - Enemies page, Threat: "Threat glow height", the height of the game's orange threat glow above the health bar, from 20% to 100% of the game's own (100% by default, as before). The glow stays the game's (its art, animation and scale): the addon only sets the height of its three parts (the flare, its brighter copy and the mask), from the game's height seen first, so a reused nameplate is never lowered twice. Only enemies.

@@ -150,7 +150,17 @@ local function UpdateManaBar(frame, data, role)
 		if bar.SetIgnoreParentScale then bar:SetIgnoreParentScale(true) end
 		local width = settings.manaBarWidth
 		if settings.manaBarFollowName then
-			width = ns.Known(nameText:GetStringWidth()) or width
+			local nameWidth = ns.Known(nameText:GetStringWidth())
+			if nameWidth then
+				-- The name is drawn at the nameplate's scale, the bar at its own (it keeps its size when the ally
+				-- is selected): the name's width turned into the bar's units, so both are just as wide on screen
+				local nameScale = ns.Known(nameText:GetEffectiveScale())
+				local barScale = ns.Known(bar:GetEffectiveScale())
+				if type(nameScale) == "number" and type(barScale) == "number" and barScale > 0 then
+					nameWidth = nameWidth * nameScale / barScale
+				end
+				width = nameWidth
+			end
 		end
 		bar:SetPoint("TOP", nameText, "BOTTOM", 0, -MANA_GAP)
 		bar:SetSize(math.max(width, 10), settings.manaBarHeight)

@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.15.1",
+		fixed = {
+			"The mana bar of a healer ally showing only the name is again as wide as the name when it follows it.",
+		},
+	},
+	{
 		version = "1.15.0",
 		new = {
 			"Enemies page: the height of the game's threat glow above the bar, from 20% to 100% of the game's. The test mode has a threat example to see it.",

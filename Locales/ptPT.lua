@@ -457,4 +457,6 @@ ns.LOCALES.ptPT = {
 	["The game's glow: it's attacking you"] = "O brilho do jogo: está a atacar-te",
 	["Enemies page: the height of the game's threat glow above the bar, from 20% to 100% of the game's. The test mode has a threat example to see it."] =
 		"Página Inimigos: a altura do brilho de ameaça do jogo por cima da barra, de 20% a 100% da original. O modo de teste tem um exemplo de ameaça para o veres.",
+	["The mana bar of a healer ally showing only the name is again as wide as the name when it follows it."] =
+		"A barra de mana de um aliado healer que mostra só o nome volta a ter a largura do nome quando o acompanha.",
 }

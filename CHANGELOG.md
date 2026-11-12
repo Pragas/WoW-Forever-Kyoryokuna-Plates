@@ -8,6 +8,11 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.17.0
+
+- Chat: `/kp errors clear` and `/kp clear errors` also empty the list of recorded errors, like `/kp clearerrors`: the three Kyoryokuna addons (Plates, Enhancements, Frames) now take the same three ways (Enhancements and Frames had none, or only `errors clear`). `/kp help` shows `/kp errors clear`. Before, those two were unknown commands, which open the options.
+- Tests: `/kp errors clear`, `/kp clearerrors` and `/kp clear errors` empty the list, without opening the options.
+
 ## 1.16.0
 
 - Buttons and dropdowns of the options in the addon's own style, like the window's X and minimize (the same as Kyoryokuna Frames): a dark box with a thin grey border, lighter under the mouse, gold text (a dropdown: its value in white and a small gold arrow drawn with two bars), made of plain colors instead of the game's `UIPanelButtonTemplate` (a thin red bar on this client, 200 wide, where a long value ran out of the button). Dropdowns are 280 wide, and a text too long for its button is cut with "...". The dropdown's list is in the same style (flat dark box, thin grey border, taller rows in the normal font). The welcome window's OK uses the normal font.

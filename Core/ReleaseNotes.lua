@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.17.0",
+		new = {
+			"/kp errors clear also clears the recorded errors, like /kp clearerrors: the same in the three Kyoryokuna addons.",
+		},
+	},
+	{
 		version = "1.16.0",
 		new = {
 			"The buttons and dropdowns of the options in the addon's own style, like its window's buttons: a long text no longer runs out of its button.",

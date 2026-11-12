@@ -417,7 +417,8 @@ SlashCmdList.KYORYOKUNAPLATES = function(message)
 	local command = strtrim(message or ""):lower()
 	if command == "errors" then
 		ns.PrintErrors()
-	elseif command == "clearerrors" then
+	-- The same three ways in every Kyoryokuna addon (Plates, Enhancements, Frames)
+	elseif command == "errors clear" or command == "clearerrors" or command == "clear errors" then
 		ns.ClearErrors()
 	elseif command == "diag" then
 		ns.PrintDiagnostics()
@@ -429,7 +430,7 @@ SlashCmdList.KYORYOKUNAPLATES = function(message)
 		DEFAULT_CHAT_FRAME:AddMessage("  /kp test - " .. L["test mode: example nameplates for every case"])
 		DEFAULT_CHAT_FRAME:AddMessage("  /kp diag - " .. L["what the game lets the addon see about your target"])
 		DEFAULT_CHAT_FRAME:AddMessage("  /kp errors - " .. L["show recorded errors"])
-		DEFAULT_CHAT_FRAME:AddMessage("  /kp clearerrors - " .. L["clear recorded errors"])
+		DEFAULT_CHAT_FRAME:AddMessage("  /kp errors clear - " .. L["clear recorded errors"])
 	else
 		ns.ToggleOptions()
 	end

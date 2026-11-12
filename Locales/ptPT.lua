@@ -8,6 +8,10 @@
 local _, ns = ...
 
 ns.LOCALES.ptPT = {
+	-- Release notes 1.17.0
+	["/kp errors clear also clears the recorded errors, like /kp clearerrors: the same in the three Kyoryokuna addons."] =
+		"/kp errors clear também apaga os erros registados, como o /kp clearerrors: igual nos três addons Kyoryokuna.",
+
 	-- Release notes 1.16.0
 	["The test mode button on the General page says \"Close the test mode\" while it's open."] =
 		"O botão do modo de teste na página Geral diz \"Fechar o modo de teste\" enquanto está aberto.",

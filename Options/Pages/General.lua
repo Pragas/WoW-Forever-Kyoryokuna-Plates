@@ -3,6 +3,7 @@
 -- See LICENSE for terms. Unauthorized copying, modification or redistribution is prohibited.
 
 local _, ns = ...
+local L = ns.L
 local W = ns.Widgets
 
 ns.AddOptionsPage("General", function(b)
@@ -13,7 +14,11 @@ ns.AddOptionsPage("General", function(b)
 	b:Header("Test mode")
 	b:Text("Example nameplates for every case, to see how the options look without having to find each case in the game. They follow every change at once.",
 		{0.7, 0.7, 0.7})
-	b:Button("Open the test mode", function() ns.Preview.Toggle() end, "Also with /kp test.")
+	-- Open or close: it says which, as the test mode is now
+	local test = b:Button("Open the test mode", function() ns.Preview.Toggle() end, "Also with /kp test.")
+	b:AddControl({frame = test, Refresh = function()
+		test:SetText(ns.Preview.IsShown() and L["Close the test mode"] or L["Open the test mode"])
+	end})
 
 	b:Header("Nameplates")
 	b:Check("general.manageGameSettings", "Manage the game's nameplate settings",

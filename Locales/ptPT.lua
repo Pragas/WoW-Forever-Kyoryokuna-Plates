@@ -8,6 +8,12 @@
 local _, ns = ...
 
 ns.LOCALES.ptPT = {
+	-- Release notes 1.16.0
+	["The test mode button on the General page says \"Close the test mode\" while it's open."] =
+		"O botão do modo de teste na página Geral diz \"Fechar o modo de teste\" enquanto está aberto.",
+	["The buttons and dropdowns of the options in the addon's own style, like its window's buttons: a long text no longer runs out of its button."] =
+		"Os botões e as listas de escolha das opções no estilo do próprio addon, como os botões da janela: um texto comprido já não sai do botão.",
+
 	-- Pages
 	["General"] = "Geral",
 	["Enemies"] = "Inimigos",
@@ -23,6 +29,7 @@ ns.LOCALES.ptPT = {
 	["Example nameplates for every case, to see how the options look without having to find each case in the game. They follow every change at once."] =
 		"Nameplates de exemplo para todos os casos, para veres como ficam as opções sem teres de encontrar cada caso no jogo. Acompanham cada alteração na hora.",
 	["Open the test mode"] = "Abrir o modo de teste",
+	["Close the test mode"] = "Fechar o modo de teste",
 	["Also with /kp test."] = "Também com /kp test.",
 	["Nameplates"] = "Nameplates",
 	["Manage the game's nameplate settings"] = "Gerir as definições de nameplates do jogo",

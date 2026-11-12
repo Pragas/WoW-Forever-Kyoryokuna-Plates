@@ -8,6 +8,12 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.16.0
+
+- Buttons and dropdowns of the options in the addon's own style, like the window's X and minimize (the same as Kyoryokuna Frames): a dark box with a thin grey border, lighter under the mouse, gold text (a dropdown: its value in white and a small gold arrow drawn with two bars), made of plain colors instead of the game's `UIPanelButtonTemplate` (a thin red bar on this client, 200 wide, where a long value ran out of the button). Dropdowns are 280 wide, and a text too long for its button is cut with "...". The dropdown's list is in the same style (flat dark box, thin grey border, taller rows in the normal font). The welcome window's OK uses the normal font.
+- Buttons inside the game's own windows keep the game's look, like the rest of those windows (the button in Options → AddOns).
+- The test mode button on the General page says **Close the test mode** while the test mode is open, and **Open the test mode** again however it's closed (the button, its own X, `/kp test`, closing the options).
+
 ## 1.15.1
 
 - Fixed: the healer mana bar of a name-only ally, set to follow the name, was shorter than the name. The name is drawn at the nameplate's scale and the bar at its own (it keeps its size when the ally is selected); the name's width is now turned into the bar's scale, so both are just as wide on screen.

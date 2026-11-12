@@ -329,6 +329,8 @@ end
 
 local function CreateWindow()
 	window = CreateFrame("Frame", "KyoryokunaPlatesPreviewWindow", UIParent, "BackdropTemplate")
+	-- However it closes (its X, the options closed, /kp test), the options' button says "Open" again
+	window:HookScript("OnHide", function() if ns.RefreshOptions then ns.RefreshOptions() end end)
 	window:SetSize(COLUMNS * CELL_WIDTH + PADDING * 2 + SCROLLBAR_WIDTH, VISIBLE_HEIGHT + TOP + PADDING)
 	window:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 	window:SetFrameStrata("HIGH")
@@ -538,4 +540,6 @@ function Preview.Toggle()
 		end
 		Preview.Refresh()
 	end
+	-- The options' button says "Close" while it's open
+	if ns.RefreshOptions then ns.RefreshOptions() end
 end

@@ -18,6 +18,13 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.16.0",
+		new = {
+			"The buttons and dropdowns of the options in the addon's own style, like its window's buttons: a long text no longer runs out of its button.",
+			"The test mode button on the General page says \"Close the test mode\" while it's open.",
+		},
+	},
+	{
 		version = "1.15.1",
 		fixed = {
 			"The mana bar of a healer ally showing only the name is again as wide as the name when it follows it.",

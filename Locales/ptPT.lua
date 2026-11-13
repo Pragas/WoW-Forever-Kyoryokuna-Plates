@@ -8,6 +8,10 @@
 local _, ns = ...
 
 ns.LOCALES.ptPT = {
+	-- Release notes 1.18.0
+	["The General page no longer has the buttons for the recorded errors and for your target's diagnostics. They're still there as chat commands: /kp errors, /kp errors clear and /kp diag (all of them in /kp help)."] =
+		"A página Geral deixa de ter os botões dos erros registados e do diagnóstico do teu alvo. Continuam a existir como comandos no chat: /kp errors, /kp errors clear e /kp diag (todos em /kp help).",
+
 	-- Release notes 1.17.1
 	["The mark of an elite or a rare (a dragon, or a rare's round medal with a star) could show at the right end of the health bar, over the health percent, with the raid marks on the right. It now always shows left of the bar, where the dragons are."] =
 		"A marca de um elite ou de um raro (um dragão, ou a medalha redonda com uma estrela dos raros) podia aparecer na ponta direita da barra de vida, por cima da percentagem, com as marcas de raide à direita. Agora aparece sempre à esquerda da barra, onde ficam os dragões.",
@@ -57,17 +61,10 @@ ns.LOCALES.ptPT = {
 	["Support"] = "Suporte",
 	["Tell me in the chat when an error happens"] = "Avisar no chat quando acontece um erro",
 	["Errors are always kept. Read them with /kp errors."] = "Os erros ficam sempre guardados. Lê-os com /kp errors.",
-	["Show recorded errors"] = "Mostrar os erros registados",
-	["Delete recorded errors"] = "Apagar os erros registados",
-	["Asks for confirmation first. Also with /kp clearerrors."] = "Pede confirmação primeiro. Também com /kp clearerrors.",
-	["Delete the %d recorded error(s)? This can't be undone."] = "Apagar os %d erro(s) registado(s)? Não dá para desfazer.",
 	["Yes"] = "Sim",
 	["No"] = "Não",
 	["Default"] = "Padrão",
 	["Puts this color back to its default."] = "Repõe esta cor no padrão.",
-	["Diagnostics of my target"] = "Diagnóstico do meu alvo",
-	["Prints in the chat what the game lets the addon see about your current target."] =
-		"Escreve no chat o que o jogo deixa o addon ver sobre o teu alvo atual.",
 
 	-- Enemies
 	["Look"] = "Aspeto",

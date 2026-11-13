@@ -34,9 +34,4 @@ ns.AddOptionsPage("General", function(b)
 	b:Header("Support")
 	b:Check("general.reportErrors", "Tell me in the chat when an error happens",
 		"Errors are always kept. Read them with /kp errors.")
-	b:Button("Show recorded errors", function() ns.PrintErrors() end)
-	b:Button("Delete recorded errors", function() ns.ConfirmClearErrors() end,
-		"Asks for confirmation first. Also with /kp clearerrors.")
-	b:Button("Diagnostics of my target", function() ns.PrintDiagnostics() end,
-		"Prints in the chat what the game lets the addon see about your current target.")
 end)

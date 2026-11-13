@@ -8,6 +8,11 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.18.0
+
+- Options (General): the Support part keeps only "Tell me in the chat when an error happens". Its three buttons ("Show recorded errors", "Delete recorded errors" and "Diagnostics of my target") are gone: tools for reporting a problem, not settings, so they stay as chat commands, `/kp errors`, `/kp errors clear` (or `/kp clearerrors`, `/kp clear errors`) and `/kp diag`, all listed by `/kp help`. The confirmation window was only the button's: the commands clear at once, as before. Their texts left the Portuguese translation.
+- Tests: the confirmation for deleting the errors, gone with its button.
+
 ## 1.17.1
 
 - Enemies: the game's mark of an elite or a rare (the gold or silver dragon, or the round medal with a star of a rare that isn't elite) could show at the right end of the health bar, over the health percent. The game ties it beside the raid mark, and the addon moved it into the row left of the bar only if it was shown when the icons were placed. Shown later by the game (a new unit on the nameplate, a new classification, a raid mark gone), it stayed beside the raid mark, which sits at the right end of the bar when the raid marks go on the right. It's now placed in the row even while hidden, and the icons are placed again whenever the game shows or hides it, so a raid mark on the left also goes past it.

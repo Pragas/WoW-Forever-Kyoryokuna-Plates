@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.18.0",
+		new = {
+			"The General page no longer has the buttons for the recorded errors and for your target's diagnostics. They're still there as chat commands: /kp errors, /kp errors clear and /kp diag (all of them in /kp help).",
+		},
+	},
+	{
 		version = "1.17.1",
 		fixed = {
 			"The mark of an elite or a rare (a dragon, or a rare's round medal with a star) could show at the right end of the health bar, over the health percent, with the raid marks on the right. It now always shows left of the bar, where the dragons are.",

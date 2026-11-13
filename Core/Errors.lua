@@ -77,29 +77,3 @@ function ns.ClearErrors()
 	ns.Print(L["Errors cleared."])
 end
 
--- The button of the options asks first, with the game's own confirmation window (nothing to clear: it
--- just says so)
-local CONFIRM = "KYORYOKUNAPLATES_CLEAR_ERRORS"
-
-function ns.ConfirmClearErrors()
-	local saved = ns.db and ns.db.errors or sessionErrors
-	if #saved == 0 then
-		ns.Print(L["No errors recorded."])
-		return
-	end
-	if not (StaticPopupDialogs and StaticPopup_Show) then
-		ns.ClearErrors()
-		return
-	end
-	StaticPopupDialogs[CONFIRM] = {
-		text = string.format(L["Delete the %d recorded error(s)? This can't be undone."], #saved),
-		button1 = YES or L["Yes"],
-		button2 = NO or L["No"],
-		OnAccept = function() ns.ClearErrors() end,
-		timeout = 0,
-		whileDead = true,
-		hideOnEscape = true,
-		preferredIndex = 3,
-	}
-	StaticPopup_Show(CONFIRM)
-end

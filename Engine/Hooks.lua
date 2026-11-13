@@ -56,6 +56,22 @@ function ns.HookFrame(frame)
 			end
 		end)
 	end
+
+	-- The game shows or hides its mark of an elite or a rare on its own (a new unit, a new
+	-- classification, a raid mark set or gone): the icons left of the bar are placed again, so it's in
+	-- their row and a raid mark on the left goes past it (Modules\LeftIcons.lua)
+	local classification = frame.ClassificationFrame
+	if type(classification) == "table" and classification.Show then
+		local function OnClassificationShownChanged()
+			local data = ns.GetPlateData(frame)
+			if data and not data.placingIcons and ns.LeftIcons then
+				ns.SafeCall(ns.LeftIcons.Update, frame, data)
+			end
+		end
+		hooksecurefunc(classification, "Show", OnClassificationShownChanged)
+		hooksecurefunc(classification, "Hide", OnClassificationShownChanged)
+		hooksecurefunc(classification, "SetShown", OnClassificationShownChanged)
+	end
 end
 
 local function GetNameplateData(frame)

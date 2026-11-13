@@ -134,8 +134,9 @@ local function PaintFade(edges, r, g, b)
 	PaintEdge(edges.right, r, g, b)
 end
 
--- What kind of enemy it is, for its border and its icons: "boss", "rare" (the silver dragon, also rare
--- elites), "elite" (the gold dragon), or nil. Players and allies are none; nil too while the game hides it.
+-- What kind of enemy it is, for its border and its icons: "boss", "rare" (rares, with the game's round
+-- medal with a star, and rare elites, with the silver dragon), "elite" (the gold dragon), or nil. Players
+-- and allies are none; nil too while the game hides it.
 function ns.GetRank(data)
 	if data.side ~= "enemy" or data.isPlayer then return nil end
 	local classification = data.classification

@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.17.1",
+		fixed = {
+			"The mark of an elite or a rare (a dragon, or a rare's round medal with a star) could show at the right end of the health bar, over the health percent, with the raid marks on the right. It now always shows left of the bar, where the dragons are.",
+		},
+	},
+	{
 		version = "1.17.0",
 		new = {
 			"/kp errors clear also clears the recorded errors, like /kp clearerrors: the same in the three Kyoryokuna addons.",

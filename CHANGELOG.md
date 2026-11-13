@@ -8,6 +8,12 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.17.1
+
+- Enemies: the game's mark of an elite or a rare (the gold or silver dragon, or the round medal with a star of a rare that isn't elite) could show at the right end of the health bar, over the health percent. The game ties it beside the raid mark, and the addon moved it into the row left of the bar only if it was shown when the icons were placed. Shown later by the game (a new unit on the nameplate, a new classification, a raid mark gone), it stayed beside the raid mark, which sits at the right end of the bar when the raid marks go on the right. It's now placed in the row even while hidden, and the icons are placed again whenever the game shows or hides it, so a raid mark on the left also goes past it.
+- Options (Enemies): the tooltip of "Show the elite and rare dragon" also names the medal of rares. Comments: a rare that isn't elite has the medal, not the silver dragon (that one is for rare elites).
+- Tests: with the raid marks on the right, the mark hidden when the icons are placed and then shown by the game: left of the bar both times; hidden by the player: invisible and not moved.
+
 ## 1.17.0
 
 - Chat: `/kp errors clear` and `/kp clear errors` also empty the list of recorded errors, like `/kp clearerrors`: the three Kyoryokuna addons (Plates, Enhancements, Frames) now take the same three ways (Enhancements and Frames had none, or only `errors clear`). `/kp help` shows `/kp errors clear`. Before, those two were unknown commands, which open the options.

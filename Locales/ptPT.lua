@@ -8,6 +8,10 @@
 local _, ns = ...
 
 ns.LOCALES.ptPT = {
+	-- Release notes 1.17.1
+	["The mark of an elite or a rare (a dragon, or a rare's round medal with a star) could show at the right end of the health bar, over the health percent, with the raid marks on the right. It now always shows left of the bar, where the dragons are."] =
+		"A marca de um elite ou de um raro (um dragão, ou a medalha redonda com uma estrela dos raros) podia aparecer na ponta direita da barra de vida, por cima da percentagem, com as marcas de raide à direita. Agora aparece sempre à esquerda da barra, onde ficam os dragões.",
+
 	-- Release notes 1.17.0
 	["/kp errors clear also clears the recorded errors, like /kp clearerrors: the same in the three Kyoryokuna addons."] =
 		"/kp errors clear também apaga os erros registados, como o /kp clearerrors: igual nos três addons Kyoryokuna.",
@@ -155,8 +159,8 @@ ns.LOCALES.ptPT = {
 	["Their border fades from black, on the left, to a color of their own. Your target always keeps the target's border."] =
 		"O contorno deles passa de preto, à esquerda, a uma cor própria. O teu alvo mantém sempre o contorno de alvo.",
 	["Show the elite and rare dragon"] = "Mostrar o dragão dos elites e raros",
-	["The game's gold (elite) or silver (rare) dragon, left of the health bar."] =
-		"O dragão dourado (elite) ou prateado (raro) do jogo, à esquerda da barra de vida.",
+	["The game's gold dragon (elites), silver dragon (rare elites) or round medal with a star (rares), left of the health bar."] =
+		"O dragão dourado (elites), o dragão prateado (raros elite) ou a medalha redonda com uma estrela (raros) do jogo, à esquerda da barra de vida.",
 	["Show the skull"] = "Mostrar a caveira",
 	["The game shows a skull instead of the level for bosses and for mobs far above your level. Hidden, they show no level."] =
 		"O jogo mostra uma caveira em vez do nível nos bosses e nos mobs muito acima do teu nível. Escondida, não mostram nível.",

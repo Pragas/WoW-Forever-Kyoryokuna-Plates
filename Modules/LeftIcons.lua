@@ -5,9 +5,11 @@
 -- The icons to the left of an enemy's health bar, in a row going left from the bar:
 --   1. the yellow "!" of mobs that belong to one of the player's active quests, right next to the bar
 --      (Questie's sword or bag, when Questie is on, shows at its own place further left);
---   2. the game's elite / rare dragon, moved here from where the game puts it.
+--   2. the game's mark of an elite or a rare (the gold dragon of elites, the silver dragon of rare elites,
+--      the round medal with a star of rares), moved here from where the game puts it.
 -- Only the icons that are shown take a place, so the first one is always next to the bar. The game
--- keeps deciding when its dragon shows. (The raid mark goes over the name: Modules\RaidMark.lua.)
+-- keeps deciding when its mark shows. (The raid mark goes where the Raid Marks page says:
+-- Modules\RaidMark.lua.)
 
 local _, ns = ...
 
@@ -77,15 +79,17 @@ function LeftIcons.Update(frame, data)
 		data.questIcon:Hide()
 	end
 
-	-- The dragon can be hidden (Enemies page): made invisible, so the game keeps managing it, and then
-	-- it takes no place in the row
+	-- The dragon (or the medal) can be hidden (Enemies page): made invisible, so the game keeps managing
+	-- it, and then it takes no place in the row. It's placed in the row even while the game hides it: the
+	-- game may show it later (a new unit on the nameplate, a new classification, a raid mark gone), and
+	-- left where the game ties it, beside the raid mark, it came up over the health percent on the right
+	-- of the bar when the raid marks go there. (Engine\Hooks.lua places the icons again when the game
+	-- shows or hides it, so a raid mark on the left goes past it.)
 	local classification = frame.ClassificationFrame
 	if classification then
 		local showDragon = ns.db.enemy.eliteIcon
 		pcall(classification.SetAlpha, classification, showDragon and 1 or 0)
-		if showDragon and IsShown(classification) and IsShown(classification.classificationIndicator) then
-			Chain(classification, anchor, anchorPoint)
-		end
+		if showDragon then Chain(classification, anchor, anchorPoint) end
 	end
 	data.placingIcons = false
 	-- A raid mark on the left goes past these icons, so it follows when they show or hide

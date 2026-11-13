@@ -41,7 +41,7 @@ ns.AddOptionsPage("Enemies", function(b)
 		{0.7, 0.7, 0.7})
 	local rankBorder = W.IsOn("enemy.rankBorder")
 	b:Check("enemy.eliteIcon", "Show the elite and rare dragon",
-		"The game's gold (elite) or silver (rare) dragon, left of the health bar.")
+		"The game's gold dragon (elites), silver dragon (rare elites) or round medal with a star (rares), left of the health bar.")
 	b:Check("enemy.skullIcon", "Show the skull",
 		"The game shows a skull instead of the level for bosses and for mobs far above your level. Hidden, they show no level.")
 	b:Check("enemy.rankBorder", "Border in their own color",

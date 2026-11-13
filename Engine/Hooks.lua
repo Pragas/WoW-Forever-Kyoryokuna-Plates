@@ -57,6 +57,16 @@ function ns.HookFrame(frame)
 		end)
 	end
 
+	-- The game updates its threat glow: never shown on an ally (Modules\Threat.lua). The game's own
+	-- isFriend, as the addon's data isn't there yet while the game hands the nameplate to a new unit.
+	if frame.UpdateAggroHighlight then
+		hooksecurefunc(frame, "UpdateAggroHighlight", function(self)
+			if ns.Threat and ns.Known(self.isFriend) == true then
+				ns.SafeCall(ns.Threat.HideOnAlly, self)
+			end
+		end)
+	end
+
 	-- The game shows or hides its mark of an elite or a rare on its own (a new unit, a new
 	-- classification, a raid mark set or gone): the icons left of the bar are placed again, so it's in
 	-- their row and a raid mark on the left goes past it (Modules\LeftIcons.lua)

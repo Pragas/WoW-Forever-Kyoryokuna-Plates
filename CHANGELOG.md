@@ -8,6 +8,11 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## Unreleased
+
+- Fix of a glitch of the game (always on, no option): the threat glow over an ally. The game never shows it on allies, but when it gives an enemy's nameplate (they're reused) to an ally, it updates the glow once before it knows the unit is a friend (Blizzard_NamePlateBase: SetUnit runs CompactUnitFrame_SetUnit before OnUnitSet runs UpdateIsFriend), with the enemy's "show threat" still set: in a group, an ally with aggro got the glow, in their threat color, fading out over 2 seconds. Seen only because the addon turns the glow on. Its three parts are now hidden on an ally right after the game updates the glow (a hook on `UpdateAggroHighlight`, by the game's own `isFriend`; nothing while it's still unknown, so a nameplate passed from enemy to enemy keeps its glow) and whenever the addon updates the nameplate, unless the game counts the unit as an enemy (a party member of the other faction, outside instances). Allies inside dungeons and raids can't be touched by addons.
+- Tests: the game's steps reproduced on a nameplate of its own (an enemy with the glow, then another enemy, then an ally with aggro): the glitch shows, and the glow is hidden right after the game; also hidden when the addon updates an ally, left to the game on a unit it counts as an enemy, and shown again when the ally becomes an enemy.
+
 ## 1.18.0
 
 - Options (General): the Support part keeps only "Tell me in the chat when an error happens". Its three buttons ("Show recorded errors", "Delete recorded errors" and "Diagnostics of my target") are gone: tools for reporting a problem, not settings, so they stay as chat commands, `/kp errors`, `/kp errors clear` (or `/kp clearerrors`, `/kp clear errors`) and `/kp diag`, all listed by `/kp help`. The confirmation window was only the button's: the commands clear at once, as before. Their texts left the Portuguese translation.

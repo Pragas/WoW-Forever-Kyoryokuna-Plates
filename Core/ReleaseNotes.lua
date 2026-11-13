@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.18.2",
+		fixed = {
+			"The game's nameplate settings: if the game refused one, the ones after it weren't changed (or put back). Each one is now changed on its own.",
+		},
+	},
+	{
 		version = "1.18.1",
 		fixed = {
 			"In a group, the threat glow could show for a moment over an ally's name (a glitch of the game itself). It no longer shows on allies.",

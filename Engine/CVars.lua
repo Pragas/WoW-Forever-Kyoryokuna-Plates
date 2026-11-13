@@ -6,7 +6,8 @@
 -- class colors of players, name-only allies, the size of the target and the width. The game keeps them
 -- even after this addon is turned off, so the value each one had before is saved the first time it's
 -- changed, and "manage the game's nameplate settings" off puts them all back. They can't be changed in
--- combat, so a change waits until the combat ends.
+-- combat, so a change waits until the combat ends. Each one is changed on its own: one the game refuses
+-- (read-only or locked) is kept as an error (/kp errors) and doesn't stop the others.
 --
 -- The game's own aura icons on nameplates (buffs, debuffs, crowd control) are turned off while this
 -- addon shows its debuffs (Modules\Debuffs.lua), so nothing shows twice or beside the bar. The game's
@@ -84,7 +85,7 @@ local function ApplyCVars()
 				if backup.cvars[name] == nil then
 					backup.cvars[name] = current
 				end
-				SetCVarValue(name, wanted)
+				ns.SafeCall(SetCVarValue, name, wanted)
 			end
 		end
 	end
@@ -138,7 +139,7 @@ local function ApplyDebuffBits()
 	-- With this addon's debuffs on, the game's are off; with them off, the game's come back
 	local wanted = not db.enemy.debuffs or ns.debuffsUnavailable == true
 	for _, bit in ipairs(GetDebuffBits()) do
-		SetBit(backup, bit[1], bit[2], wanted)
+		ns.SafeCall(SetBit, backup, bit[1], bit[2], wanted)
 	end
 end
 
@@ -154,8 +155,8 @@ local function ApplyThreatBits()
 	if not (kinds and C_CVar and C_CVar.GetCVarBitfield and C_CVar.SetCVarBitfield) then return end
 	local name = (NamePlateConstants and NamePlateConstants.THREAT_DISPLAY_CVAR) or "nameplateThreatDisplay"
 	local backup = GetBackup()
-	SetBit(backup, name, kinds.Progressive, db.enemy.threatGlow and true or false)
-	SetBit(backup, name, kinds.Flash, db.enemy.threatFlash and true or false)
+	ns.SafeCall(SetBit, backup, name, kinds.Progressive, db.enemy.threatGlow and true or false)
+	ns.SafeCall(SetBit, backup, name, kinds.Flash, db.enemy.threatFlash and true or false)
 end
 
 -- Stacking: overlapping nameplates of mobs close together swap which one is in front from one moment to
@@ -167,7 +168,7 @@ local function ApplyStackBits()
 	if not (kinds and C_CVar and C_CVar.GetCVarBitfield and C_CVar.SetCVarBitfield) then return end
 	local name = (NamePlateConstants and NamePlateConstants.STACKING_TYPES_CVAR) or "nameplateStackingTypes"
 	local backup = GetBackup()
-	SetBit(backup, name, kinds.Enemy, db.general.stackNameplates and true or false)
+	ns.SafeCall(SetBit, backup, name, kinds.Enemy, db.general.stackNameplates and true or false)
 end
 
 -- Every switch changed by the addon goes back to the value it had before
@@ -175,7 +176,7 @@ local function RestoreBits(backup)
 	for key, saved in pairs(backup.bits) do
 		local name, index = key:match("^(.+):(%d+)$")
 		if name and index then
-			C_CVar.SetCVarBitfield(name, tonumber(index), saved)
+			ns.SafeCall(C_CVar.SetCVarBitfield, name, tonumber(index), saved)
 		end
 	end
 end
@@ -226,10 +227,10 @@ end
 function ns.ApplyGameSettings()
 	if not ns.db then return end
 	ns.RunOutOfCombat("cvars", function()
-		ApplyCVars()
-		ApplyDebuffBits()
-		ApplyThreatBits()
-		ApplyStackBits()
+		ns.SafeCall(ApplyCVars)
+		ns.SafeCall(ApplyDebuffBits)
+		ns.SafeCall(ApplyThreatBits)
+		ns.SafeCall(ApplyStackBits)
 	end)
 	ns.ApplyNameplateSize()
 	if ns.Allies and ns.Allies.ApplyClickThrough then
@@ -241,9 +242,9 @@ function ns.RestoreGameSettings()
 	ns.RunOutOfCombat("restore", function()
 		local backup = GetBackup()
 		for name, value in pairs(backup.cvars) do
-			SetCVarValue(name, value)
+			ns.SafeCall(SetCVarValue, name, value)
 		end
-		RestoreBits(backup)
+		ns.SafeCall(RestoreBits, backup)
 		wipe(backup.cvars)
 		wipe(backup.bits)
 		RestoreNameplateSize()

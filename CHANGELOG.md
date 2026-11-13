@@ -8,6 +8,11 @@ Versions follow MAJOR.MINOR.PATCH:
 - **MINOR**: new features or options;
 - **MAJOR**: big changes, e.g. ones that need setting the addon up again.
 
+## 1.18.2
+
+- The game's nameplate settings (Engine\CVars.lua): they were changed one after the other in one go, so one the game refused (read-only or locked) stopped the rest: the settings after it, and the switches (the game's aura lists, threat glow and flash, stacking). Putting them back had the same weakness. Each setting and each switch is now changed on its own (`ns.SafeCall`): one refused is kept as an error (`/kp errors`), the others are still changed. Never seen in the game: a safeguard, found comparing with Advanced Interface Options, which guards each of its settings the same way.
+- Tests: a setting the game refuses, then a switch it refuses, then a setting refused while putting them back: the others are still changed, and the refusal is kept as an error (cleared after the test).
+
 ## 1.18.1
 
 - Fix of a glitch of the game (always on, no option): the threat glow over an ally. The game never shows it on allies, but when it gives an enemy's nameplate (they're reused) to an ally, it updates the glow once before it knows the unit is a friend (Blizzard_NamePlateBase: SetUnit runs CompactUnitFrame_SetUnit before OnUnitSet runs UpdateIsFriend), with the enemy's "show threat" still set: in a group, an ally with aggro got the glow, in their threat color, fading out over 2 seconds. Seen only because the addon turns the glow on. Its three parts are now hidden on an ally right after the game updates the glow (a hook on `UpdateAggroHighlight`, by the game's own `isFriend`; nothing while it's still unknown, so a nameplate passed from enemy to enemy keeps its glow) and whenever the addon updates the nameplate, unless the game counts the unit as an enemy (a party member of the other faction, outside instances). Allies inside dungeons and raids can't be touched by addons.

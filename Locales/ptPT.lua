@@ -8,6 +8,10 @@
 local _, ns = ...
 
 ns.LOCALES.ptPT = {
+	-- Release notes 1.18.1
+	["In a group, the threat glow could show for a moment over an ally's name (a glitch of the game itself). It no longer shows on allies."] =
+		"Em grupo, o brilho de ameaça podia aparecer por um momento por cima do nome de um aliado (um erro do próprio jogo). Já não aparece nos aliados.",
+
 	-- Release notes 1.18.0
 	["The General page no longer has the buttons for the recorded errors and for your target's diagnostics. They're still there as chat commands: /kp errors, /kp errors clear and /kp diag (all of them in /kp help)."] =
 		"A página Geral deixa de ter os botões dos erros registados e do diagnóstico do teu alvo. Continuam a existir como comandos no chat: /kp errors, /kp errors clear e /kp diag (todos em /kp help).",

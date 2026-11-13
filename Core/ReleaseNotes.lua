@@ -18,6 +18,12 @@ local L = ns.L
 
 ns.RELEASE_NOTES = {
 	{
+		version = "1.18.1",
+		fixed = {
+			"In a group, the threat glow could show for a moment over an ally's name (a glitch of the game itself). It no longer shows on allies.",
+		},
+	},
+	{
 		version = "1.18.0",
 		new = {
 			"The General page no longer has the buttons for the recorded errors and for your target's diagnostics. They're still there as chat commands: /kp errors, /kp errors clear and /kp diag (all of them in /kp help).",
